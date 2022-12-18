@@ -31,7 +31,7 @@
                 <th>Jenis Kelamin</th>
                 <th width="100px">Action</th>
             </tr>
-
+            @if(is_array($balita) || is_object($balita))
             @foreach ($balita as $k => $item)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -42,6 +42,7 @@
                 </td>
             </tr>
             @endforeach
+            @endif
         </table>
     </div>
 </div>

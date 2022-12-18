@@ -33,7 +33,7 @@
                 <th>Lingkar Lengan</th>
                 <th width="160px">Action</th>
             </tr>
-
+            @if(is_array($pemeriksaanbalita) || is_object($pemeriksaanbalita))
             @foreach ($pemeriksaanbalita as $k => $item)
             <tr>
                 <td>1</td>
@@ -47,6 +47,7 @@
                 </td>
             </tr>
             @endforeach
+            @endif
         </table>
     </div>
 </div>

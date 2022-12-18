@@ -32,6 +32,7 @@
                 <th>Dusun</th>
                 <th width="190px">Action</th>
             </tr>
+            @if(is_array($keluarga) || is_object($keluarga))
             @foreach ($keluarga as $k)
             <tr href=>
                 <td>{{ ++$i }}</td>
@@ -46,6 +47,7 @@
                 </td>
             </tr>
             @endforeach
+            @endif
         </table>
     </div>
 </div>

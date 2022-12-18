@@ -28,6 +28,7 @@
                 <th>vaksin</th>
                 <th width="280px">Action</th>
             </tr>
+            @if(is_array($vaksin) || is_object($vaksin))
             @foreach($vaksin as $vaksin)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -36,6 +37,7 @@
                 </td>
             </tr>
             @endforeach
+            @endif
         </table>
     </div>
 </div>

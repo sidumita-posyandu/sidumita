@@ -28,6 +28,7 @@
                 <th>Vitamin</th>
                 <th width="280px">Action</th>
             </tr>
+            @if(is_array($vitamin) || is_object($vitamin))
             @foreach($vitamin as $vitamin)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -36,6 +37,7 @@
                 </td>
             </tr>
             @endforeach
+            @endif
         </table>
     </div>
 </div>
