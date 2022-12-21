@@ -26,7 +26,7 @@ Route::resource('dusun', DusunController::class);
 
 Route::resource('keluarga', KeluargaController::class);
 Route::resource('balita', BalitaController::class);
-// Route::resource('ibu-hamil', IbuHamilController::class);
+Route::resource('ibu-hamil', IbuHamilController::class);
 
 Route::resource('jadwal-pemeriksaan', JadwalPemeriksaanController::class);
 Route::resource('pemeriksaan-balita', PemeriksaanBalitaController::class);

@@ -26,7 +26,7 @@
 @endif
 
 
-<form action="{{ route('vitamin.update',$vitamin->id) }}" method="POST">
+<form action="{{ route('vitamin.update',$vitamin['id']) }}" method="POST">
     @csrf
     @method('PUT')
 
@@ -38,8 +38,15 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <strong>Nama vitamin:</strong>
-                    <input type="text" name="nama_vitamin" value="{{ $vitamin->nama_vitamin }}" class="form-control"
-                        placeholder="Nama vitamin">
+                    <input type="text" name="nama_vitamin" class="form-control" value="{{ $vitamin['nama_vitamin'] }}">
+                </div>
+                <div class="form-group">
+                    <strong>Dosis:</strong>
+                    <input type="text" name="dosis" class="form-control" value="{{ $vitamin['dosis'] }}">
+                </div>
+                <div class="form-group">
+                    <strong>Catatan:</strong>
+                    <input type="text" name="catatan" class="form-control" value="{{ $vitamin['catatan'] }}">
                 </div>
             </div>
             <div class="col-xs-12 col-sm-12 col-md-12 text-center">

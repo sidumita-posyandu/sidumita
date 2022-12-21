@@ -110,7 +110,7 @@
 
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link" href="{{ route('jadwal-pemeriksaan.index') }}">
                     <i class="fas fa-fw fa-folder"></i>
                     <span>Penjadwalan</span></a>
             </li>
@@ -194,7 +194,7 @@
                 <!-- End of Topbar -->
 
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid mb-4">
                     @yield('content')
                 </div>
                 <!-- /.container-fluid -->

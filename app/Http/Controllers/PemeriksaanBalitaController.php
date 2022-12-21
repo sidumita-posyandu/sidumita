@@ -11,53 +11,65 @@ class PemeriksaanBalitaController extends Controller
 {
     public function index()
     {
-        $response = Http::get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/pemeriksaan-balita')->json();
         $pemeriksaanbalita = $response['data'];
-
-        $response2 = Http::get('http://127.0.0.1:8080/api/balita')->json();
-        $balita = $response2['data'];
         
-        return view('pemeriksaanbalita.index',compact('pemeriksaanbalita', 'balita'));
+        return view('pemeriksaanbalita.index',compact('pemeriksaanbalita'));
 
         
     }
 
     public function create()
     {
-        $balita = Balita::all();
-        $bulanimunisasi = BulanImunisasi::all();
-        return view('pemeriksaanbalita.create', compact('balita','bulanimunisasi'));
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/balita')->json();
+        $balita = $response['data'];
+
+        return view('pemeriksaanbalita.create', compact('balita'));
     }
 
     public function store(Request $request)
     {
         $data = $request->all();
-        // dd($data);
-        $pemeriksaan = new PemeriksaanBalita;
-        $pemeriksaan->balita_id = $data['balita_id'];
-        $pemeriksaan->tanggal_pemeriksaan = $data['tanggal_pemeriksaan'];
-        $pemeriksaan->save();
 
-        $detailpemeriksaan = new DetailPemeriksaanBalita;
-        $detailpemeriksaan->pemeriksaan_balita_id = $pemeriksaan->id;
-        $detailpemeriksaan->berat_badan = $data['berat_badan'];
-        $detailpemeriksaan->tinggi_badan = $data['tinggi_badan'];
-        $detailpemeriksaan->lingkar_kepala = $data['lingkar_kepala'];
-        $detailpemeriksaan->lingkar_lengan = $data['lingkar_lengan'];
-        $detailpemeriksaan->bulan_imunisasi_id = $data['bulan_imunisasi_id'];
-        $detailpemeriksaan->keluhan = $data['keluhan'];
-        $detailpemeriksaan->penanganan = $data['penanganan'];
-        $detailpemeriksaan->catatan = $data['catatan'];
-        $detailpemeriksaan->save();
+        request()->validate([
+            'balita_id' => 'required',
+            'tanggal_pemeriksaan' => 'required',
+            'berat_badan' => 'required',
+            'tinggi_badan' => 'required',
+            'lingkar_kepala' => 'required',
+            'lingkar_lengan' => 'required',
+            'keluhan' => 'required',
+            'penanganan' => 'required',
+            'catatan' => 'required',
+            'petugas_kesehatan_id' => 'required',
+            'dokter_id' => 'required',
+        ]);
         
-        return redirect()->route('pemeriksaanbalita.index')
+        $response = Http::post('https://api-sidumita.ftudayana.com/api/pemeriksaan-balita', [
+            'balita_id' => $request->balita_id,
+            'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
+            'berat_badan' => $request->berat_badan,
+            'tinggi_badan' => $request->tinggi_badan,
+            'lingkar_kepala' => $request->lingkar_kepala,
+            'lingkar_lengan' => $request->lingkar_lengan,
+            'keluhan' => $request->keluhan,
+            'penanganan' => $request->penanganan,
+            'catatan' => $request->catatan,
+            'petugas_kesehatan_id' => $request->petugas_kesehatan_id,
+            'dokter_id' => $request->dokter_id,
+        ]);
+        
+        return redirect()->route('pemeriksaan-balita.index')
         ->with('success','Pemeriksaan Balita berhasil dibuat.');
     }
 
     public function show($id)
     {
-        $pemeriksaanbalita = PemeriksaanBalita::where('id', $id)->get();
-        $detailpemeriksaanbalita = DetailPemeriksaanBalita::with('pemeriksaan_balita')->where('pemeriksaan_balita_id', $id)->get();
-        return view('pemeriksaanbalita.show',compact('pemeriksaanbalita','detailpemeriksaanbalita'));
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/pemeriksaan-balita/'.' '.$id)->json();
+        $pemeriksaanbalita = $response['data'];
+
+        dd($pemeriksaanbalita);
+        
+        return view('pemeriksaanbalita.show',compact('pemeriksaanbalita'));
     }
 }

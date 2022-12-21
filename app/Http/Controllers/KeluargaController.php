@@ -14,7 +14,7 @@ class KeluargaController extends Controller
 
     public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/keluarga')->json();
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/keluarga')->json();
         $keluarga = $response['data'];
 
         return view('keluarga.index', compact('keluarga'))
@@ -23,7 +23,7 @@ class KeluargaController extends Controller
     
     public function create()
     {
-        $response = Http::get('http://127.0.0.1:8080/api/dusun')->json();
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/dusun')->json();
         $dusun = $response['data'];
 
         return view('keluarga.create', compact('dusun'));
@@ -33,7 +33,7 @@ class KeluargaController extends Controller
     {
         $data = $request->all();
         
-        $response = Http::post('http://127.0.0.1:8080/api/keluarga', [
+        $response = Http::post('https://api-sidumita.ftudayana.com/api/keluarga', [
             'no_kartu_keluarga' => $data['no_kartu_keluarga'],
             'kepala_keluarga' => $data['kepala_keluarga'],
             'alamat' => $data['alamat'],
@@ -42,11 +42,11 @@ class KeluargaController extends Controller
             'dusun_id' => $data['dusun_id'],
         ]);
 
-        $getId = Http::get('http://127.0.0.1:8080/api/keluarga')->json();
+        $getId = Http::get('https://api-sidumita.ftudayana.com/api/keluarga')->json();
             $maxId = max($getId['data'])['id'];
         
         foreach ($data['nik'] as $item => $value) {          
-            $response2 = Http::post('http://127.0.0.1:8080/api/detail-keluarga', [
+            $response2 = Http::post('https://api-sidumita.ftudayana.com/api/detail-keluarga', [
                 'keluarga_id' => $maxId,
                 'nik' => $data['nik'][$item],
                 'nama_lengkap' => $data['nama_lengkap'][$item],
@@ -70,7 +70,7 @@ class KeluargaController extends Controller
     
     public function show($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/keluarga/'.' '.$id)->json();
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/keluarga/'.' '.$id)->json();
         $keluarga = $response['data'];
         
         return view('keluarga.show',compact('keluarga'));

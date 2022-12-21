@@ -21,7 +21,7 @@
         <div class="col">
             <div class="form-group">
                 <strong>vitamin:</strong>
-                <input type="text" name="nama_vitamin" class="form-control" value="{{ $vitamin->nama_vitamin }}"
+                <input type="text" name="nama_vitamin" class="form-control" value="{{ $vaksin['nama_vaksin'] }}"
                     disabled>
             </div>
         </div>

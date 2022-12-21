@@ -27,17 +27,25 @@
                 <th>No</th>
                 <th>Desa</th>
                 <th>Kecamatan</th>
-                <th wiDth="280px">Action</th>
+                <th wiDth="170px">Action</th>
             </tr>
             @if(is_array($desa) || is_object($desa))
-            @foreach ($desa as $p)
+            @foreach ($desa as $item)
             <tr>
                 <td>{{ ++$i }}</td>
-                <td>{{ $p['nama_desa'] }}</td>
-                <td>{{ $p['kecamatan']['nama_kecamatan'] }}</td>
+                <td>{{ $item['nama_desa'] }}</td>
+                <td>{{ $item['kecamatan']['nama_kecamatan'] }}</td>
                 <td>
-                    <a class="btn btn-info" href="#">Show</a>
-                    <a class="btn btn-primary" href="#">Edit</a>
+                    <div class="row m-auto">
+                        <a class="btn btn-primary btn-sm" href="{{ route('desa.edit', $item['id']) }}"><i
+                                class='fas fa-edit mr-1'></i>Edit</a>
+                        <form method="POST" action="{{ route('desa.destroy', [$item['id']]) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-danger btn-sm ml-1"><i
+                                    class='fas fa-trash mr-1'></i>Delete</button>
+                        </form>
+                    </div>
                 </td>
             </tr>
             @endforeach

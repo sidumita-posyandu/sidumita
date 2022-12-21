@@ -11,7 +11,7 @@ class DusunController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/dusun')->json();
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/dusun')->json();
         $dusun = $response['data'];
         
         return view('dusun.index',compact('dusun'))
@@ -20,7 +20,7 @@ class DusunController extends Controller
     
     public function create()
     {
-        $response = Http::get('http://127.0.0.1:8080/api/desa')->json();
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/desa')->json();
         $desa = $response['data'];
         return view('dusun.create', compact('desa'));
     }
@@ -32,7 +32,7 @@ class DusunController extends Controller
             'desa_id' => 'required'
         ]);
         
-        $response = Http::post('http://127.0.0.1:8080/api/dusun', [
+        $response = Http::post('https://api-sidumita.ftudayana.com/api/dusun', [
             'nama_dusun' => $request->nama_dusun,
             'desa_id' => $request->desa_id,
         ]);
@@ -45,7 +45,7 @@ class DusunController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/dusun/'.' '.$id)->json();
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/dusun/'.' '.$id)->json();
         $dusun = $response['data'];
         
         return view('dusun.show',compact('dusun'));
@@ -53,7 +53,7 @@ class DusunController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/dusun/'.' '.$id)->json();
+        $response = Http::get('https://api-sidumita.ftudayana.com/api/dusun/'.' '.$id)->json();
         $dusun = $response['data'];
         
         return view('dusun.edit',compact('dusun'));
@@ -66,7 +66,7 @@ class DusunController extends Controller
             'desa_id' => 'required',
         ]);
 
-        $response = Http::patch('http://127.0.0.1:8080/api/dusun/'.' '.$id, [
+        $response = Http::patch('https://api-sidumita.ftudayana.com/api/dusun/'.' '.$id, [
             'nama_dusun' => $request->nama_dusun,
             'desa_id' => $request->desa_id,
         ]);
@@ -77,7 +77,7 @@ class DusunController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('http://127.0.0.1:8080/apidusunn'.' '.$id)->json();
+        $response = Http::delete('https://api-sidumita.ftudayana.com/api/dusun/'.' '.$id);
     
         return redirect()->route('dusun.index')
                         ->with('success','Data dusun berhasil dihapus');

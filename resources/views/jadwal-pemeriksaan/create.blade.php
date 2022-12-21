@@ -4,10 +4,10 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Tambah Jadwal Pemeriksaan Balita</h2>
+            <h2>Tambah Jadwal Pemeriksaan</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('jadwalpemeriksaanbalita.index') }}"><i
+            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('jadwal-pemeriksaan.index') }}"><i
                     class="fas fa-arrow-left mr-1"></i> Kembali</a>
         </div>
     </div>
@@ -26,11 +26,11 @@
 @endif
 
 
-<form action="{{ route('jadwalpemeriksaanbalita.store') }}" method="POST">
+<form action="{{ route('jadwal-pemeriksaan.store') }}" method="POST">
     @csrf
     <div class="card">
         <div class="card-header font-weight-bold">
-            Data Jadwal Pemeriksaan Balita
+            Data Jadwal Pemeriksaan
         </div>
         <div class="row m-2">
             <div class="col-sm-12">
@@ -56,12 +56,25 @@
                     <strong>Dusun:</strong>
                     <select class="form-control" id="dusun" name="dusun_id">
                         <option value="" selected disabled>-- Pilih Dusun --</option>
-                        @foreach ($dusun as $p)
-                        <option value="{{ $p->id }}">{{ $p->nama_dusun }}</option>
+                        @foreach ($dusun as $dusun)
+                        <option value="{{ $dusun['id'] }}">{{ $dusun['nama_dusun'] }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Keluarga Peserta:</strong>
+                    <select class="form-control" id="keluarga_id" name="keluarga_id">
+                        <option value="" selected disabled>-- Pilih Keluarga Peserta --</option>
+                        @foreach ($keluarga as $keluarga)
+                        <option value="{{ $keluarga['id'] }}">
+                            {{ $keluarga['kepala_keluarga'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <input type="hidden" name="operator_posyandu_id" class="form-control" value="1">
         </div>
         <div class="text-center col-sm-12">
             <button type="submit" class="btn btn-success btn-block">Submit</button>
