@@ -7,22 +7,25 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use DB;
+use Illuminate\Support\Facades\Http;
+
 
 class RoleController extends Controller
 {
-
-    
     public function index(Request $request)
     {
-        $roles = Role::orderBy('id','ASC')->paginate(5);
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/role')->json();
+        $roles = $response['data'];
+
         return view('roles.index',compact('roles'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     
-    public function create()
+    public function create(Request $request)
     {
-        $permission = Permission::get();
-        return view('roles.create',compact('permission'));
+        return view('roles.create');
     }
     
     public function store(Request $request)
@@ -32,32 +35,19 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
     
-        $role = Role::create(['name' => $request->input('name')]);
-        $role->syncPermissions($request->input('permission'));
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/role', [
+                'role' => $request->role,
+            ]);
     
         return redirect()->route('roles.index')
                         ->with('success','Role berhasil dibuat');
     }
-
-    public function show($id)
-    {
-        $role = Role::find($id);
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$id)
-            ->get();
-    
-        return view('roles.show',compact('role','rolePermissions'));
-    }
     
     public function edit($id)
     {
-        $role = Role::find($id);
-        $permission = Permission::get();
-        $rolePermissions = DB::table("role_has_permissions")->where("role_has_permissions.role_id",$id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')
-            ->all();
-    
-        return view('roles.edit',compact('role','permission','rolePermissions'));
+        return view('roles.edit');
     }
     
     public function update(Request $request, $id)
@@ -67,11 +57,11 @@ class RoleController extends Controller
             'permission' => 'required',
         ]);
     
-        $role = Role::find($id);
-        $role->name = $request->input('name');
-        $role->save();
-    
-        $role->syncPermissions($request->input('permission'));
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->patch('http://127.0.0.1:8080/api/role/'.' '.$id, [
+            'role' => $request->role,
+        ]);
     
         return redirect()->route('roles.index')
                         ->with('success','Role berhasil diperbarui');
@@ -79,7 +69,12 @@ class RoleController extends Controller
 
     public function destroy($id)
     {
-        DB::table("roles")->where('id',$id)->delete();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->delete('http://127.0.0.1:8080/api/role/'.' '.$id, [
+            'role' => $request->role,
+        ]);
+
         return redirect()->route('roles.index')
                         ->with('success','Role berhasil dihapus');
     }

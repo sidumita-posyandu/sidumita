@@ -57,7 +57,9 @@ class UserController extends Controller
             'role_id' => 'required',
         ]);
         
-        $response = Http::post('http://127.0.0.1:8080/api/auth/register', [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->post('http://127.0.0.1:8080/api/auth/register', [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
@@ -78,7 +80,11 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        $user = User::find($id);
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/user/'.' '.$id)->json();
+        $user = $response['data'];
+
         return view('users.show',compact('user'));
     }
     
@@ -88,58 +94,54 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+    // public function edit($id)
+    // {
+    //     return view('users.edit');
+    // }
     
-        return view('users.edit',compact('user','roles','userRole'));
-    }
+    // /**
+    //  * Update the specified resource in storage.
+    //  *
+    //  * @param  \Illuminate\Http\Request  $request
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function update(Request $request, $id)
+    // {
+    //     $this->validate($request, [
+    //         'name' => 'required',
+    //         'email' => 'required|email|unique:users,email,'.$id,
+    //         'password' => 'same:confirm-password',
+    //         'roles' => 'required'
+    //     ]);
     
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users,email,'.$id,
-            'password' => 'same:confirm-password',
-            'roles' => 'required'
-        ]);
+    //     $input = $request->all();
+    //     if(!empty($input['password'])){ 
+    //         $input['password'] = Hash::make($input['password']);
+    //     }else{
+    //         $input = Arr::except($input,array('password'));    
+    //     }
     
-        $input = $request->all();
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
-        }
+    //     $user = User::find($id);
+    //     $user->update($input);
+    //     DB::table('model_has_roles')->where('model_id',$id)->delete();
     
-        $user = User::find($id);
-        $user->update($input);
-        DB::table('model_has_roles')->where('model_id',$id)->delete();
+    //     $user->assignRole($request->input('roles'));
     
-        $user->assignRole($request->input('roles'));
+    //     return redirect()->route('users.index')
+    //                     ->with('success','User updated successfully');
+    // }
     
-        return redirect()->route('users.index')
-                        ->with('success','User updated successfully');
-    }
-    
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        User::find($id)->delete();
-        return redirect()->route('users.index')
-                        ->with('success','User deleted successfully');
-    }
+    // /**
+    //  * Remove the specified resource from storage.
+    //  *
+    //  * @param  int  $id
+    //  * @return \Illuminate\Http\Response
+    //  */
+    // public function destroy($id)
+    // {
+    //     User::find($id)->delete();
+    //     return redirect()->route('users.index')
+    //                     ->with('success','User deleted successfully');
+    // }
 }

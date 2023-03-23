@@ -11,16 +11,28 @@ class KabupatenController extends Controller
 {   
     public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/kabupaten')->json();
+        // $response = Http::get('http://127.0.0.1:8080/api/kabupaten')->json();
+
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/kabupaten')
+            ->json();
+
         $kabupaten = $response['data'];
 
         return view('kabupaten.index', compact('kabupaten'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     
-    public function create()
+    public function create(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/provinsi')->json();
+        // $response = Http::get('http://127.0.0.1:8080/api/provinsi')->json();
+        
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/provinsi')
+            ->json();
+
         $provinsi = $response['data'];
         
         return view('kabupaten.create', compact('provinsi'));
@@ -33,29 +45,46 @@ class KabupatenController extends Controller
             'provinsi_id' => 'required'
         ]);
 
-        $response = Http::post('http://127.0.0.1:8080/api/kabupaten', [
-            'nama_kabupaten' => $request->nama_kabupaten,
-            'provinsi_id' => $request->provinsi_id,
-        ]);
+        // $response = Http::post('http://127.0.0.1:8080/api/kabupaten', [
+        //     'nama_kabupaten' => $request->nama_kabupaten,
+        //     'provinsi_id' => $request->provinsi_id,
+        // ]);
+
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/kabupaten', [
+                'nama_kabupaten' => $request->nama_kabupaten,
+                'provinsi_id' => $request->provinsi_id,
+            ]);
     
         return redirect()->route('kabupaten.index')
                         ->with('success','Data kabupaten berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/kabupaten/'.' '.$id)->json();
+        // $response = Http::get('http://127.0.0.1:8080/api/kabupaten/'.' '.$id)->json();
+
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/kabupaten/'.' '.$id)
+            ->json();
+            
         $kabupaten = $response['data'];
         dd($response);
         return view('kabupaten.show',compact('kabupaten'));
     }
     
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/provinsi/')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/provinsi/')->json();
         $provinsi = $response['data'];
 
-        $response2 = Http::get('http://127.0.0.1:8080/api/kabupaten/'.' '.$id)->json();
+        $response2 = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/kabupaten/'.' '.$id)->json();
         $kabupaten = $response2['data'];
         
         return view('kabupaten.edit',compact('provinsi','kabupaten'));
@@ -68,7 +97,9 @@ class KabupatenController extends Controller
             'provinsi_id' => 'required',
         ]);
 
-        $response = Http::patch('http://127.0.0.1:8080/api/kabupaten/'.' '.$id, [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->patch('http://127.0.0.1:8080/api/kabupaten/'.' '.$id, [
             'nama_kabupaten' => $request->nama_kabupaten,
             'provinsi_id' => $request->provinsi_id,
         ]);
@@ -77,9 +108,11 @@ class KabupatenController extends Controller
                         ->with('success','Data kabupaten Berhasil Diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $response = Http::delete('http://127.0.0.1:8080/api/kabupaten/'.$id);
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->delete('http://127.0.0.1:8080/api/kabupaten/'.$id);
     
         return redirect()->route('kabupaten.index')
                         ->with('success','Data kabupaten berhasil dihapus');

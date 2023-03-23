@@ -31,7 +31,7 @@
                 <th>Nama</th>
                 <th>Email</th>
                 <th>Role</th>
-                <th width="280px">Action</th>
+                <th width="170px">Action</th>
             </tr>
             @foreach ($users as $user)
             <tr>

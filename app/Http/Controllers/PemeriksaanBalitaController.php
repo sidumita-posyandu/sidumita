@@ -9,9 +9,11 @@ use Illuminate\Http\Request;
 
 class PemeriksaanBalitaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
         $pemeriksaanbalita = $response['data'];
         
         return view('pemeriksaanbalita.index',compact('pemeriksaanbalita'));
@@ -19,12 +21,16 @@ class PemeriksaanBalitaController extends Controller
         
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/balita')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/balita')->json();
         $balita = $response['data'];
 
-        $response2 = Http::get('http://127.0.0.1:8080/api/vaksin')->json();
+        $response2 = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/vaksin')->json();
         $vaksin = $response2['data'];
 
         return view('pemeriksaanbalita.create', compact('balita','vaksin'));
@@ -48,7 +54,9 @@ class PemeriksaanBalitaController extends Controller
             'dokter_id' => 'required',
         ]);
         
-        $response = Http::post('http://127.0.0.1:8080/api/pemeriksaan-balita', [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->post('http://127.0.0.1:8080/api/pemeriksaan-balita', [
             'balita_id' => $request->balita_id,
             'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
             'berat_badan' => $request->berat_badan,
@@ -64,11 +72,15 @@ class PemeriksaanBalitaController extends Controller
         ]);
 
         if ($request->vaksin_id != 0) {
-            $getId = Http::get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
+            $getId = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
             $maxId = max($getId['data'])['id'];
             
             foreach ($data['vaksin_id'] as $item => $value) {          
-                $response2 = Http::post('http://127.0.0.1:8080/api/detailpemeriksaan-balita', [
+                $response2 = Http::accept('application/json')
+                ->withToken($request->session()->get('token'))
+                ->post('http://127.0.0.1:8080/api/detailpemeriksaan-balita', [
                     'pemeriksaan_balita_id' => $maxId,
                     'balita_id' => $request->balita_id,
                     'vaksin_id' => $data['vaksin_id'][$item],
@@ -80,9 +92,11 @@ class PemeriksaanBalitaController extends Controller
         ->with('success','Pemeriksaan Balita berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/pemeriksaan-balita/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/pemeriksaan-balita/'.' '.$id)->json();
         $pemeriksaanbalita = $response['data'];
 
         return view('pemeriksaanbalita.show',compact('pemeriksaanbalita'));

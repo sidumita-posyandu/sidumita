@@ -72,17 +72,28 @@ class ProvinsiController extends Controller
                         ->with('success','Data provinsi berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)
+            ->json();
+            
+        // $response = Http::get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)->json();
         $provinsi = $response['data'];
 
         return view('provinsi.show',compact('provinsi'));
     }
     
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)->json();
+        // $response = Http::get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)->json();
+
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)
+            ->json();
+
         $provinsi = $response['data'];
         
         return view('provinsi.edit',compact('provinsi'));
@@ -94,17 +105,29 @@ class ProvinsiController extends Controller
             'nama_provinsi' => 'required',
         ]);
 
-        $response = Http::patch('http://127.0.0.1:8080/api/provinsi/'.' '.$id, [
-            'nama_provinsi' => $request->nama_provinsi,
-        ]);
+        // $response = Http::patch('http://127.0.0.1:8080/api/provinsi/'.' '.$id, [
+        //     'nama_provinsi' => $request->nama_provinsi,
+        // ]);
+
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->patch('http://127.0.0.1:8080/api/provinsi/'.' '.$id, [
+                'nama_provinsi' => $request->nama_provinsi,
+            ]);
+        
     
         return redirect()->route('provinsi.index')
                         ->with('success','Data provinsi Berhasil Diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $response = Http::delete('http://127.0.0.1:8080/api/provinsi/'.$id);
+        // $response = Http::delete('http://127.0.0.1:8080/api/provinsi/'.$id);
+
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->delete('http://127.0.0.1:8080/api/provinsi/'.$id)
+            ->json();
 
         return redirect()->route('provinsi.index')
                         ->with('success','Data provinsi berhasil dihapus');

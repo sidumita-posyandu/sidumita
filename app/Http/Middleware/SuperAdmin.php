@@ -18,6 +18,6 @@ class SuperAdmin
         if ($request->session()->get('token') && $request->session()->get('userAuth')['role_id'] == 1) {
             return $next($request);
         }
-        return redirect('/');
+        return redirect('/admin');
     }
 }

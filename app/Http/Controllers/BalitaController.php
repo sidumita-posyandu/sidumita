@@ -11,7 +11,9 @@ class BalitaController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/balita')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/balita')->json();
         $balita = $response['data'];
         
         return view('balita.index',compact('balita'))
@@ -20,7 +22,9 @@ class BalitaController extends Controller
     
     public function create()
     {
-        $response = Http::get('http://127.0.0.1:8080/api/keluarga')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/keluarga')->json();
         $keluarga = $response['data'];
 
         return view('balita.create', compact('keluarga'));
@@ -32,7 +36,9 @@ class BalitaController extends Controller
             'detail_keluarga_id' => 'required',
         ]);
         
-        $response = Http::post('http://127.0.0.1:8080/api/balita', [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->post('http://127.0.0.1:8080/api/balita', [
             'detail_keluarga_id' => $request->detail_keluarga_id,
         ]);
         
@@ -44,7 +50,9 @@ class BalitaController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
         $balita = $response['data'];
         
         return view('balita.show',compact('balita'));
@@ -52,7 +60,9 @@ class BalitaController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
         $balita = $response['data'];
         
         return view('balita.edit',compact('balita'));
@@ -65,7 +75,9 @@ class BalitaController extends Controller
             'keluarga_id' => 'required',
         ]);
 
-        $response = Http::patch('http://127.0.0.1:8080/api/balita/'.' '.$id, [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->patch('http://127.0.0.1:8080/api/balita/'.' '.$id, [
             'nama_balita' => $request->nama_balita,
             'keluarga_id' => $request->keluarga_id,
         ]);
@@ -76,7 +88,9 @@ class BalitaController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->delete('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
     
         return redirect()->route('balita.index')
                         ->with('success','Data balita berhasil dihapus');

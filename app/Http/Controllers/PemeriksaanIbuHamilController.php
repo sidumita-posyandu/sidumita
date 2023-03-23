@@ -8,9 +8,11 @@ use Illuminate\Http\Request;
 
 class PemeriksaanIbuHamilController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil')->json();
         $pemeriksaanibuhamil = $response['data'];
         
         return view('pemeriksaanibuhamil.index',compact('pemeriksaanibuhamil'));
@@ -18,9 +20,11 @@ class PemeriksaanIbuHamilController extends Controller
         
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/ibu-hamil')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/ibu-hamil')->json();
         $ibuhamil = $response['data'];
 
         return view('pemeriksaanibuhamil.create', compact('ibuhamil'));
@@ -30,7 +34,9 @@ class PemeriksaanIbuHamilController extends Controller
     {
         $data = $request->all();
         
-        $response = Http::post('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil', [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->post('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil', [
             'ibu_hamil_id' => $request->ibu_hamil_id,
             'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
             'berat_badan' => $request->berat_badan,
@@ -47,9 +53,11 @@ class PemeriksaanIbuHamilController extends Controller
         ->with('success','Pemeriksaan ibu hamil berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil/'.' '.$id)->json();
         $pemeriksaanibuhamil = $response['data'];
         
         return view('pemeriksaanibuhamil.show',compact('pemeriksaanibuhamil'));
