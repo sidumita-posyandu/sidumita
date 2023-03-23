@@ -6,9 +6,6 @@
         <div class="pull-left">
             <h2>Manajemen User</h2>
         </div>
-        <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('users.create') }}"> Tambah User</a>
-        </div>
     </div>
 </div>
 
@@ -19,37 +16,46 @@
 </div>
 @endif
 
-
-<table class="table table-bordered">
-    <tr>
-        <th>No</th>
-        <th>Nama</th>
-        <th>Email</th>
-        <th>Role</th>
-        <th width="280px">Action</th>
-    </tr>
-    @foreach ($data as $key => $user)
-    <tr>
-        <td>{{ ++$i }}</td>
-        <td>{{ $user->name }}</td>
-        <td>{{ $user->email }}</td>
-        <td>
-            @if(!empty($user->getRoleNames()))
-            @foreach($user->getRoleNames() as $v)
-            <label class="badge bg-success text-light">{{ $v }}</label>
+<div class="card shadow mt-2">
+    <div class="card-header font-weight-bold text-success">
+        Data User
+    </div>
+    <div class="card-body">
+        <div class="pull-right">
+            <a class="btn btn-success btn-sm mb-2" href="{{ route('users.create') }}"><i class="fas fa-plus mr-1"></i>
+                Tambah User</a>
+        </div>
+        <table class="table table-bordered">
+            <tr>
+                <th>No</th>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th width="280px">Action</th>
+            </tr>
+            @foreach ($users as $user)
+            <tr>
+                <td>{{ ++$i }}</td>
+                <td>{{ $user['name'] }}</td>
+                <td>{{ $user['email'] }}</td>
+                <td>
+                    <label class="badge bg-success text-light">{{ $user['role']['role'] }}</label>
+                </td>
+                <td>
+                    <div class="row m-auto">
+                        <a class="btn btn-primary btn-sm" href="#"><i class='fas fa-edit mr-1'></i>Edit</a>
+                        <form method="POST" action="#">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button type="submit" class="btn btn-danger btn-sm ml-1"
+                                onclick="return confirm('Yakin Menghapus Data?')"><i
+                                    class='fas fa-trash mr-1'></i>Delete</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
             @endforeach
-            @endif
-        </td>
-        <td>
-            <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-            <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-            {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-            {!! Form::close() !!}
-        </td>
-    </tr>
-    @endforeach
-</table>
-
-{!! $data->render() !!}
+        </table>
+    </div>
+</div>
 @endsection

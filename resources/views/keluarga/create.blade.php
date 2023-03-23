@@ -26,7 +26,7 @@
 
 <form action="{{ route('keluarga.store') }}" method="POST">
     @csrf
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header font-weight-bold">
             Data Keluarga
         </div>
@@ -68,7 +68,7 @@
             </div>
         </div>
     </div>
-    <div class="card">
+    <div class="card shadow mt-2">
         <div class="card-header font-weight-bold">
             Anggota Keluarga
         </div>

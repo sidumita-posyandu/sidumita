@@ -29,12 +29,16 @@
 <form action="{{ route('kabupaten.store') }}" method="POST">
     @csrf
 
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header font-weight-bold">
             Data Kabupaten
         </div>
         <div class="row m-2">
             <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Nama Kabupaten:</strong>
+                    <input type="text" name="nama_kabupaten" class="form-control" placeholder="Nama Kabupaten">
+                </div>
                 <div class="form-group">
                     <strong>Provinsi:</strong>
                     <select class="form-control" id="provinsi" name="provinsi_id">

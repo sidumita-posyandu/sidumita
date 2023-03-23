@@ -26,7 +26,7 @@
 @endif
 
 
-<form action="{{ route('desa.update',$desa->id) }}" method="POST">
+<form action="{{ route('desa.update',$desa['id']) }}" method="POST">
     @csrf
     @method('PUT')
 
@@ -38,23 +38,21 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <strong>Nama desa:</strong>
-                    <input type="text" name="nama_desa" value="{{ $desa->nama_desa }}" class="form-control"
+                    <input type="text" name="nama_desa" value="{{ $desa['nama_desa'] }}" class="form-control"
                         placeholder="Nama desa">
                 </div>
                 <div class="form-group">
                     <strong>Kecamatan:</strong>
                     <select class="form-control" id="kecamatan" name="kecamatan_id">
                         @foreach ($kecamatan as $p)
-                        <option @if ($desa->kecamatan_id == $p->id)
-                            selected="true"
-                            @endif
-                            value="{{ $p->id }}">{{ $p->nama_kecamatan }}</option>
+                        <option @if ($desa['kecamatan_id']==$p['id']) selected="true" @endif value="{{ $p['id'] }}">
+                            {{ $p['nama_kecamatan'] }}</option>
                         @endforeach
                     </select>
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="text-center col-sm-12">
+                <button type="submit" class="btn btn-success btn-block">Submit</button>
             </div>
         </div>
     </div>

@@ -7,7 +7,8 @@
             <h2>Edit Kabupaten</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('kabupaten.index') }}"> Kembali</a>
+            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('kabupaten.index') }}"><i
+                    class="fas fa-arrow-left mr-1"></i> Kembali</a>
         </div>
     </div>
 </div>
@@ -25,34 +26,36 @@
 @endif
 
 
-<form action="{{ route('kabupaten.update',$kabupaten->id) }}" method="POST">
+<form action="{{ route('kabupaten.update', $kabupaten['id']) }}" method="POST">
     @csrf
     @method('PUT')
 
-    <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Nama kabupaten:</strong>
-                <input type="text" name="nama_kabupaten" value="{{ $kabupaten->nama_kabupaten }}" class="form-control"
-                    placeholder="Nama kabupaten">
-            </div>
-            <div class="form-group">
-                <strong>Provinsi:</strong>
-                <select class="form-control" id="provinsi" name="provinsi_id">
-                    @foreach ($provinsi as $p)
-                    <option @if ($kabupaten->provinsi_id == $p->id)
-                        selected="true"
-                        @endif
-                        value="{{ $p->id }}">{{ $p->nama_provinsi }}</option>
-                    @endforeach
-                </select>
-            </div>
+    <div class="card shadow">
+        <div class="card-header font-weight-bold">
+            Edit Kabupaten
         </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Submit</button>
+        <div class="row m-2">
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Nama Kabupaten:</strong>
+                    <input type="text" name="nama_kabupaten" value="{{ $kabupaten['nama_kabupaten'] }}"
+                        class="form-control" placeholder="Nama Kabupaten">
+                </div>
+                <div class="form-group">
+                    <strong>Provinsi:</strong>
+                    <select class="form-control" id="provinsi" name="provinsi_id">
+                        @foreach ($provinsi as $p)
+                        <option @if ($kabupaten['provinsi_id']==$p['id']) selected="true" @endif value="{{ $p['id'] }}">
+                            {{ $p['nama_provinsi'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="text-center col-sm-12">
+                <button type="submit" class="btn btn-success btn-block">Submit</button>
+            </div>
         </div>
     </div>
-
 
 </form>
 

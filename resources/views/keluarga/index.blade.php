@@ -15,7 +15,10 @@
 </div>
 @endif
 
-<div class="card mt-2">
+<div class="card shadow mt-2">
+    <div class="card-header font-weight-bold text-success">
+        Data Keluarga
+    </div>
     <div class="card-body">
         <div class="pull-right">
             <a class="btn btn-success btn-sm mb-2" href="{{ route('keluarga.create') }}"><i

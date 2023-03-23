@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Tambah vaksin</h2>
+            <h2>Tambah Vaksin</h2>
         </div>
         <div class="pull-right">
             <a class="btn btn-secondary btn-sm mb-3" href="{{ route('vaksin.index') }}"><i
@@ -28,7 +28,7 @@
 
 <form action="{{ route('vaksin.store') }}" method="POST">
     @csrf
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header font-weight-bold">
             Data vaksin
         </div>
@@ -53,8 +53,13 @@
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
-                    <strong>Status:</strong>
-                    <input type="text" name="status" class="form-control" placeholder="Status">
+                    <div class="form-group">
+                        <strong>Status:</strong>
+                        <select class="form-control" id="status" name="status">
+                            <option value="Wajib">Wajib</option>
+                            <option value="Tambahan">Tambahan</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="text-center col-sm-12">

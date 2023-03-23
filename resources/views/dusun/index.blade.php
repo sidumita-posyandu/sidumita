@@ -16,7 +16,10 @@
 </div>
 @endif
 
-<div class="card mt-2">
+<div class="card shadow mt-2">
+    <div class="card-header font-weight-bold text-success">
+        Master Data Dusun
+    </div>
     <div class="card-body">
         <div class="pull-right">
             <a class="btn btn-success btn-sm mb-2" href="{{ route('dusun.create') }}"><i class="fas fa-plus mr-1"></i>
@@ -42,7 +45,8 @@
                         <form method="POST" action="{{ route('dusun.destroy', [$item['id']]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger btn-sm ml-1"><i
+                            <button type="submit" class="btn btn-danger btn-sm ml-1"
+                                onclick="return confirm('Yakin Menghapus Data?')"><i
                                     class='fas fa-trash mr-1'></i>Delete</button>
                         </form>
                     </div>

@@ -4,10 +4,10 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Edit vitamin</h2>
+            <h2>Edit Vaksin</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('vitamin.index') }}"><i
+            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('vaksin.index') }}"><i
                     class="fas fa-arrow-left mr-1"></i> Kembali</a>
         </div>
     </div>
@@ -26,24 +26,44 @@
 @endif
 
 
-<form action="{{ route('vitamin.update',$vitamin->id) }}" method="POST">
+<form action="{{ route('vaksin.update',$vaksin['id']) }}" method="POST">
     @csrf
     @method('PUT')
 
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header font-weight-bold">
-            Edit vitamin
+            Edit Vaksin
         </div>
         <div class="row m-2">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <strong>Nama vitamin:</strong>
-                    <input type="text" name="nama_vitamin" value="{{ $vitamin->nama_vitamin }}" class="form-control"
-                        placeholder="Nama vitamin">
+                    <strong>Nama Vaksin:</strong>
+                    <input type="text" name="nama_vaksin" value="{{ $vaksin['nama_vaksin'] }}" class="form-control">
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Dosis:</strong>
+                    <input type="text" name="dosis" class="form-control" value="{{ $vaksin['dosis'] }}">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Catatan:</strong>
+                    <input type="text" name="catatan" class="form-control" value="{{ $vaksin['catatan'] }}">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Status:</strong>
+                    <select class="form-control" id="status" name="status">
+                        <option value="Wajib">Wajib</option>
+                        <option value="Tambahan">Tambahan</option>
+                    </select>
+                </div>
+            </div>
+            <div class="text-center col-sm-12">
+                <button type="submit" class="btn btn-success btn-block">Submit</button>
             </div>
         </div>
     </div>

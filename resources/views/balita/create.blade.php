@@ -28,7 +28,7 @@
 
 <form action="{{ route('balita.store') }}" method="POST">
     @csrf
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header font-weight-bold">
             Data balita
         </div>

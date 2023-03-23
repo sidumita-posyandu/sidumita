@@ -30,7 +30,7 @@
     @csrf
     @method('PUT')
 
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header font-weight-bold">
             Edit vitamin
         </div>
@@ -49,8 +49,8 @@
                     <input type="text" name="catatan" class="form-control" value="{{ $vitamin['catatan'] }}">
                 </div>
             </div>
-            <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-                <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="text-center col-sm-12">
+                <button type="submit" class="btn btn-success btn-block">Submit</button>
             </div>
         </div>
     </div>

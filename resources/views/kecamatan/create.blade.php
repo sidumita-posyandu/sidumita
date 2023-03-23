@@ -27,22 +27,22 @@
 
 <form action="{{ route('kecamatan.store') }}" method="POST">
     @csrf
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header font-weight-bold">
-            Data Kabupaten
+            Data Kecamatan
         </div>
         <div class="row m-2">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <strong>Nama kecamatan:</strong>
-                    <input type="text" name="nama_kecamatan" class="form-control" placeholder="Nama kecamatan">
+                    <strong>Nama Kecamatan:</strong>
+                    <input type="text" name="nama_kecamatan" class="form-control" placeholder="Nama Kecamatan">
                 </div>
                 <div class="form-group">
                     <strong>Kabupaten:</strong>
                     <select class="form-control" id="kabupaten" name="kabupaten_id">
-                        <option value="" selected disabled>-- Pilih Kecamatan --</option>
-                        @foreach ($kabupaten as $p)
-                        <option value="{{ $p['id'] }}">{{ $p['nama_kabupaten'] }}</option>
+                        <option value="" selected disabled>-- Pilih Kabupaten --</option>
+                        @foreach ($kabupaten as $kabupaten)
+                        <option value="{{ $kabupaten['id'] }}">{{ $kabupaten['nama_kabupaten'] }}</option>
                         @endforeach
                     </select>
                 </div>

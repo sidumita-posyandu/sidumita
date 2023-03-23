@@ -11,7 +11,7 @@ class VitaminController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/vitamin')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/vitamin')->json();
         $vitamin = $response['data'];
 
         return view('vitamin.index', compact('vitamin'))
@@ -30,7 +30,7 @@ class VitaminController extends Controller
             'dosis' => 'required',
         ]);
 
-        $response = Http::post('https://api-sidumita.ftudayana.com/api/vitamin', [
+        $response = Http::post('http://127.0.0.1:8080/api/vitamin', [
             'nama_vitamin' => $request->nama_vitamin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan
@@ -42,7 +42,7 @@ class VitaminController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/vitamin/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/vitamin/'.' '.$id)->json();
         $vitamin = $response['data'];
 
         return view('vitamin.show',compact('vitamin'));
@@ -50,7 +50,7 @@ class VitaminController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/vitamin/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/vitamin/'.' '.$id)->json();
         $vitamin = $response['data'];
         
         return view('vitamin.edit',compact('vitamin'));
@@ -64,7 +64,7 @@ class VitaminController extends Controller
             'catatan' => 'required',
         ]);
 
-        $response = Http::patch('https://api-sidumita.ftudayana.com/api/vitamin/'.' '.$id, [
+        $response = Http::patch('http://127.0.0.1:8080/api/vitamin/'.' '.$id, [
             'nama_vitamin' => $request->nama_vitamin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan,
@@ -76,7 +76,7 @@ class VitaminController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('https://api-sidumita.ftudayana.com/api/vitamin/'.' '.$id)->json();
+        $response = Http::delete('http://127.0.0.1:8080/api/vitamin/'.' '.$id)->json();
     
         return redirect()->route('vitamin.index')
                         ->with('success','Data vitamin berhasil dihapus');

@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div class="card">
+<div class="card shadow">
     <div class="card-header font-weight-bold">
         Data Keluarga
     </div>
@@ -47,46 +47,49 @@
     </div>
 </div>
 
-<div class="card mt-2">
+<div class="card shadow mt-2">
     <div class="card-header font-weight-bold">
         Data Anggota Keluarga
     </div>
-    <table class="table table-responsive table-bordered">
-        <tr>
-            <th>No</th>
-            <th class="w-25">NIK</th>
-            <th class="w-25">Nama Lengkap</th>
-            <th class="w-25">Jenis Kelamin</th>
-            <th class="w-25">Tempat Lahir</th>
-            <th class="w-25">Tanggal Lahir</th>
-            <th class="w-25">Agama</th>
-            <th class="w-25">Pendidikan</th>
-            <th class="w-25">Golongan Darah</th>
-            <th class="w-25">Jenis Pekerjaan</th>
-            <th class="w-25">Status Perkawinan</th>
-            <th class="w-25">Status dalam Keluarga</th>
-            <th class="w-25">Kewarganegaraan</th>
-            <th class="w-25">No Telepon</th>
-        </tr>
-        @foreach($keluarga['detail_keluargas'] as $keluarga)
-        <tr>
-            <td>1</td>
-            <td>{{ $keluarga['nik'] }}</td>
-            <td>{{ $keluarga['nama_lengkap'] }}</td>
-            <td>{{ $keluarga['jenis_kelamin'] }}</td>
-            <td>{{ $keluarga['tempat_lahir'] }}</td>
-            <td>{{ $keluarga['tanggal_lahir'] }}</td>
-            <td>{{ $keluarga['agama'] }}</td>
-            <td>{{ $keluarga['pendidikan'] }}</td>
-            <td>{{ $keluarga['golongan_darah'] }}</td>
-            <td>{{ $keluarga['jenis_pekerjaan'] }}</td>
-            <td>{{ $keluarga['status_perkawinan'] }}</td>
-            <td>{{ $keluarga['status_dalam_keluarga'] }}</td>
-            <td>{{ $keluarga['kewarganegaraan'] }}</td>
-            <td>{{ $keluarga['no_telp'] }}</td>
-        </tr>
-        @endforeach
-    </table>
+    <div class="card-body">
+        <table class="table table-responsive table-bordered">
+            <tr>
+                <th>No</th>
+                <th class="w-25">NIK</th>
+                <th class="w-25">Nama Lengkap</th>
+                <th class="w-25">Jenis Kelamin</th>
+                <th class="w-25">Tempat Lahir</th>
+                <th class="w-25">Tanggal Lahir</th>
+                <th class="w-25">Agama</th>
+                <th class="w-25">Pendidikan</th>
+                <th class="w-25">Golongan Darah</th>
+                <th class="w-25">Jenis Pekerjaan</th>
+                <th class="w-25">Status Perkawinan</th>
+                <th class="w-25">Status dalam Keluarga</th>
+                <th class="w-25">Kewarganegaraan</th>
+                <th class="w-25">No Telepon</th>
+            </tr>
+            <?php $i = 1; ?>
+            @foreach($keluarga['detail_keluargas'] as $keluarga)
+            <tr>
+                <td>{{$i++}}</td>
+                <td>{{ $keluarga['nik'] }}</td>
+                <td>{{ $keluarga['nama_lengkap'] }}</td>
+                <td>{{ $keluarga['jenis_kelamin'] }}</td>
+                <td>{{ $keluarga['tempat_lahir'] }}</td>
+                <td>{{ $keluarga['tanggal_lahir'] }}</td>
+                <td>{{ $keluarga['agama'] }}</td>
+                <td>{{ $keluarga['pendidikan'] }}</td>
+                <td>{{ $keluarga['golongan_darah'] }}</td>
+                <td>{{ $keluarga['jenis_pekerjaan'] }}</td>
+                <td>{{ $keluarga['status_perkawinan'] }}</td>
+                <td>{{ $keluarga['status_dalam_keluarga'] }}</td>
+                <td>{{ $keluarga['kewarganegaraan'] }}</td>
+                <td>{{ $keluarga['no_telp'] }}</td>
+            </tr>
+            @endforeach
+        </table>
+    </div>
 </div>
 
 @endsection

@@ -4,7 +4,7 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Tambah vitamin</h2>
+            <h2>Tambah Vitamin</h2>
         </div>
         <div class="pull-right">
             <a class="btn btn-secondary btn-sm mb-3" href="{{ route('vitamin.index') }}"><i
@@ -28,9 +28,9 @@
 
 <form action="{{ route('vitamin.store') }}" method="POST">
     @csrf
-    <div class="card">
+    <div class="card shadow">
         <div class="card-header font-weight-bold">
-            Data vitamin
+            Data Vitamin
         </div>
         <div class="row m-2">
             <div class="col-sm-12">

@@ -14,7 +14,7 @@ class KeluargaController extends Controller
 
     public function index(Request $request)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/keluarga')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/keluarga')->json();
         $keluarga = $response['data'];
 
         return view('keluarga.index', compact('keluarga'))
@@ -23,7 +23,7 @@ class KeluargaController extends Controller
     
     public function create()
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/dusun')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/dusun')->json();
         $dusun = $response['data'];
 
         return view('keluarga.create', compact('dusun'));
@@ -32,21 +32,23 @@ class KeluargaController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
-        
-        $response = Http::post('https://api-sidumita.ftudayana.com/api/keluarga', [
-            'no_kartu_keluarga' => $data['no_kartu_keluarga'],
-            'kepala_keluarga' => $data['kepala_keluarga'],
-            'alamat' => $data['alamat'],
-            'jumlah' => $data['jumlah'],
+
+        $response = Http::post('http://127.0.0.1:8080/api/keluarga', [
+            'no_kartu_keluarga' => $request->no_kartu_keluarga,
+            'kepala_keluarga' => $request->kepala_keluarga,
+            'alamat' => $request->alamat,
+            'jumlah' => $request->jumlah,
             'user_id' => 1,
-            'dusun_id' => $data['dusun_id'],
+            'dusun_id' => $request->dusun_id,
         ]);
 
-        $getId = Http::get('https://api-sidumita.ftudayana.com/api/keluarga')->json();
-            $maxId = max($getId['data'])['id'];
+        $getId = Http::get('http://127.0.0.1:8080/api/keluarga')->json();
+        $maxId = max($getId['data'])['id'];
+
+        // dd($data);
         
         foreach ($data['nik'] as $item => $value) {          
-            $response2 = Http::post('https://api-sidumita.ftudayana.com/api/detail-keluarga', [
+            $response2 = Http::post('http://127.0.0.1:8080/api/detail-keluarga', [
                 'keluarga_id' => $maxId,
                 'nik' => $data['nik'][$item],
                 'nama_lengkap' => $data['nama_lengkap'][$item],
@@ -70,39 +72,31 @@ class KeluargaController extends Controller
     
     public function show($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/keluarga/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/keluarga/'.' '.$id)->json();
         $keluarga = $response['data'];
         
         return view('keluarga.show',compact('keluarga'));
     }
 
     
-    public function edit(Keluarga $keluarga)
+    public function edit($id)
     {
-        return view('keluarga.edit',compact('keluarga'));
+        // return view('keluarga.edit',compact('keluarga'));
     }
     
-    public function update(Request $request, Keluarga $keluarga)
+    public function update(Request $request, $id)
     {
-        // request()->validate([
-        //     'no_kartu_keluarga' => 'required',
-        //     'kepala_keluarga' => 'required',
-        //     'alamat' => 'required',
-        //     'jumlah' => 'required',
-        //     'dusun_id' => 'required',
-        // ]);
+        // $keluarga->update($request->all());
     
-        $keluarga->update($request->all());
-    
-        return redirect()->route('keluarga.index')
-                        ->with('success','Data Keluarga Berhasil Diperbarui');
+        // return redirect()->route('keluarga.index')
+        //                 ->with('success','Data Keluarga Berhasil Diperbarui');
     }
     
-    public function destroy(Keluarga $keluarga)
+    public function destroy($id)
     {
-        $keluarga->delete();
+        // $keluarga->delete();
     
-        return redirect()->route('keluarga.index')
-                        ->with('success','Data keluarga berhasil dihapus');
+        // return redirect()->route('keluarga.index')
+        //                 ->with('success','Data keluarga berhasil dihapus');
     }
 }

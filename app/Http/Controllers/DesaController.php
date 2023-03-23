@@ -11,7 +11,7 @@ class DesaController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/desa')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/desa')->json();
         $desa = $response['data'];
         
         return view('desa.index',compact('desa'))
@@ -20,7 +20,7 @@ class DesaController extends Controller
     
     public function create()
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/kecamatan')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/kecamatan')->json();
         $kecamatan = $response['data'];
         return view('desa.create', compact('kecamatan'));
     }
@@ -32,7 +32,7 @@ class DesaController extends Controller
             'kecamatan_id' => 'required'
         ]);
 
-        $response = Http::post('https://api-sidumita.ftudayana.com/api/desa', [
+        $response = Http::post('http://127.0.0.1:8080/api/desa', [
             'nama_desa' => $request->nama_desa,
             'kecamatan_id' => $request->kecamatan_id,
         ]);
@@ -45,7 +45,7 @@ class DesaController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/desa/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/desa/'.' '.$id)->json();
         $desa = $response['data'];
 
         return view('desa.show',compact('desa'));
@@ -53,11 +53,14 @@ class DesaController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/desa/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/desa/'.' '.$id)->json();
         $desa = $response['data'];
+
+        $response2 = Http::get('http://127.0.0.1:8080/api/kecamatan/')->json();
+        $kecamatan = $response2['data'];        
         
-        return view('desa.edit',compact('desa'));
-    }
+        return view('desa.edit',compact('kecamatan','desa'));
+        }
     
     public function update(Request $request, $id)
     {
@@ -66,7 +69,7 @@ class DesaController extends Controller
             'kecamatan_id' => 'required',
         ]);
 
-        $response = Http::patch('https://api-sidumita.ftudayana.com/api/desa/'.' '.$id, [
+        $response = Http::patch('http://127.0.0.1:8080/api/desa/'.' '.$id, [
             'nama_desa' => $request->nama_desa,
             'kecamatan_id' => $request->kecamatan_id,
         ]);
@@ -77,7 +80,7 @@ class DesaController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('https://api-sidumita.ftudayana.com/api/desa/'.' '.$id)->json();
+        $response = Http::delete('http://127.0.0.1:8080/api/desa/'.' '.$id)->json();
     
         return redirect()->route('desa.index')
                         ->with('success','Data desa berhasil dihapus');

@@ -16,9 +16,9 @@
 </div>
 @endif
 
-<div class="card mt-2">
-    <div class="card-header font-weight-bold">
-        Data Kabupaten
+<div class="card shadow mt-2">
+    <div class="card-header font-weight-bold text-success">
+        Master Data Kabupaten
     </div>
     <div class="card-body">
         <div class="pull-right">
@@ -45,7 +45,8 @@
                         <form method="POST" action="{{ route('kabupaten.destroy', [$item['id']]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
-                            <button type="submit" class="btn btn-danger btn-sm ml-1"><i
+                            <button type="submit" class="btn btn-danger btn-sm ml-1"
+                                onclick="return confirm('Yakin Menghapus Data?')"><i
                                     class='fas fa-trash mr-1'></i>Delete</button>
                         </form>
                     </div>

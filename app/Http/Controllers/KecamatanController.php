@@ -12,7 +12,7 @@ class KecamatanController extends Controller
 
     public function index(Request $request)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/kecamatan')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/kecamatan')->json();
         $kecamatan = $response['data'];
         
         return view('kecamatan.index',compact('kecamatan'))
@@ -21,7 +21,7 @@ class KecamatanController extends Controller
     
     public function create()
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/kabupaten')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/kabupaten')->json();
         $kabupaten = $response['data'];
         
         return view('kecamatan.create', compact('kabupaten'));
@@ -34,7 +34,7 @@ class KecamatanController extends Controller
             'kabupaten_id' => 'required'
         ]);
 
-        $response = Http::post('https://api-sidumita.ftudayana.com/api/kecamatan', [
+        $response = Http::post('http://127.0.0.1:8080/api/kecamatan', [
             'nama_kecamatan' => $request->nama_kecamatan,
             'kabupaten_id' => $request->kabupaten_id,
         ]);
@@ -47,7 +47,7 @@ class KecamatanController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/kecamatan/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/kecamatan/'.' '.$id)->json();
         $kecamatan = $response['data'];
         
         return view('kecamatan.show',compact('kecamatan'));
@@ -55,12 +55,13 @@ class KecamatanController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/kecamatan/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/kecamatan/'.' '.$id)->json();
         $kecamatan = $response['data'];
 
+        $response2 = Http::get('http://127.0.0.1:8080/api/kabupaten/')->json();
+        $kabupaten = $response2['data'];        
         
-        
-        return view('kecamatan.edit',compact('kecamatan'));
+        return view('kecamatan.edit',compact('kecamatan','kabupaten'));
     }
     
     public function update(Request $request, $id)
@@ -70,7 +71,7 @@ class KecamatanController extends Controller
             'kabupaten_id' => 'required',
         ]);
 
-        $response = Http::patch('https://api-sidumita.ftudayana.com/api/kecamatan/'.' '.$id, [
+        $response = Http::patch('http://127.0.0.1:8080/api/kecamatan/'.' '.$id, [
             'nama_kecamatan' => $request->nama_kecamatan,
             'kabupaten_id' => $request->kabupaten_id,
         ]);
@@ -81,7 +82,7 @@ class KecamatanController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('https://api-sidumita.ftudayana.com/api/kecamatan/'.' '.$id);
+        $response = Http::delete('http://127.0.0.1:8080/api/kecamatan/'.' '.$id);
     
         return redirect()->route('kecamatan.index')
                         ->with('success','Data kecamatan berhasil dihapus');

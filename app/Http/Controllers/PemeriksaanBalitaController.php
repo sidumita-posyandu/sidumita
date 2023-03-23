@@ -11,7 +11,7 @@ class PemeriksaanBalitaController extends Controller
 {
     public function index()
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/pemeriksaan-balita')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
         $pemeriksaanbalita = $response['data'];
         
         return view('pemeriksaanbalita.index',compact('pemeriksaanbalita'));
@@ -21,10 +21,13 @@ class PemeriksaanBalitaController extends Controller
 
     public function create()
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/balita')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/balita')->json();
         $balita = $response['data'];
 
-        return view('pemeriksaanbalita.create', compact('balita'));
+        $response2 = Http::get('http://127.0.0.1:8080/api/vaksin')->json();
+        $vaksin = $response2['data'];
+
+        return view('pemeriksaanbalita.create', compact('balita','vaksin'));
     }
 
     public function store(Request $request)
@@ -45,7 +48,7 @@ class PemeriksaanBalitaController extends Controller
             'dokter_id' => 'required',
         ]);
         
-        $response = Http::post('https://api-sidumita.ftudayana.com/api/pemeriksaan-balita', [
+        $response = Http::post('http://127.0.0.1:8080/api/pemeriksaan-balita', [
             'balita_id' => $request->balita_id,
             'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
             'berat_badan' => $request->berat_badan,
@@ -55,9 +58,23 @@ class PemeriksaanBalitaController extends Controller
             'keluhan' => $request->keluhan,
             'penanganan' => $request->penanganan,
             'catatan' => $request->catatan,
-            'petugas_kesehatan_id' => $request->petugas_kesehatan_id,
-            'dokter_id' => $request->dokter_id,
+            'petugas_kesehatan_id' => 1,
+            'dokter_id' => 1,
+            'vitamin_id' => 3, 
         ]);
+
+        if ($request->vaksin_id != 0) {
+            $getId = Http::get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
+            $maxId = max($getId['data'])['id'];
+            
+            foreach ($data['vaksin_id'] as $item => $value) {          
+                $response2 = Http::post('http://127.0.0.1:8080/api/detailpemeriksaan-balita', [
+                    'pemeriksaan_balita_id' => $maxId,
+                    'balita_id' => $request->balita_id,
+                    'vaksin_id' => $data['vaksin_id'][$item],
+                ]);
+            }
+        }
         
         return redirect()->route('pemeriksaan-balita.index')
         ->with('success','Pemeriksaan Balita berhasil dibuat.');
@@ -65,11 +82,9 @@ class PemeriksaanBalitaController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/pemeriksaan-balita/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/pemeriksaan-balita/'.' '.$id)->json();
         $pemeriksaanbalita = $response['data'];
 
-        dd($pemeriksaanbalita);
-        
         return view('pemeriksaanbalita.show',compact('pemeriksaanbalita'));
     }
 }

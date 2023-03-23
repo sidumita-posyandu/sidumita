@@ -9,6 +9,7 @@ use Spatie\Permission\Models\Role;
 use DB;
 use Hash;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
 
 class UserController extends Controller
 {
@@ -19,8 +20,14 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $data = User::orderBy('id','ASC')->paginate(5);
-        return view('users.index',compact('data'))
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/user')
+            ->json();
+        
+        $users = $response['data'];
+
+        return view('users.index', compact('users'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
     
@@ -29,35 +36,38 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $roles = Role::pluck('name','name')->all();
-        return view('users.create',compact('roles'));
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/role')
+            ->json();
+        
+        $role = $response['data'];
+                
+        return view('users.create', compact('role'));
     }
     
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        request()->validate([
             'name' => 'required',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|same:confirm-password',
-            'roles' => 'required'
+            'email' => 'required',
+            'password' => 'required',
+            'role_id' => 'required',
         ]);
-    
-        $input = $request->all();
-        $input['password'] = Hash::make($input['password']);
-    
-        $user = User::create($input);
-        $user->assignRole($request->input('roles'));
+        
+        $response = Http::post('http://127.0.0.1:8080/api/auth/register', [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => $request->role_id,
+        ]);
+                
+        // users::create($request->all());
     
         return redirect()->route('users.index')
-                        ->with('success','User created successfully');
+                        ->with('success','Data user berhasil dibuat.');
     }
     
     /**

@@ -10,7 +10,7 @@ class JadwalPemeriksaanController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/jadwal-pemeriksaan')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/jadwal-pemeriksaan')->json();
         $jadwal_pemeriksaan = $response['data'];
         
         return view('jadwal-pemeriksaan.index',compact('jadwal_pemeriksaan'))
@@ -19,10 +19,10 @@ class JadwalPemeriksaanController extends Controller
     
     public function create()
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/dusun')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/dusun')->json();
         $dusun = $response['data'];
 
-        $response2 = Http::get('https://api-sidumita.ftudayana.com/api/keluarga')->json();
+        $response2 = Http::get('http://127.0.0.1:8080/api/keluarga')->json();
         $keluarga = $response2['data'];
         
         return view('jadwal-pemeriksaan.create', compact('dusun', 'keluarga'));
@@ -39,7 +39,7 @@ class JadwalPemeriksaanController extends Controller
             'operator_posyandu_id' => 'required',
         ]);
         
-        $response = Http::post('https://api-sidumita.ftudayana.com/api/jadwal-pemeriksaan', [
+        $response = Http::post('http://127.0.0.1:8080/api/jadwal-pemeriksaan', [
             'jenis_pemeriksaan' => $request->jenis_pemeriksaan,
             'waktu_mulai' => $request->waktu_mulai,
             'waktu_berakhir' => $request->waktu_berakhir,
@@ -54,7 +54,7 @@ class JadwalPemeriksaanController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/jadwal-pemeriksaan/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/jadwal-pemeriksaan/'.' '.$id)->json();
         $jadwal_pemeriksaan = $response['data'];
         
         return view('jadwal-pemeriksaan.show',compact('jadwal-pemeriksaan'));
@@ -62,7 +62,7 @@ class JadwalPemeriksaanController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/jadwal-pemeriksaan/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/jadwal-pemeriksaan/'.' '.$id)->json();
         $jadwal_pemeriksaan = $response['data'];
         
         return view('jadwal-pemeriksaan.edit',compact('jadwal-pemeriksaan'));
@@ -75,7 +75,7 @@ class JadwalPemeriksaanController extends Controller
             'desa_id' => 'required',
         ]);
 
-        $response = Http::patch('https://api-sidumita.ftudayana.com/api/jadwal-pemeriksaan/'.' '.$id, [
+        $response = Http::patch('http://127.0.0.1:8080/api/jadwal-pemeriksaan/'.' '.$id, [
             'nama_jadwal-pemeriksaan' => $request->nama_jadwal-pemeriksaan,
             'desa_id' => $request->desa_id,
         ]);
@@ -86,7 +86,7 @@ class JadwalPemeriksaanController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('https://api-sidumita.ftudayana.com/apijadwal-pemeriksaann'.' '.$id)->json();
+        $response = Http::delete('http://127.0.0.1:8080/apijadwal-pemeriksaann'.' '.$id)->json();
     
         return redirect()->route('jadwal-pemeriksaan.index')
                         ->with('success','Data jadwal-pemeriksaan berhasil dihapus');

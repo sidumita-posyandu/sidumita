@@ -10,10 +10,36 @@ use App\Provinsi;
 
 class ProvinsiController extends Controller
 {
-    
     public function index(Request $request)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/provinsi')->json();
+        // if($request->session()->has('token')){
+		// 	dd( $request->session()->get('token'));
+		// }
+        
+        // $response = Http::get('http://127.0.0.1:8080/api/provinsi', [
+        //     'headers' => [
+        //         'Accept' => 'application/json',
+        //         'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODA4MFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY3OTM4NTMyMCwiZXhwIjoxNjc5Mzg4OTIwLCJuYmYiOjE2NzkzODUzMjAsImp0aSI6IjRmOERmS1VTZm80YVVEbVAiLCJzdWIiOjcsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.iOkwAEwM6ZD-wx4w44jpllRc3fASnOc1YHC9XhwIh1M',
+        //     ],
+        // ])->json();
+
+        // $response = Http::get('http://127.0.0.1:8080/api/user');
+        // $response->headers->set('Accept', 'application/json');
+        // $response->headers->set('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODA4MFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY3OTM4NTMyMCwiZXhwIjoxNjc5Mzg4OTIwLCJuYmYiOjE2NzkzODUzMjAsImp0aSI6IjRmOERmS1VTZm80YVVEbVAiLCJzdWIiOjcsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.iOkwAEwM6ZD-wx4w44jpllRc3fASnOc1YHC9XhwIh1M');
+        // $provinsi = json_decode($response->getContent());
+        // dd(json_decode($response, true));
+
+        // $response = Request::create('http://127.0.0.1:8080/api/provinsi', 'GET');
+        // $response->headers->set('Accept', 'application/json');
+        // $response->headers->set('Authorization', 'Bearer '.$token);
+        // $res = app()->handle($response);
+        // $provinsi = json_decode($res->getContent());
+
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/provinsi')
+            ->json();
+        
         $provinsi = $response['data'];
 
         return view('provinsi.index', compact('provinsi'))
@@ -31,9 +57,16 @@ class ProvinsiController extends Controller
             'nama_provinsi' => 'required',
         ]);
 
-        $response = Http::post('https://api-sidumita.ftudayana.com/api/provinsi', [
-            'nama_provinsi' => $request->nama_provinsi,
-        ]);
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/provinsi', [
+                'nama_provinsi' => $request->nama_provinsi,
+            ]);
+
+        // $response = Http::post('http://127.0.0.1:8080/api/provinsi', [
+        //     'nama_provinsi' => $request->nama_provinsi,
+
+        // ]);
     
         return redirect()->route('provinsi.index')
                         ->with('success','Data provinsi berhasil dibuat.');
@@ -41,7 +74,7 @@ class ProvinsiController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/provinsi/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)->json();
         $provinsi = $response['data'];
 
         return view('provinsi.show',compact('provinsi'));
@@ -49,7 +82,7 @@ class ProvinsiController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/provinsi/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)->json();
         $provinsi = $response['data'];
         
         return view('provinsi.edit',compact('provinsi'));
@@ -61,7 +94,7 @@ class ProvinsiController extends Controller
             'nama_provinsi' => 'required',
         ]);
 
-        $response = Http::patch('https://api-sidumita.ftudayana.com/api/provinsi/'.' '.$id, [
+        $response = Http::patch('http://127.0.0.1:8080/api/provinsi/'.' '.$id, [
             'nama_provinsi' => $request->nama_provinsi,
         ]);
     
@@ -71,7 +104,7 @@ class ProvinsiController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('https://api-sidumita.ftudayana.com/api/provinsi/'.$id);
+        $response = Http::delete('http://127.0.0.1:8080/api/provinsi/'.$id);
 
         return redirect()->route('provinsi.index')
                         ->with('success','Data provinsi berhasil dihapus');

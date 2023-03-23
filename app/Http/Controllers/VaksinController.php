@@ -10,7 +10,7 @@ class VaksinController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/vaksin')->json();
+        $response = Http::get('http://127.0.0.1:8080/api/vaksin')->json();
         $vaksin = $response['data'];
 
         return view('vaksin.index', compact('vaksin'))
@@ -31,7 +31,7 @@ class VaksinController extends Controller
             'status' => 'required',
         ]);
 
-        $response = Http::post('https://api-sidumita.ftudayana.com/api/vaksin', [
+        $response = Http::post('http://127.0.0.1:8080/api/vaksin', [
             'nama_vaksin' => $request->nama_vaksin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan,
@@ -44,7 +44,7 @@ class VaksinController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/vaksin/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
         $vaksin = $response['data'];
 
         return view('vaksin.show',compact('vaksin'));
@@ -52,7 +52,7 @@ class VaksinController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('https://api-sidumita.ftudayana.com/api/vaksin/'.' '.$id)->json();
+        $response = Http::get('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
         $vaksin = $response['data'];
         
         return view('vaksin.edit',compact('vaksin'));
@@ -61,20 +61,18 @@ class VaksinController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate([
-            'nama_vaksin' => $request->nama_vaksin,
-            'dosis' => $request->dosis,
-            'catatan' => $request->catatan,
-            'status' => $request->status,
+            'nama_vaksin' => 'required',
+            'dosis' => 'required',
+            'catatan' => 'required',
+            'status' => 'required',
         ]);
 
-        $response = Http::patch('https://api-sidumita.ftudayana.com/api/vaksin/'.' '.$id, [
+        $response = Http::patch('http://127.0.0.1:8080/api/vaksin/'.' '.$id, [
             'nama_vaksin' => $request->nama_vaksin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan,
             'status' => $request->status,
         ]);
-    
-        // $vaksin->update($request->all());
     
         return redirect()->route('vaksin.index')
                         ->with('success','Data vaksin Berhasil Diperbarui');
@@ -82,7 +80,7 @@ class VaksinController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('https://api-sidumita.ftudayana.com/api/vaksin/'.' '.$id)->json();
+        $response = Http::delete('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
     
         return redirect()->route('vaksin.index')
                         ->with('success','Data vaksin berhasil dihapus');
