@@ -47,8 +47,8 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <strong>Tanggal Pemeriksaan:</strong>
-                    <input type="text" name="tanggal_pemeriksaan" class="form-control" id="datepicker"
-                        autocomplete='off' placeholder="Tanggal Pemeriksaan">
+                    <input type="text" name="tanggal_pemeriksaan" class="form-control"
+                        value="{{ $tanggal_pemeriksaan }}" readonly>
                 </div>
             </div>
         </div>

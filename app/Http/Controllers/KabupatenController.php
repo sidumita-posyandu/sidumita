@@ -71,7 +71,6 @@ class KabupatenController extends Controller
             ->json();
             
         $kabupaten = $response['data'];
-        dd($response);
         return view('kabupaten.show',compact('kabupaten'));
     }
     

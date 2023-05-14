@@ -19,6 +19,10 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $request->session()->flush();
+        $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/auth/logout')
+            ->json();
 
         return redirect('login');
     }
@@ -37,6 +41,9 @@ class LoginController extends Controller
 
         if($response->getStatusCode() == 401){
             return Redirect::back()->withErrors(['message' => 'Email atau password salah!']);
+        }
+        elseif($response->getStatusCode() == 500){
+            return Redirect::back()->withErrors(['message' => 'Terjadi kesalahan pada server']);
         }
         
         $token = json_decode((string) $response->getBody(), true)['access_token'];

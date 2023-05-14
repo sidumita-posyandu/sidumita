@@ -16,15 +16,15 @@
 </div>
 @endif
 
-
 <div class="card shadow mt-2">
     <div class="card-header font-weight-bold text-success">
         Data Pemeriksaan Balita
     </div>
     <div class="card-body">
-        <a class="btn btn-success btn-sm mb-2" href="{{ route('pemeriksaan-balita.create') }}"><i
-                class="fas fa-plus mr-1"></i>
-            Tambah Pemeriksaan Balita</a>
+        <div class="float-left"><a class="btn btn-success btn-sm mb-2"
+                href="{{ route('pemeriksaan-balita.create') }}"><i class="fas fa-plus mr-1"></i>
+                Tambah Pemeriksaan Balita</a>
+        </div>
         <table class="table table-bordered">
             <tr>
                 <th>No</th>

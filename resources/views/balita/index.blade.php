@@ -29,10 +29,10 @@
         <table class="table table-bordered">
             <tr>
                 <th width="50px">No</th>
-                <th width="500px">Nama Balita</th>
+                <th width="300px">Nama Balita</th>
                 <th>Tanggal Lahir</th>
                 <th>Jenis Kelamin</th>
-                <th width="110px">Action</th>
+                <th width="290px">Action</th>
             </tr>
             @if(is_array($balita) || is_object($balita))
             @foreach ($balita as $k => $item)
@@ -50,6 +50,13 @@
                                 onclick="return confirm('Yakin Menghapus Data?')"><i
                                     class='fas fa-trash mr-1'></i>Delete</button>
                         </form>
+                        <a class="btn btn-success btn-sm ml-1"
+                            href="{{ route('pemeriksaan-balita.create', [$item['id']]) }}"><i
+                                class="fas fa-edit mr-1"></i>
+                            Periksa</a>
+                        <a class="btn btn-info btn-sm ml-1" href="{{ route('rekap-balita', [$item['id']]) }}"><i
+                                class="fas fa-edit mr-1"></i>
+                            Rekap</a>
                     </div>
                 </td>
             </tr>

@@ -37,7 +37,7 @@
             </tr>
             @if(is_array($keluarga) || is_object($keluarga))
             @foreach ($keluarga as $k)
-            <tr href=>
+            <tr>
                 <td>{{ ++$i }}</td>
                 <td>{{ $k['no_kartu_keluarga'] }}</td>
                 <td>{{ $k['kepala_keluarga'] }}</td>

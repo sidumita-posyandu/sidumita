@@ -31,163 +31,190 @@
             Data Keluarga
         </div>
         <div class="row m-2">
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="form-group">
                     <strong>No Kartu Keluarga:</strong>
                     <input type="text" name="no_kartu_keluarga" class="form-control" placeholder="No Kartu Keluarga">
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="form-group">
                     <strong>Kepala Keluarga:</strong>
                     <input type="text" name="kepala_keluarga" class="form-control" placeholder="Nama Kepala Keluarga">
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-12">
                 <div class="form-group">
                     <strong>Alamat:</strong>
-                    <input type="text" name="alamat" class="form-control" placeholder="Alamat">
+                    <input type="text" name="alamat" class="form-control" placeholder="Alamat" rows="3"></input>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <strong>Jumlah:</strong>
-                    <input type="text" name="jumlah" class="form-control" placeholder="Jumlah Keluarga">
+                    <strong>Provinsi:</strong>
+                    <select class="form-control" id="provinsi" name="provinsi_id">
+                        <option value="" selected disabled>-- Pilih Provinsi --</option>
+                        @foreach ($provinsi as $p)
+                        <option value="{{ $p['id'] }}">{{ $p['nama_provinsi'] }}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <strong>Kabupaten:</strong>
+                    <select class="form-control" id="kabupaten" name="kabupaten_id">
+                        <option value="" selected disabled></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <strong>Kecamatan:</strong>
+                    <select class="form-control" id="kecamatan" name="kecamatan_id">
+                        <option value="" selected disabled></option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <strong>Desa:</strong>
+                    <select class="form-control" id="desa" name="desa_id">
+                        <option value="" selected disabled></option>
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Dusun:</strong>
                     <select class="form-control" id="dusun" name="dusun_id">
-                        <option value="" selected disabled>-- Pilih Dusun --</option>
-                        @foreach ($dusun as $p)
-                        <option value="{{ $p['id'] }}">{{ $p['nama_dusun'] }}</option>
-                        @endforeach
+                        <option value="" selected disabled></option>
                     </select>
+                </div>
+            </div>
+            <div class="col-sm-6"></div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <strong>Email:</strong>
+                    <input type="text" name="email" class="form-control" placeholder="Email">
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <strong>Password:</strong>
+                    <input type="text" name="password" class="form-control" value="Sidumita2022!" readonly="readonly">
                 </div>
             </div>
         </div>
     </div>
-    <div class="card shadow mt-2">
-        <div class="card-header font-weight-bold">
-            Anggota Keluarga
-        </div>
-        <div class="row m-2">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>NIK:</strong>
-                    <input type="text" name="nik[]" class="form-control" placeholder="NIK">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Nama Lengkap:</strong>
-                    <input type="text" name="nama_lengkap[]" class="form-control" placeholder="Nama Lengkap">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Jenis Kelamin:</strong>
-                    <select class="form-control" id="jenis_kelamin" name="jenis_kelamin[]">
-                        <option value="" selected disabled>-- Pilih Jenis Kelamin --</option>
-                        <option value="Laki-Laki">Laki-Laki</option>
-                        <option value="Perempuan">Perempuan</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Tempat Lahir:</strong>
-                    <input type="text" name="tempat_lahir[]" class="form-control" placeholder="Tempat Lahir">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Tanggal Lahir:</strong>
-                    <input type="text" name="tanggal_lahir[]" class="form-control" placeholder="Tanggal Lahir">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Agama:</strong>
-                    <input type="text" name="agama[]" class="form-control" placeholder="Agama">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Pendidikan:</strong>
-                    <input type="text" name="pendidikan[]" class="form-control" placeholder="Pendidikan Terakhir">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Golongan Darah:</strong>
-                    <select class="form-control" id="golongan_darah" name="golongan_darah[]">
-                        <option value="" selected disabled>-- Pilih Golongan Darah --</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="AB">AB</option>
-                        <option value="O">O</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Jenis Pekerjaan:</strong>
-                    <input type="text" name="jenis_pekerjaan[]" class="form-control" placeholder="Jenis Pekerjaan">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Status Perkawinan:</strong>
-                    <select class="form-control" id="status_perkawinan" name="status_perkawinan[]">
-                        <option value="" selected disabled>-- Pilih Status Perkawinan --</option>
-                        <option value="Belum Kawin">Belum Kawin</option>
-                        <option value="Kawin">Kawin</option>
-                        <option value="Janda">Janda</option>
-                        <option value="Duda">Duda</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>Status dalam Keluarga:</strong>
-                    <select class="form-control" id="status_dalam_keluarga" name="status_dalam_keluarga[]">
-                        <option value="" selected disabled>-- Pilih Status Perkawinan --</option>
-                        <option value="Anak">Anak</option>
-                        <option value="Ayah">Ayah</option>
-                        <option value="Ibu">Ibu</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>kewarganegaraan:</strong>
-                    <input type="text" name="kewarganegaraan[]" class="form-control" placeholder="kewarganegaraan">
-                </div>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <strong>No Telepon:</strong>
-                    <input type="text" name="no_telp[]" class="form-control" placeholder="No Telepon">
-                </div>
-            </div>
-        </div>
-        <div class="card-footer">
-            <div class="form-group">
-                <button type="button" class="btn btn-primary add-keluarga" style="float: right;"><i
-                        class="fas fa-plus mr-1"></i>Tambah Data
-                    Keluarga
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <div class="keluarga" id="keluarga"></div>
 
     <div class="text-center">
         <button type="submit" class="btn btn-success btn-block">Submit</button>
     </div>
 
 </form>
+@endsection
+
+@section('script')
+<script>
+$(document).ready(function() {
+    var token = @json($token);
+    $('#provinsi').on('change', function() {
+        var idProvinsi = this.value;
+        $("#kabupaten").html('');
+        $.ajax({
+            url: "http://127.0.0.1:8080/api/fetch-provinsi",
+            type: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            data: {
+                provinsi_id: idProvinsi,
+                _token: '{{csrf_token()}}'
+            },
+            dataType: 'json',
+            success: function(result) {
+                $('#kabupaten').html('<option value="">-- Pilih Kabupaten --</option>');
+
+                $.each(result.data, function(key, value) {
+                    $("#kabupaten").append('<option value="' + value.id + '">' +
+                        value.nama_kabupaten + '</option>');
+                });
+            }
+        });
+    });
+
+    $('#kabupaten').on('change', function() {
+        var idKabupaten = this.value;
+        $("#kecamatan").html('');
+        $.ajax({
+            url: "http://127.0.0.1:8080/api/fetch-kabupaten",
+            type: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            data: {
+                kabupaten_id: idKabupaten,
+                _token: '{{csrf_token()}}'
+            },
+            dataType: 'json',
+            success: function(result) {
+                $('#kecamatan').html('<option value="">-- Pilih Kecamatan --</option>');
+                $.each(result.data, function(key, value) {
+                    $("#kecamatan").append('<option value="' + value.id + '">' +
+                        value.nama_kecamatan + '</option>');
+                });
+            }
+        });
+    });
+
+    $('#kecamatan').on('change', function() {
+        var idKecamatan = this.value;
+        $("#desa").html('');
+        $.ajax({
+            url: "http://127.0.0.1:8080/api/fetch-kecamatan",
+            type: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            data: {
+                kecamatan_id: idKecamatan,
+                _token: '{{csrf_token()}}'
+            },
+            dataType: 'json',
+            success: function(result) {
+                $('#desa').html('<option value="">-- Pilih Desa --</option>');
+                $.each(result.data, function(key, value) {
+                    $("#desa").append('<option value="' + value.id + '">' + value
+                        .nama_desa + '</option>');
+                });
+            }
+        });
+    });
+
+    $('#desa').on('change', function() {
+        var idDesa = this.value;
+        $("#dusun").html('');
+        $.ajax({
+            url: "http://127.0.0.1:8080/api/fetch-desa",
+            type: "POST",
+            headers: {
+                "Authorization": "Bearer " + token
+            },
+            data: {
+                desa_id: idDesa,
+                _token: '{{csrf_token()}}'
+            },
+            dataType: 'json',
+            success: function(result) {
+                $('#dusun').html('<option value="">-- Pilih Dusun --</option>');
+                $.each(result.data, function(key, value) {
+                    $("#dusun").append('<option value="' + value.id + '">' + value
+                        .nama_dusun + '</option>');
+                });
+            }
+        });
+    });
+});
+</script>
 @endsection

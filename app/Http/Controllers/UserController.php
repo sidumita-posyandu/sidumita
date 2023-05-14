@@ -42,10 +42,17 @@ class UserController extends Controller
             ->withToken($request->session()->get('token'))
             ->get('http://127.0.0.1:8080/api/role')
             ->json();
-        
         $role = $response['data'];
+
+        $response2 = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/provinsi')
+            ->json();
+        $provinsi = $response2['data'];
+
+        $token = $request->session()->get('token');
                 
-        return view('users.create', compact('role'));
+        return view('users.create', compact('role', 'provinsi', 'token'));
     }
     
     public function store(Request $request)
@@ -59,11 +66,13 @@ class UserController extends Controller
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/auth/register', [
+        ->post('http://127.0.0.1:8080/api/auth/register-admin', [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
             'role_id' => $request->role_id,
+            'kecamatan_id' => $request->kecamatan_id,
+            'dusun_id' => $request->dusun_id
         ]);
                 
         // users::create($request->all());

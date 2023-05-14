@@ -10,22 +10,25 @@ class JadwalPemeriksaanController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/jadwal-pemeriksaan')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/jadwal-pemeriksaan')->json();
         $jadwal_pemeriksaan = $response['data'];
-        
+
         return view('jadwal-pemeriksaan.index',compact('jadwal_pemeriksaan'))
             ->with('i', ($request->input('jadwal-pemeriksaan', 1) - 1) * 5);   
     }
     
-    public function create()
+    public function create(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/dusun')->json();
-        $dusun = $response['data'];
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/provinsi')->json();
+        $provinsi = $response['data'];
 
-        $response2 = Http::get('http://127.0.0.1:8080/api/keluarga')->json();
-        $keluarga = $response2['data'];
+        $token = $request->session()->get('token');
         
-        return view('jadwal-pemeriksaan.create', compact('dusun', 'keluarga'));
+        return view('jadwal-pemeriksaan.create', compact('provinsi', 'token'));
     }
     
     public function store(Request $request)
@@ -35,18 +38,22 @@ class JadwalPemeriksaanController extends Controller
             'waktu_mulai' => 'required',
             'waktu_berakhir' => 'required',
             'dusun_id' => 'required',
-            'keluarga_id' => 'required',
             'operator_posyandu_id' => 'required',
         ]);
         
-        $response = Http::post('http://127.0.0.1:8080/api/jadwal-pemeriksaan', [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->post('http://127.0.0.1:8080/api/jadwal-pemeriksaan', [
             'jenis_pemeriksaan' => $request->jenis_pemeriksaan,
             'waktu_mulai' => $request->waktu_mulai,
             'waktu_berakhir' => $request->waktu_berakhir,
             'dusun_id' => $request->dusun_id,
-            'keluarga_id' => $request->keluarga_id,
             'operator_posyandu_id' => $request->operator_posyandu_id,
         ]);
+
+        if($response->status() == 409){
+            return redirect()->route('jadwal-pemeriksaan.index')->with('success','Data jadwal-pemeriksaan berhasil dibuat.');;
+        }
             
         return redirect()->route('jadwal-pemeriksaan.index')
                         ->with('success','Data jadwal-pemeriksaan berhasil dibuat.');

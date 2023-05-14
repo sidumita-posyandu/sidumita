@@ -127,8 +127,6 @@
             </div>
         </div>
     </div>
-    <div class="text-center mt-3">
-        <button type="submit" class="btn btn-success btn-block">Submit</button>
-    </div>
 </form>
+
 @endsection

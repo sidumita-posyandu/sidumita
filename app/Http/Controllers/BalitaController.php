@@ -20,7 +20,7 @@ class BalitaController extends Controller
             ->with('i', ($request->input('balita', 1) - 1) * 5);   
     }
     
-    public function create()
+    public function create(Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))

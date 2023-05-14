@@ -17,7 +17,7 @@
 @endif
 
 
-<div class="card mt-2">
+<div class="card shadow mt-2">
     <div class="card-header font-weight-bold text-success">
         Data Ibu Hamil
     </div>
@@ -32,7 +32,7 @@
                 <th width="50px">No</th>
                 <th width="500px">Nama Ibu Hamil</th>
                 <th>Tanggal Lahir</th>
-                <th width="110px">Action</th>
+                <th width="190px">Action</th>
             </tr>
             @if(is_array($ibu_hamil) || is_object($ibu-hamil))
             @foreach ($ibu_hamil as $k => $item)
@@ -49,6 +49,9 @@
                                 onclick="return confirm('Yakin Menghapus Data?')"><i
                                     class='fas fa-trash mr-1'></i>Delete</button>
                         </form>
+                        <a class="btn btn-info btn-sm ml-1" href="{{ route('rekap-ibu-hamil', [$item['id']]) }}"><i
+                                class="fas fa-edit mr-1"></i>
+                            Rekap</a>
                     </div>
                 </td>
             </tr>

@@ -48,13 +48,25 @@
                     </select>
                 </div>
             </div>
-            <div class="text-center col-sm-12">
-                <button type="submit" class="btn btn-success btn-block">Submit</button>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <strong>Berat Badan Prakehamilan:</strong>
+                    <input type="text" name="berat_badan_prakehamilan" class="form-control"
+                        placeholder="Berat Badan Terakhir Sebelum Kehamilan"></input>
+                </div>
             </div>
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <strong>Tinggi Badan Prakehamilan:</strong>
+                    <input type="text" name="tinggi_badan_prakehamilan" class="form-control"
+                        placeholder="Tinggi Badan Terakhir Sebelum Kehamilan"></input>
+                </div>
+            </div>
+
+        </div>
+        <div class="text-center">
+            <button type="submit" class="btn btn-success btn-block">Submit</button>
         </div>
     </div>
-    </div>
-
-
 </form>
 @endsection

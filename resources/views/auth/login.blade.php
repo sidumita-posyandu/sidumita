@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>SIDUMITA</title>
 
     <!-- Custom fonts for this template-->
     <link href="{{ asset('admin2/vendor/fontawesome-free/css/all.min.css') }}" rel="stylesheet" type="text/css">
@@ -22,22 +22,25 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient" style="background-color: #eee;">
 
     <div class="container">
 
         <!-- Outer Row -->
         <div class="row justify-content-center" style="height: 100vh;">
 
-            <div class="col-xl-10 col-lg-12 col-md-9" style="margin: auto;">
+            <div class="col-xl-9 col-lg-12 col-md-9" style="margin: auto;">
                 <div class="card o-hidden border-0 shadow-lg">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-12">
+                            <div class="col-lg-6 text-center">
+                                <img src="{{asset('img/dashboard.png')}}" alt="" width="350px">
+                            </div>
+                            <div class="col-lg-6">
                                 <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">SIDUMITA</h1>
+                                    <div class="text-left">
+                                        <strong class="text-gray-900" style="font-size: 24px;">SIDUMITA</strong>
                                     </div>
                                     @if($errors->any())
                                     <div class="alert alert-danger">
@@ -46,7 +49,7 @@
                                     @endif
                                     <form action="{{ route('login.store') }}" method="POST" class="user">
                                         @csrf
-                                        <div class="form-group">
+                                        <div class="form-group mt-4">
                                             <input type="email" class="form-control form-control-user" name="email"
                                                 placeholder="Masukan Alamat Email">
                                         </div>
@@ -54,12 +57,9 @@
                                             <input type="password" class="form-control form-control-user"
                                                 name="password" placeholder="Masukan Password">
                                         </div>
-
                                         <hr>
-
-                                        <button type="submit" class="btn btn-primary btn-user btn-block">Log
+                                        <button type="submit" class="btn btn-success btn-user btn-block">Log
                                             In</button>
-
                                     </form>
                                 </div>
                             </div>

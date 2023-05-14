@@ -33,12 +33,16 @@ class IbuHamilController extends Controller
     {
         request()->validate([
             'detail_keluarga_id' => 'required',
+            'berat_badan_prakehamilan' => 'required',
+            'tinggi_badan_prakehamilan' => 'required'
         ]);
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->post('http://127.0.0.1:8080/api/ibu-hamil', [
             'detail_keluarga_id' => $request->detail_keluarga_id,
+            'berat_badan_prakehamilan' => $request->berat_badan_prakehamilan,
+            'tinggi_badan_prakehamilan' => $request->tinggi_badan_prakehamilan,
         ]);
             
         return redirect()->route('ibu-hamil.index')

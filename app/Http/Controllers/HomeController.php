@@ -32,7 +32,7 @@ class HomeController extends Controller
 
         if($request->session()->get('userAuth')['role_id'] == 4)
         {
-            return view('user-peserta.home');
+            return view('peserta.home');
         }
         else{
             return view('home', compact('balita','ibu_hamil','keluarga','anggota_keluarga'));
@@ -40,6 +40,6 @@ class HomeController extends Controller
     }
 
     public function peserta(){
-        return view('peserta.index');
+        return view('peserta.home');
     }
 }

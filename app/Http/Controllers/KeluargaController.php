@@ -27,54 +27,75 @@ class KeluargaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun')->json();
-        $dusun = $response['data'];
+        ->get('http://127.0.0.1:8080/api/provinsi')->json();
+        $provinsi = $response['data'];
 
-        return view('keluarga.create', compact('dusun'));
+        $token = $request->session()->get('token');
+
+        return view('keluarga.create', compact('provinsi', 'token'));
     }
+
     
     public function store(Request $request)
     {
         $data = $request->all();
 
+        // $count = 0;
+        // foreach ($data['nik'] as $item => $value) {
+        //     $count = $count + 1;
+        // }
+                
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/keluarga', [
+        ->post('http://127.0.0.1:8080/api/auth/register', [
+            'name' => $request->kepala_keluarga,
+            'email' => $request->email,
+            'password' => $request->password,
+            'role_id' => 4,
             'no_kartu_keluarga' => $request->no_kartu_keluarga,
             'kepala_keluarga' => $request->kepala_keluarga,
             'alamat' => $request->alamat,
-            'jumlah' => $request->jumlah,
-            'user_id' => 1,
             'dusun_id' => $request->dusun_id,
         ]);
 
-        $getId = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/keluarga')->json();
-        $maxId = max($getId['data'])['id'];
+        // $response = Http::accept('application/json')
+        // ->withToken($request->session()->get('token'))
+        // ->post('http://127.0.0.1:8080/api/keluarga', [
+        //     'no_kartu_keluarga' => $request->no_kartu_keluarga,
+        //     'kepala_keluarga' => $request->kepala_keluarga,
+        //     'alamat' => $request->alamat,
+        //     'jumlah' => $count,
+        //     'user_id' => 1,
+        //     'dusun_id' => $request->dusun_id,
+        // ]);
 
-        // dd($data);
+        // $getId = Http::accept('application/json')
+        // ->withToken($request->session()->get('token'))
+        // ->get('http://127.0.0.1:8080/api/keluarga')->json();
+        // $maxId = max($getId['data'])['id'];
+
+        // // dd($data);
         
-        foreach ($data['nik'] as $item => $value) {          
-            $response2 = Http::accept('application/json')
-            ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/detail-keluarga', [
-                'keluarga_id' => $maxId,
-                'nik' => $data['nik'][$item],
-                'nama_lengkap' => $data['nama_lengkap'][$item],
-                'jenis_kelamin' => $data['jenis_kelamin'][$item],
-                'tempat_lahir' => $data['tempat_lahir'][$item],
-                'tanggal_lahir' => $data['tanggal_lahir'][$item],
-                'agama' => $data['agama'][$item],
-                'pendidikan' => $data['pendidikan'][$item],
-                'no_telp' => $data['no_telp'][$item],
-                'golongan_darah' => $data['golongan_darah'][$item],
-                'jenis_pekerjaan' => $data['jenis_pekerjaan'][$item],
-                'status_perkawinan' => $data['status_perkawinan'][$item],
-                'status_dalam_keluarga' => $data['status_dalam_keluarga'][$item],
-                'kewarganegaraan' => $data['kewarganegaraan'][$item],
-            ]);
-        }
+        // foreach ($data['nik'] as $item => $value) {          
+        //     $response2 = Http::accept('application/json')
+        //     ->withToken($request->session()->get('token'))
+        //     ->post('http://127.0.0.1:8080/api/detail-keluarga', [
+        //         'keluarga_id' => $maxId,
+        //         'nik' => $data['nik'][$item],
+        //         'nama_lengkap' => $data['nama_lengkap'][$item],
+        //         'jenis_kelamin' => $data['jenis_kelamin'][$item],
+        //         'tempat_lahir' => $data['tempat_lahir'][$item],
+        //         'tanggal_lahir' => $data['tanggal_lahir'][$item],
+        //         'agama' => $data['agama'][$item],
+        //         'pendidikan' => $data['pendidikan'][$item],
+        //         'no_telp' => $data['no_telp'][$item],
+        //         'golongan_darah' => $data['golongan_darah'][$item],
+        //         'jenis_pekerjaan' => $data['jenis_pekerjaan'][$item],
+        //         'status_perkawinan' => $data['status_perkawinan'][$item],
+        //         'status_dalam_keluarga' => $data['status_dalam_keluarga'][$item],
+        //         'kewarganegaraan' => $data['kewarganegaraan'][$item],
+        //     ]);
+        // }
         
         return redirect()->route('keluarga.index')
                         ->with('success','Data Keluarga berhasil dibuat.');

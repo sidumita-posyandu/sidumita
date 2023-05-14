@@ -10,7 +10,9 @@ class VaksinController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/vaksin')->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/vaksin')->json();
         $vaksin = $response['data'];
 
         return view('vaksin.index', compact('vaksin'))
@@ -31,7 +33,9 @@ class VaksinController extends Controller
             'status' => 'required',
         ]);
 
-        $response = Http::post('http://127.0.0.1:8080/api/vaksin', [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->post('http://127.0.0.1:8080/api/vaksin', [
             'nama_vaksin' => $request->nama_vaksin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan,
@@ -44,7 +48,9 @@ class VaksinController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
         $vaksin = $response['data'];
 
         return view('vaksin.show',compact('vaksin'));
@@ -52,7 +58,9 @@ class VaksinController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
         $vaksin = $response['data'];
         
         return view('vaksin.edit',compact('vaksin'));
@@ -67,7 +75,9 @@ class VaksinController extends Controller
             'status' => 'required',
         ]);
 
-        $response = Http::patch('http://127.0.0.1:8080/api/vaksin/'.' '.$id, [
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->patch('http://127.0.0.1:8080/api/vaksin/'.' '.$id, [
             'nama_vaksin' => $request->nama_vaksin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan,
@@ -80,7 +90,9 @@ class VaksinController extends Controller
 
     public function destroy($id)
     {
-        $response = Http::delete('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->delete('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
     
         return redirect()->route('vaksin.index')
                         ->with('success','Data vaksin berhasil dihapus');

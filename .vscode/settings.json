@@ -1,0 +1,4 @@
+{
+    "javascript.format.insertSpaceAfterKeywordsInControlFlowStatements": true,
+    "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": true
+}
