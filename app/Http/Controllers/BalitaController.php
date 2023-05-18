@@ -6,18 +6,31 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BalitaController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/balita')->json();
-        $balita = $response['data'];
-        
-        return view('balita.index',compact('balita'))
-            ->with('i', ($request->input('balita', 1) - 1) * 5);   
+        if($request->session()->get('userAuth')['role_id'] == 3){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/petugas/with-balita')->json();
+            $balita = $this->paginate($response['data'])->withPath('/admin/balita');
+            
+            return view('balita.index-petugas',compact('balita'))
+            ->with('i', ($request->input('balita', 1) - 1) * 5); 
+        }else{
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/balita')->json();
+            $balita = $this->paginate($response['data'])->withPath('/admin/balita');
+            
+            return view('balita.index',compact('balita'))
+            ->with('i', ($request->input('balita', 1) - 1) * 5); 
+        }
     }
     
     public function create(Request $request)
@@ -94,5 +107,12 @@ class BalitaController extends Controller
     
         return redirect()->route('balita.index')
                         ->with('success','Data balita berhasil dihapus');
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

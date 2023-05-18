@@ -8,19 +8,32 @@ use Illuminate\Http\Request;
 use App\Dusun;
 use App\Keluarga;
 use App\DetailKeluarga;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class KeluargaController extends Controller
 {
 
     public function index(Request $request)
     {
-        $response = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/keluarga')->json();
-        $keluarga = $response['data'];
+        if($request->session()->get('userAuth')['role_id'] == 3){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/petugas/with-keluarga')->json();
+            $keluarga = $this->paginate($response['data'])->withPath('/admin/keluarga');
 
-        return view('keluarga.index', compact('keluarga'))
+            return view('keluarga.index-petugas', compact('keluarga'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
+        }else{
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/keluarga')->json();
+            $keluarga = $this->paginate($response['data'])->withPath('/admin/keluarga');
+            
+            return view('keluarga.index', compact('keluarga'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+        }  
     }
     
     public function create(Request $request)
@@ -131,5 +144,12 @@ class KeluargaController extends Controller
     
         // return redirect()->route('keluarga.index')
         //                 ->with('success','Data keluarga berhasil dihapus');
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

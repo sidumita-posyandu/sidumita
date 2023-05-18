@@ -32,7 +32,11 @@
                 <th width="300px">Nama Balita</th>
                 <th>Tanggal Lahir</th>
                 <th>Jenis Kelamin</th>
+                @if(Session::get('userAuth')['role_id'] <= 2)
                 <th width="290px">Action</th>
+                @else
+                <th width="200px">Action</th>
+                @endif
             </tr>
             @if(is_array($balita) || is_object($balita))
             @foreach ($balita as $k => $item)
@@ -43,6 +47,7 @@
                 <td>{{ $item['detail_keluarga']['jenis_kelamin'] }}</td>
                 <td>
                     <div class="row m-auto">
+                        @if(Session::get('userAuth')['role_id'] <= 2)
                         <form method="POST" action="{{ route('balita.destroy', [$item['id']]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -50,8 +55,9 @@
                                 onclick="return confirm('Yakin Menghapus Data?')"><i
                                     class='fas fa-trash mr-1'></i>Delete</button>
                         </form>
+                        @endif
                         <a class="btn btn-success btn-sm ml-1"
-                            href="{{ route('pemeriksaan-balita.create', [$item['id']]) }}"><i
+                            href="{{ route('create-balita-id', [$item['id']]) }}"><i
                                 class="fas fa-edit mr-1"></i>
                             Periksa</a>
                         <a class="btn btn-info btn-sm ml-1" href="{{ route('rekap-balita', [$item['id']]) }}"><i
@@ -63,6 +69,9 @@
             @endforeach
             @endif
         </table>
+        <div class="d-flex justify-content-center">
+            {{ $balita->links() }}
+        </div>
     </div>
 </div>
 @endsection

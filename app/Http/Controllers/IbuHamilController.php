@@ -5,18 +5,31 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class IbuHamilController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/ibu-hamil')->json();
-        $ibu_hamil = $response['data'];
-        
-        return view('ibu-hamil.index',compact('ibu_hamil'))
-            ->with('i', ($request->input('ibu-hamil', 1) - 1) * 5);   
+        if($request->session()->get('userAuth')['role_id'] == 3){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/petugas/with-ibu-hamil')->json();
+            $ibu_hamil = $this->paginate($response['data'])->withPath('/admin/ibu-hamil');
+            
+            return view('ibu-hamil.index-petugas',compact('ibu_hamil'))
+            ->with('i', ($request->input('ibu_hamils', 1) - 1) * 5); 
+        }else{
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/ibu-hamil')->json();
+            $ibu_hamil = $this->paginate($response['data'])->withPath('/admin/ibu-hamil');
+            
+            return view('ibu-hamil.index',compact('ibu_hamil'))
+                ->with('i', ($request->input('ibu-hamil', 1) - 1) * 5);   
+        }
     }
     
     public function create(Request $request)
@@ -95,5 +108,12 @@ class IbuHamilController extends Controller
     
         return redirect()->route('ibu-hamil.index')
                         ->with('success','Data ibu-hamil berhasil dihapus');
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

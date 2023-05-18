@@ -101,7 +101,7 @@
                             <input type="text" readonly class="form-control-plaintext" id="vaksin" name="vaksin"
                                 value="{{$imunisasi['vaksin']}}">
                         </div>
-                        @if($imunisasi['status'] == "sudah")
+                        @if($imunisasi['status'] == "Sudah")
                         <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
                                 name="vaksin"><span class="badge bg-success">{{$imunisasi['status']}}</span>
@@ -150,7 +150,7 @@
                             <input type="text" readonly class="form-control-plaintext" id="vaksin" name="vaksin"
                                 value="{{$imunisasi['vaksin']}}">
                         </div>
-                        @if($imunisasi['status'] == "sudah")
+                        @if($imunisasi['status'] == "Sudah")
                         <div class="col-sm-6">
                             <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
                                 name="vaksin"><span class="badge bg-success">{{$imunisasi['status']}}</span>

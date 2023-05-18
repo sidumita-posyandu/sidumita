@@ -103,6 +103,10 @@
                 <a class="nav-link text-success" id="head-tab" data-toggle="tab" href="#head" role="tab"
                     aria-controls="head" aria-selected="false">Lingkar Kepala</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link text-success" id="vaksin-tab" data-toggle="tab" href="#vaksin" role="tab"
+                    aria-controls="vaksin" aria-selected="false">Imunisasi</a>
+            </li>
         </ul>
         @if($balita['jenis_kelamin'] == 'Laki-Laki')
         <div class="tab-content" id="myTabContent">
@@ -115,6 +119,50 @@
             <div class="tab-pane fade" id="head" role="tabpanel" aria-labelledby="head-tab">
                 <div id="head_boys_0_2_years" style="height:500px;"></div>
             </div>
+            <div class="tab-pane fade" id="vaksin" role="tabpanel" aria-labelledby="vaksin-tab">
+            <div id="vaksin" class="row ml-2 mt-2">
+                    <div class="col-sm-6">
+                        <strong>Jenis Vaksin</strong>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>Status</strong>
+                    </div>
+                    @foreach($vaksin as $imunisasi)
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext" id="vaksin" name="vaksin"
+                            value="{{$imunisasi['vaksin']}}">
+                    </div>
+                    @if($imunisasi['status'] == "Sudah")
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-success">{{$imunisasi['status']}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
+                    </div>
+                    @elseif($imunisasi['status'] == "Akan")
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-warning">{{$imunisasi['status']}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
+                    </div>
+                    @else
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-danger">{{$imunisasi['status']}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"></span>
+                    </div>
+                    @endif
+                    @endforeach
+                </div>
+            </div>
         </div>
         @elseif($balita['jenis_kelamin'] == 'Perempuan')
         <div class="tab-content" id="myTabContent">
@@ -126,6 +174,38 @@
             </div>
             <div class="tab-pane fade" id="head" role="tabpanel" aria-labelledby="head-tab">
                 <div id="head_girls_0_2_years" style="height:500px;"></div>
+            </div>
+            <div class="tab-pane fade" id="vaksin" role="tabpanel" aria-labelledby="vaksin-tab">
+                <div id="vaksin" class="row ml-2 mt-2">
+                    <div class="col-sm-6">
+                        <h6>Jenis Vaksin</h6>
+                    </div>
+                    <div class="col-sm-6">
+                        <h6>Status</h6>
+                    </div>
+                    @foreach($vaksin as $imunisasi)
+                    <div class="col-sm-6">
+                        <input type="text" readonly class="form-control-plaintext" id="vaksin" name="vaksin"
+                            value="{{$imunisasi['vaksin']}}">
+                    </div>
+                    @if($imunisasi['status'] == "Sudah")
+                    <div class="col-sm-6">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-success">{{$imunisasi['status']}}</span>
+                    </div>
+                    @elseif($imunisasi['status'] == "Akan")
+                    <div class="col-sm-6">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-warning">{{$imunisasi['status']}}</span>
+                    </div>
+                    @else
+                    <div class="col-sm-6">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-danger">{{$imunisasi['status']}}</span>
+                    </div>
+                    @endif
+                    @endforeach
+                </div>
             </div>
         </div>
         @else

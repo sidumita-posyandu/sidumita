@@ -34,7 +34,7 @@
                 <th>Tanggal Lahir</th>
                 <th width="190px">Action</th>
             </tr>
-            @if(is_array($ibu_hamil) || is_object($ibu-hamil))
+            @if(is_array($ibu_hamil) || is_object($ibu_hamil))
             @foreach ($ibu_hamil as $k => $item)
             <tr>
                 <td>{{ ++$i }}</td>
@@ -58,6 +58,9 @@
             @endforeach
             @endif
         </table>
+        <div class="d-flex justify-content-center">
+            {{ $ibu_hamil->links() }}
+        </div>
     </div>
 </div>
 @endsection

@@ -52,6 +52,9 @@
             @endforeach
             @endif
         </table>
+        <div class="d-flex justify-content-center">
+            {{ $keluarga->links() }}
+        </div>
     </div>
 </div>
 @endsection

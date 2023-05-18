@@ -5,17 +5,26 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
-use App\Charts\pria_06_bulan;
 use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PemeriksaanBalitaController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
-        $pemeriksaanbalita = $response['data'];
+        if($request->session()->get('userAuth')['role_id'] == 3){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/petugas/with-pemeriksaan-balita')->json();
+            $pemeriksaanbalita = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-balita');
+        }else{
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
+            $pemeriksaanbalita = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-balita');  
+        }
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
@@ -38,9 +47,41 @@ class PemeriksaanBalitaController extends Controller
         ->get('http://127.0.0.1:8080/api/vaksin')->json();
         $vaksin = $response2['data'];
 
+        $response3 = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/dokter')->json();
+        $dokter = $response3['data'];
+
         $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
 
-        return view('pemeriksaanbalita.create', compact('balita','vaksin','tanggal_pemeriksaan'));
+        return view('pemeriksaanbalita.create', compact('dokter', 'balita','vaksin','tanggal_pemeriksaan'));
+    }
+
+    public function createWithId(Request $request, $id)
+    {
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
+        $balita = $response['data'];
+
+        $response2 = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/vaksin')->json();
+        $vaksin = $response2['data'];
+
+        $response3 = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/umur/'.' '.$balita['detail_keluarga_id'])->json();
+        $umur = $response3['data'];
+
+        $response4 = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/dokter')->json();
+        $dokter = $response4['data'];
+
+        $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
+
+        return view('pemeriksaanbalita.create-by-id', compact('dokter','balita','vaksin','tanggal_pemeriksaan','umur'));
     }
 
     public function store(Request $request)
@@ -84,9 +125,9 @@ class PemeriksaanBalitaController extends Controller
             'keluhan' => $request->keluhan,
             'penanganan' => $request->penanganan,
             'catatan' => $request->catatan,
-            'petugas_kesehatan_id' => 1,
-            'dokter_id' => 1,
-            'vitamin_id' => 3,
+            'petugas_kesehatan_id' => $request->petugas_kesehatan,
+            'dokter_id' => $request->dokter_id,
+            'vitamin_id' => $request->vitamin_id,
             'vaksin_id' => array($request->vaksin_id),
         ]);
 
@@ -126,6 +167,9 @@ class PemeriksaanBalitaController extends Controller
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get('http://127.0.0.1:8080/api/pemeriksaan-balita/umur/'.' '.$id)->json();
+        if ($response['data'] == []) {
+            return view('errors.no-data');
+         }
         $rekap = $response['data'];
 
         $response2 = Http::accept('application/json')
@@ -144,54 +188,56 @@ class PemeriksaanBalitaController extends Controller
         $dusun = $response4['data'];
 
         $data_terbaru = max($rekap);
+        if($data_terbaru['umur_balita'] <= 24){
 
-        $response5 = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-tinggi-boys', [
-            'data_ukur' => $data_terbaru['tinggi_badan'],
-            'umur' => $data_terbaru['umur_balita'],
-        ]);
-        $hasil_tinggi_boys = json_decode((string) $response5->getBody(), true)['data'];
+            $response5 = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/cek-tinggi-boys', [
+                'data_ukur' => $data_terbaru['tinggi_badan'],
+                'umur' => $data_terbaru['umur_balita'],
+            ]);
+            $hasil_tinggi_boys = json_decode((string) $response5->getBody(), true)['data'];
 
-        $response6 = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-tinggi-girls', [
-            'data_ukur' => $data_terbaru['tinggi_badan'],
-            'umur' => $data_terbaru['umur_balita'],
-        ]);
-        $hasil_tinggi_girls = json_decode((string) $response6->getBody(), true)['data'];
+            $response6 = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/cek-tinggi-girls', [
+                'data_ukur' => $data_terbaru['tinggi_badan'],
+                'umur' => $data_terbaru['umur_balita'],
+            ]);
+            $hasil_tinggi_girls = json_decode((string) $response6->getBody(), true)['data'];
 
-        $response7 = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-berat-boys', [
-            'data_ukur' => $data_terbaru['berat_badan'],
-            'umur' => $data_terbaru['umur_balita'],
-        ]);
-        $hasil_berat_boys = json_decode((string) $response7->getBody(), true)['data'];
+            $response7 = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/cek-berat-boys', [
+                'data_ukur' => $data_terbaru['berat_badan'],
+                'umur' => $data_terbaru['umur_balita'],
+            ]);
+            $hasil_berat_boys = json_decode((string) $response7->getBody(), true)['data'];
 
-        $response8 = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-berat-girls', [
-            'data_ukur' => $data_terbaru['berat_badan'],
-            'umur' => $data_terbaru['umur_balita'],
-        ]);
-        $hasil_berat_girls = json_decode((string) $response8->getBody(), true)['data'];
+            $response8 = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/cek-berat-girls', [
+                'data_ukur' => $data_terbaru['berat_badan'],
+                'umur' => $data_terbaru['umur_balita'],
+            ]);
+            $hasil_berat_girls = json_decode((string) $response8->getBody(), true)['data'];
 
-        $response8 = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-kepala-boys', [
-            'data_ukur' => $data_terbaru['lingkar_kepala'],
-            'umur' => $data_terbaru['umur_balita'],
-        ]);
-        $hasil_kepala_boys = json_decode((string) $response8->getBody(), true)['data'];
+            $response8 = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/cek-kepala-boys', [
+                'data_ukur' => $data_terbaru['lingkar_kepala'],
+                'umur' => $data_terbaru['umur_balita'],
+            ]);
+            $hasil_kepala_boys = json_decode((string) $response8->getBody(), true)['data'];
 
-        $response9 = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-kepala-girls', [
-            'data_ukur' => $data_terbaru['lingkar_kepala'],
-            'umur' => $data_terbaru['umur_balita'],
-        ]);
-        $hasil_kepala_girls = json_decode((string) $response9->getBody(), true)['data'];
+            $response9 = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post('http://127.0.0.1:8080/api/cek-kepala-girls', [
+                'data_ukur' => $data_terbaru['lingkar_kepala'],
+                'umur' => $data_terbaru['umur_balita'],
+            ]);
+            $hasil_kepala_girls = json_decode((string) $response9->getBody(), true)['data'];
+        }
 
         $ltinggi0 = [49.9, 54.7, 58.4, 61.4, 63.9, 65.9, 67.6, 69.2, 70.6, 72, 73.3, 74.5, 75.7, 76.9, 78.0,
         79.1, 80.2, 81.2, 82.3, 83.2, 84.2, 85.1, 86, 86.9, 87.8];
@@ -306,16 +352,27 @@ class PemeriksaanBalitaController extends Controller
         for ($i=0; $i < count($rekap); $i++) { 
             // ($i == (int)$rekap[$i]['umur_balita']) ? ($tinggi_badan[(int)$rekap[$i]['umur_balita']] = (int)$rekap[$i]['tinggi_badan']) : $tinggi_badan[$i] = NULL && $tinggi_badan[];           
             // $tinggi_badan[(int)$rekap[$i]['umur_balita']] = (int)$rekap[$i]['tinggi_badan'];
+            if($rekap[$i]['umur_balita'] > 24){
+                break;
+            }
+
             $tinggi_badan[(int)$rekap[$i]['umur_balita']] = (int)$rekap[$i]['tinggi_badan'];
             $berat_badan[(int)$rekap[$i]['umur_balita']] = (int)$rekap[$i]['berat_badan'];
             $lingkar_kepala[(int)$rekap[$i]['umur_balita']] = (int)$rekap[$i]['lingkar_kepala'];
         }
 
-        // $tinggi_badan[8] = NULL;
-        // $tinggi_badan[1] = 2;
-        // $tinggi_badan[2] = null;
-        // $tinggi_badan[3] = 4;
+        $response10 = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/cek-imunisasi-balita/'.' '.$id);
+        $vaksin = $response10['data'];
 
-        return view('pemeriksaanbalita.rekap-balita',compact('thick_position','tinggi_badan', 'berat_badan', 'lingkar_kepala', 'rekap', 'balita', 'umur', 'dusun', 'ltinggi0', 'ltinggi1', 'ltinggi2', 'ltinggi3', 'ltinggimin1', 'ltinggimin2', 'ltinggimin3', 'ptinggi0', 'ptinggi1', 'ptinggi2', 'ptinggi3', 'ptinggimin1', 'ptinggimin2', 'ptinggimin3', 'lberat0', 'lberat1', 'lberat2', 'lberat3', 'lberatmin1', 'lberatmin2', 'lberatmin3', 'pberat0', 'pberat1', 'pberat2', 'pberat3', 'pberatmin1', 'pberatmin2', 'pberatmin3', 'lkepala0', 'lkepala1', 'lkepala2', 'lkepala3', 'lkepalamin1', 'lkepalamin2', 'lkepalamin3', 'pkepala0', 'pkepala1', 'pkepala2', 'pkepala3', 'pkepalamin1', 'pkepalamin2', 'pkepalamin3'));
+        return view('pemeriksaanbalita.rekap-balita',compact('vaksin','thick_position','tinggi_badan', 'berat_badan', 'lingkar_kepala', 'rekap', 'balita', 'umur', 'dusun', 'ltinggi0', 'ltinggi1', 'ltinggi2', 'ltinggi3', 'ltinggimin1', 'ltinggimin2', 'ltinggimin3', 'ptinggi0', 'ptinggi1', 'ptinggi2', 'ptinggi3', 'ptinggimin1', 'ptinggimin2', 'ptinggimin3', 'lberat0', 'lberat1', 'lberat2', 'lberat3', 'lberatmin1', 'lberatmin2', 'lberatmin3', 'pberat0', 'pberat1', 'pberat2', 'pberat3', 'pberatmin1', 'pberatmin2', 'pberatmin3', 'lkepala0', 'lkepala1', 'lkepala2', 'lkepala3', 'lkepalamin1', 'lkepalamin2', 'lkepalamin3', 'pkepala0', 'pkepala1', 'pkepala2', 'pkepala3', 'pkepalamin1', 'pkepalamin2', 'pkepalamin3'));
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }

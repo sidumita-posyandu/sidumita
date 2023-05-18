@@ -22,7 +22,7 @@
     </div>
     <div class="card-body">
         <div class="float-left"><a class="btn btn-success btn-sm mb-2"
-                href="{{ route('pemeriksaan-balita.create') }}"><i class="fas fa-plus mr-1"></i>
+                href="{{ route('balita.index') }}"><i class="fas fa-plus mr-1"></i>
                 Tambah Pemeriksaan Balita</a>
         </div>
         <table class="table table-bordered">
@@ -47,6 +47,9 @@
             @endforeach
             @endif
         </table>
+        <div class="d-flex justify-content-center">
+            {{ $pemeriksaanbalita->links() }}
+        </div>
     </div>
 </div>
 

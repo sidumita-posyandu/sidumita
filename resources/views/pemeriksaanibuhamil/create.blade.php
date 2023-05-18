@@ -48,7 +48,7 @@
                 <div class="form-group">
                     <strong>Tanggal Pemeriksaan:</strong>
                     <input type="text" name="tanggal_pemeriksaan" class="form-control"
-                        placeholder="Tanggal Pemeriksaan">
+                        value="{{ $tanggal_pemeriksaan }}" readonly>
                 </div>
             </div>
         </div>

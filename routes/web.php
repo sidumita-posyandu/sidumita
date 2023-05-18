@@ -47,6 +47,8 @@ Route::group([
     
     Route::resource('jadwal-pemeriksaan', JadwalPemeriksaanController::class);
     Route::resource('pemeriksaan-balita', PemeriksaanBalitaController::class);
+    Route::get('/pemeriksaan-balita/create/{id}', [App\Http\Controllers\PemeriksaanBalitaController::class, 'createWithId'])->name('create-balita-id');
+    Route::get('/pemeriksaan-ibu-hamil/create/{id}', [App\Http\Controllers\PemeriksaanIbuHamilController::class, 'createWithId'])->name('create-ibu-hamil-id');
     Route::resource('pemeriksaan-ibuhamil', PemeriksaanIbuHamilController::class);
 
     Route::get('/rekap-pemeriksaan-balita/{id}', [App\Http\Controllers\PemeriksaanBalitaController::class, 'rekap_balita'])->name('rekap-balita');
@@ -54,6 +56,8 @@ Route::group([
 
     Route::get('/petugas-kesehatan/profile', [App\Http\Controllers\PetugasKesehatanController::class, 'profile'])->name('petugas.profile');
     Route::post('/petugas-kesehatan/profile/{id}', [App\Http\Controllers\PetugasKesehatanController::class, 'update'])->name('petugas.update');
+
+    Route::resource('dokter', DokterController::class);
 });
 
 Route::group(['middleware' => ['ceklogin']], function () {

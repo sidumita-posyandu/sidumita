@@ -22,7 +22,7 @@
         Data Pemeriksaan Ibu Hamil
     </div>
     <div class="card-body">
-        <a class="btn btn-success btn-sm mb-2" href="{{ route('pemeriksaan-ibuhamil.create') }}"><i
+        <a class="btn btn-success btn-sm mb-2" href="{{ route('ibu-hamil.index') }}"><i
                 class="fas fa-plus mr-1"></i>
             Tambah Pemeriksaan Ibu Hamil</a>
         <table class="table table-bordered">
@@ -47,6 +47,9 @@
             @endforeach
             @endif
         </table>
+        <div class="d-flex justify-content-center">
+            {{ $pemeriksaanibuhamil->links() }}
+        </div>
     </div>
 </div>
 

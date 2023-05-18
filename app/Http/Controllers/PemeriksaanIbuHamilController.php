@@ -5,19 +5,28 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class PemeriksaanIbuHamilController extends Controller
 {
     public function index(Request $request)
     {
-        $response = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil')->json();
-        $pemeriksaanibuhamil = $response['data'];
+        if($request->session()->get('userAuth')['role_id'] == 3){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/petugas/with-pemeriksaan-ibu-hamil')->json();
+            $pemeriksaanibuhamil = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-ibuhamil');
+        }else{
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil')->json();
+            $pemeriksaanibuhamil = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-ibuhamil');
+        }
         
         return view('pemeriksaanibuhamil.index',compact('pemeriksaanibuhamil'));
-
-        
     }
 
     public function create(Request $request)
@@ -27,7 +36,21 @@ class PemeriksaanIbuHamilController extends Controller
         ->get('http://127.0.0.1:8080/api/ibu-hamil')->json();
         $ibuhamil = $response['data'];
 
-        return view('pemeriksaanibuhamil.create', compact('ibuhamil'));
+        $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
+
+        return view('pemeriksaanibuhamil.create', compact('ibuhamil', 'tanggal_pemeriksaan'));
+    }
+
+    public function createWithId(Request $request, $id)
+    {
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get('http://127.0.0.1:8080/api/ibu-hamil/'.' '.$id)->json();
+        $ibuhamil = $response['data'];
+
+        $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
+
+        return view('pemeriksaanibuhamil.create-by-id', compact('ibuhamil', 'tanggal_pemeriksaan'));
     }
 
     public function store(Request $request)
@@ -114,5 +137,12 @@ class PemeriksaanIbuHamilController extends Controller
         }
 
         return view('pemeriksaanibuhamil.rekap-ibuhamil', compact('rekap', 'ibuhamil', 'dusun', 'hasil_pengukuran', 'data_grafik', 'berat_badan', 'tick_position'));
+    }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 }
