@@ -22,17 +22,6 @@
 
 </head>
 
-<style>
-    a:link { text-decoration: none;   }
-    a:hover { color: #1ccc8c; }
-
-
-
-    a { color: grey; }
-
-
-</style>
-
 <body class="bg-gradient" style="background-color: #eee;">
 
     <div class="container">
@@ -53,26 +42,11 @@
                                     <div class="text-left">
                                         <strong class="text-gray-900" style="font-size: 24px;">SIDUMITA</strong>
                                         <hr>
+                                        <h6 style="font-size: 14px;">Silahkan cek emailmu untuk melakukan reset password</h3>
                                     </div>
-                                    @if($errors->any())
-                                    <div class="alert alert-danger">
-                                        <p>{{ $errors->first() }}</p>
+                                    <div class="user">
+                                        <a href="{{route('login')}}"><button class="btn btn-secondary btn-user btn-block mt-4">Kembali ke menu login</button></a>
                                     </div>
-                                    @endif
-                                    <form action="{{ route('login.store') }}" method="POST" class="user">
-                                        @csrf
-                                        <div class="form-group mt-4">
-                                            <input type="email" class="form-control form-control-user" name="email"
-                                                placeholder="Masukan Alamat Email">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                name="password" placeholder="Masukan Password">
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-user btn-block">Log
-                                            In</button>
-                                    </form>
-                                    <div class="text-center mt-2" style="font-size: 14px;"><a href="{{route('forget-password')}}">Lupa Password?</a></div>
                                 </div>
                             </div>
                         </div>

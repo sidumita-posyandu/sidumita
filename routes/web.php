@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/login', [App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::get('/forget-password', [App\Http\Controllers\Auth\ForgetPasswordController::class, 'index'])->name('forget-password');
+Route::post('/forget-password/store', [App\Http\Controllers\Auth\ForgetPasswordController::class, 'store'])->name('forget-password.store');
+Route::get('/resetPassword', [App\Http\Controllers\Auth\ForgetPasswordController::class, 'getResetRequest'])->name('getResetRequest');
+Route::post('/resetPassword/store', [App\Http\Controllers\Auth\ForgetPasswordController::class, 'setResetRequest'])->name('getResetRequest.store');
 Route::post('/login/authenticate', [App\Http\Controllers\Auth\LoginController::class, 'authenticate'])->name('login.store');
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'peserta'])->name('peserta');
