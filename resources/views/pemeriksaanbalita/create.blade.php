@@ -138,3 +138,20 @@
     </div>
 </form>
 @endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $("#form-input").css("display", "none");
+        $(".detail").click(
+            function() { //Memberikan even ketika class detail di klik (class detail ialah class radio button)
+                if ($("input[name='alamat']:checked").val() ==
+                    "berbeda") { //Jika radio button "berbeda" dipilih maka tampilkan form-inputan
+                    $("#form-input").slideDown("fast"); //Efek Slide Down (Menampilkan Form Input)
+                } else {
+                    $("#form-input").slideUp("fast"); //Efek Slide Up (Menghilangkan Form Input)
+                }
+            });
+    });
+</script>
+@endsection

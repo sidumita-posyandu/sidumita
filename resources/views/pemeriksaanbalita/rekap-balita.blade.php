@@ -121,11 +121,14 @@
             </div>
             <div class="tab-pane fade" id="vaksin" role="tabpanel" aria-labelledby="vaksin-tab">
                 <div id="vaksin" class="row ml-2 mt-2">
-                    <div class="col-sm-6">
+                    <div class="col-sm-4">
                         <strong>Jenis Vaksin</strong>
                     </div>
                     <div class="col-sm-4">
                         <strong>Status</strong>
+                    </div>
+                    <div class="col-sm-4">
+                        <strong>Waktu Pemeriksaan</strong>
                     </div>
                     @foreach($vaksin as $imunisasi)
                     <div class="col-sm-4">

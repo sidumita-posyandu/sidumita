@@ -37,21 +37,21 @@
                     <strong>Nama balita:</strong>
                     <input type="text" name="balita_id" class="form-control"
                         value="{{ $balita['id'] }}" hidden>
-                    <input type="text" name="nama_balita" class="form-control-plaintext"
+                    <input type="text" class="form-control-plaintext"
                         value="{{ $balita['detail_keluarga']['nama_lengkap'] }}" readonly>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Jenis Kelamin:</strong>
-                    <input type="text" name="jenis_kelamin" class="form-control-plaintext"
+                    <input type="text" class="form-control-plaintext"
                         value="{{ $balita['detail_keluarga']['jenis_kelamin'] }}" readonly>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Umur Balita (bulan):</strong>
-                    <input type="text" name="nama_balita" class="form-control-plaintext"
+                    <input type="text" class="form-control-plaintext"
                         value="{{ $umur['usia_bulan'] }} bulan" readonly>
                 </div>
             </div>
@@ -115,15 +115,19 @@
                         <input type="text" name="catatan" class="form-control" placeholder="Catatan Khusus"></input>
                     </div>
                     <div class="form-group">
+                        <strong>Vitamin:</strong>
                         <select class="form-control" id="vitamin" name="vitamin_id">
-                            <option value="" selected disabled>-- Pilih Dokter / Bidan --</option>
-                            @foreach ($dokter as $d)
-                            <option value="{{ $d['id'] }}">{{ $d['nama_dokter'] }}</option>
+                            <option value="" selected disabled>-- Pilih Vitamin --</option>
+                            @foreach ($vitamin as $v)
+                            <option value="{{ $v['id'] }}">{{ $v['nama_vitamin'] }}</option>
                             @endforeach
                         </select>
                     </div>
+                    @if(Session::get('userAuth')['role_id'] == 1)
                     <input type="hidden" name="petugas_kesehatan_id" class="form-control" value="1">
-                    <input type="hidden" name="dokter_id" class="form-control" value="1">
+                    @elseif(Session::get('userAuth')['role_id'] == 3)
+                    <input type="hidden" name="petugas_kesehatan_id" class="form-control" value="{{Session::get('userAuth')['id']}}">
+                    @endif
                 </div>
             </div>
         </div>
@@ -150,8 +154,8 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group">
-                        <input type="radio" name="vaksin" value="sama" class="detail" checked> Tidak Vaksin
-                        <input type="radio" name="vaksin" value="berbeda" class="detail ml-5"> Lakukan Vaksin
+                        <input type="radio" name="alamat" value="sama" class="detail" checked> Tidak Vaksin
+                        <input type="radio" name="alamat" value="berbeda" class="detail ml-5"> Lakukan Vaksin
                         <div id="form-input" class="mt-3">
                             <strong>Jenis Vaksin</strong>
                             @foreach($vaksin as $listvaksin)
@@ -171,4 +175,21 @@
         <button type="submit" class="btn btn-success btn-block">Submit</button>
     </div>
 </form>
+@endsection
+
+@section('script')
+<script>
+    $(document).ready(function() {
+        $("#form-input").css("display", "none");
+        $(".detail").click(
+            function() { //Memberikan even ketika class detail di klik (class detail ialah class radio button)
+                if ($("input[name='alamat']:checked").val() ==
+                    "berbeda") { //Jika radio button "berbeda" dipilih maka tampilkan form-inputan
+                    $("#form-input").slideDown("fast"); //Efek Slide Down (Menampilkan Form Input)
+                } else {
+                    $("#form-input").slideUp("fast"); //Efek Slide Up (Menghilangkan Form Input)
+                }
+            });
+    });
+</script>
 @endsection

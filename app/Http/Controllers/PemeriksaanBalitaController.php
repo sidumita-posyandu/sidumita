@@ -79,9 +79,14 @@ class PemeriksaanBalitaController extends Controller
         ->get(env('BASE_API_URL').'dokter')->json();
         $dokter = $response4['data'];
 
+        $response5 = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get(env('BASE_API_URL').'vitamin')->json();
+        $vitamin = $response5['data'];
+
         $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
 
-        return view('pemeriksaanbalita.create-by-id', compact('dokter','balita','vaksin','tanggal_pemeriksaan','umur'));
+        return view('pemeriksaanbalita.create-by-id', compact('dokter','balita','vaksin','tanggal_pemeriksaan','umur', 'vitamin'));
     }
 
     public function store(Request $request)
@@ -112,41 +117,47 @@ class PemeriksaanBalitaController extends Controller
         ->get(env('BASE_API_URL').'umur/'.' '.$cekBalita['detail_keluarga_id'])->json();
         $cekUmur = $responseUmur['data'];
         
-        $response = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->post(env('BASE_API_URL').'pemeriksaan-balita', [
-            'balita_id' => $request->balita_id,
-            'umur_balita' => $cekUmur['usia_bulan'],
-            'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
-            'berat_badan' => $request->berat_badan,
-            'tinggi_badan' => $request->tinggi_badan,
-            'lingkar_kepala' => $request->lingkar_kepala,
-            'lingkar_lengan' => $request->lingkar_lengan,
-            'keluhan' => $request->keluhan,
-            'penanganan' => $request->penanganan,
-            'catatan' => $request->catatan,
-            'petugas_kesehatan_id' => $request->petugas_kesehatan,
-            'dokter_id' => $request->dokter_id,
-            'vitamin_id' => $request->vitamin_id,
-            'vaksin_id' => array($request->vaksin_id),
-        ]);
+        if($request->session()->get('userAuth')['role_id'] == 3){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post(env('BASE_API_URL').'pemeriksaan-balita/byPetugas', [
+                'balita_id' => $request->balita_id,
+                'umur_balita' => $cekUmur['usia_bulan'],
+                'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
+                'berat_badan' => $request->berat_badan,
+                'tinggi_badan' => $request->tinggi_badan,
+                'lingkar_kepala' => $request->lingkar_kepala,
+                'lingkar_lengan' => $request->lingkar_lengan,
+                'keluhan' => $request->keluhan,
+                'penanganan' => $request->penanganan,
+                'catatan' => $request->catatan,
+                'petugas_kesehatan_id' => $request->petugas_kesehatan,
+                'dokter_id' => $request->dokter_id,
+                'vitamin_id' => $request->vitamin_id,
+                'vaksin_id' => array($request->vaksin_id),
+            ]);
+        }
 
-        // if ($request->vaksin_id != 0) {
-        //     $getId = Http::accept('application/json')
-        //     ->withToken($request->session()->get('token'))
-        //     ->get(env('BASE_API_URL').'pemeriksaan-balita')->json();
-        //     $maxId = max($getId['data'])['id'];
-            
-        //     foreach ($data['vaksin_id'] as $item => $value) {          
-        //         $response2 = Http::accept('application/json')
-        //         ->withToken($request->session()->get('token'))
-        //         ->post(env('BASE_API_URL').'detailpemeriksaan-balita', [
-        //             'pemeriksaan_balita_id' => $maxId,
-        //             'balita_id' => $request->balita_id,
-        //             'vaksin_id' => $data['vaksin_id'][$item],
-        //         ]);
-        //     }
-        // }
+        else{
+            $responseAdmin = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post(env('BASE_API_URL').'pemeriksaan-balita-admin', [
+                'balita_id' => $request->balita_id,
+                'umur_balita' => $cekUmur['usia_bulan'],
+                'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
+                'berat_badan' => $request->berat_badan,
+                'tinggi_badan' => $request->tinggi_badan,
+                'lingkar_kepala' => $request->lingkar_kepala,
+                'lingkar_lengan' => $request->lingkar_lengan,
+                'keluhan' => $request->keluhan,
+                'penanganan' => $request->penanganan,
+                'catatan' => $request->catatan,
+                'petugas_kesehatan_id' => $request->petugas_kesehatan_id,
+                'dokter_id' => $request->dokter_id,
+                'vitamin_id' => $request->vitamin_id,
+            ]);
+
+        }
         
         return redirect()->route('pemeriksaan-balita.index')
         ->with('success','Pemeriksaan Balita berhasil dibuat.');
