@@ -11,8 +11,13 @@ class PemeriksaanBalitaController extends Controller
     public function index(Request $request){
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/me/balita')->json();
-        $balita = $response['data'];
+        ->get(env('BASE_API_URL').'me/balita')->json();
+
+        if($response['exception'] == 'ErrorException'){
+            $balita = "Data belum terdaftar";
+        }else{
+            $balita = $response['data'];
+        }
 
         $token = $request->session()->get('token');
 
@@ -22,12 +27,12 @@ class PemeriksaanBalitaController extends Controller
     // public function index(Request $request){
     //     $response = Http::accept('application/json')
     //     ->withToken($request->session()->get('token'))
-    //     ->get('http://127.0.0.1:8080/api/pemeriksaan-balita/46')->json();
+    //     ->get(env('BASE_API_URL').'pemeriksaan-balita/46')->json();
     //     $pemeriksaan = $response['data'];
 
         // $response2 = Http::accept('application/json')
         // ->withToken($request->session()->get('token'))
-        // ->post('http://127.0.0.1:8080/api/cek-tinggi-boys', [
+        // ->post(env('BASE_API_URL').'cek-tinggi-boys', [
         //     'data_ukur' => $pemeriksaan['tinggi_badan'],
         //     'age' => 0,
         // ]);
@@ -39,22 +44,22 @@ class PemeriksaanBalitaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/pemeriksaan-balita/balita/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'pemeriksaan-balita/balita/'.' '.$id)->json();
         $det_balita = $response['data'][0];
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/detail-keluarga/'.' '.$det_balita['balita']['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'detail-keluarga/'.' '.$det_balita['balita']['detail_keluarga_id'])->json();
         $balita = $response2['data'][0];
         
         $response3 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/umur/'.' '.$det_balita['balita']['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'umur/'.' '.$det_balita['balita']['detail_keluarga_id'])->json();
         $umur = $response3['data'];
 
         $response4 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun/'.' '.$balita['keluarga']['dusun_id'])->json();
+        ->get(env('BASE_API_URL').'dusun/'.' '.$balita['keluarga']['dusun_id'])->json();
         $dusun = $response4['data'];
 
         return view('peserta.pemeriksaan-balita.detail-balita', compact('balita', 'det_balita', 'umur', 'dusun'));
@@ -64,31 +69,31 @@ class PemeriksaanBalitaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/pemeriksaan-balita/umur/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'pemeriksaan-balita/umur/'.' '.$id)->json();
         $rekap = $response['data'];
 
         $data_terbaru = max($rekap);
         
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/detail-keluarga/'.' '.$rekap[0]['balita']['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'detail-keluarga/'.' '.$rekap[0]['balita']['detail_keluarga_id'])->json();
         $balita = $response2['data'][0];
 
         $response3 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/umur/'.' '.$data_terbaru['balita']['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'umur/'.' '.$data_terbaru['balita']['detail_keluarga_id'])->json();
         $umur = $response3['data'];
 
         $response4 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun/'.' '.$balita['keluarga']['dusun_id'])->json();
+        ->get(env('BASE_API_URL').'dusun/'.' '.$balita['keluarga']['dusun_id'])->json();
         $dusun = $response4['data'];
 
         $data_terbaru = max($rekap);
 
         $response5 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-tinggi-boys', [
+        ->post(env('BASE_API_URL').'cek-tinggi-boys', [
             'data_ukur' => $data_terbaru['tinggi_badan'],
             'umur' => $data_terbaru['umur_balita'],
         ]);
@@ -96,7 +101,7 @@ class PemeriksaanBalitaController extends Controller
 
         $response6 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-tinggi-girls', [
+        ->post(env('BASE_API_URL').'cek-tinggi-girls', [
             'data_ukur' => $data_terbaru['tinggi_badan'],
             'umur' => $data_terbaru['umur_balita'],
         ]);
@@ -104,7 +109,7 @@ class PemeriksaanBalitaController extends Controller
 
         $response7 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-berat-boys', [
+        ->post(env('BASE_API_URL').'cek-berat-boys', [
             'data_ukur' => $data_terbaru['berat_badan'],
             'umur' => $data_terbaru['umur_balita'],
         ]);
@@ -112,7 +117,7 @@ class PemeriksaanBalitaController extends Controller
 
         $response8 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-berat-girls', [
+        ->post(env('BASE_API_URL').'cek-berat-girls', [
             'data_ukur' => $data_terbaru['berat_badan'],
             'umur' => $data_terbaru['umur_balita'],
         ]);
@@ -120,7 +125,7 @@ class PemeriksaanBalitaController extends Controller
 
         $response8 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-kepala-boys', [
+        ->post(env('BASE_API_URL').'cek-kepala-boys', [
             'data_ukur' => $data_terbaru['lingkar_kepala'],
             'umur' => $data_terbaru['umur_balita'],
         ]);
@@ -128,7 +133,7 @@ class PemeriksaanBalitaController extends Controller
 
         $response9 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-kepala-girls', [
+        ->post(env('BASE_API_URL').'cek-kepala-girls', [
             'data_ukur' => $data_terbaru['lingkar_kepala'],
             'umur' => $data_terbaru['umur_balita'],
         ]);
@@ -247,7 +252,7 @@ class PemeriksaanBalitaController extends Controller
 
         $response10 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/cek-imunisasi-balita/'.' '.$id);
+        ->get(env('BASE_API_URL').'cek-imunisasi-balita/'.' '.$id);
         $vaksin = $response10['data'];
 
         return view('peserta.pemeriksaan-balita.grafik',compact('vaksin','data_terbaru','hasil_tinggi_girls', 'hasil_berat_boys', 'hasil_berat_girls', 'hasil_kepala_boys', 'hasil_tinggi_girls', 'thick_position','tinggi_badan','berat_badan','lingkar_kepala','hasil_tinggi_boys', 'rekap', 'balita', 'umur', 'dusun', 'ltinggi0', 'ltinggi1', 'ltinggi2', 'ltinggi3', 'ltinggimin1', 'ltinggimin2', 'ltinggimin3', 'ptinggi0', 'ptinggi1', 'ptinggi2', 'ptinggi3', 'ptinggimin1', 'ptinggimin2', 'ptinggimin3', 'lberat0', 'lberat1', 'lberat2', 'lberat3', 'lberatmin1', 'lberatmin2', 'lberatmin3', 'pberat0', 'pberat1', 'pberat2', 'pberat3', 'pberatmin1', 'pberatmin2', 'pberatmin3', 'lkepala0', 'lkepala1', 'lkepala2', 'lkepala3', 'lkepalamin1', 'lkepalamin2', 'lkepalamin3', 'pkepala0', 'pkepala1', 'pkepala2', 'pkepala3', 'pkepalamin1', 'pkepalamin2', 'pkepalamin3'));

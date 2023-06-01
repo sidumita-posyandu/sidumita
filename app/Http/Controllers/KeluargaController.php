@@ -20,7 +20,7 @@ class KeluargaController extends Controller
         if($request->session()->get('userAuth')['role_id'] == 3){
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/petugas/with-keluarga')->json();
+            ->get(env('BASE_API_URL').'petugas/with-keluarga')->json();
             $keluarga = $this->paginate($response['data'])->withPath('/admin/keluarga');
 
             return view('keluarga.index-petugas', compact('keluarga'))
@@ -28,7 +28,7 @@ class KeluargaController extends Controller
         }else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/keluarga')->json();
+            ->get(env('BASE_API_URL').'keluarga')->json();
             $keluarga = $this->paginate($response['data'])->withPath('/admin/keluarga');
             
             return view('keluarga.index', compact('keluarga'))
@@ -40,7 +40,7 @@ class KeluargaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/provinsi')->json();
+        ->get(env('BASE_API_URL').'provinsi')->json();
         $provinsi = $response['data'];
 
         $token = $request->session()->get('token');
@@ -60,7 +60,7 @@ class KeluargaController extends Controller
                 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/auth/register', [
+        ->post(env('BASE_API_URL').'auth/register', [
             'name' => $request->kepala_keluarga,
             'email' => $request->email,
             'password' => $request->password,
@@ -73,7 +73,7 @@ class KeluargaController extends Controller
 
         // $response = Http::accept('application/json')
         // ->withToken($request->session()->get('token'))
-        // ->post('http://127.0.0.1:8080/api/keluarga', [
+        // ->post(env('BASE_API_URL').'keluarga', [
         //     'no_kartu_keluarga' => $request->no_kartu_keluarga,
         //     'kepala_keluarga' => $request->kepala_keluarga,
         //     'alamat' => $request->alamat,
@@ -84,7 +84,7 @@ class KeluargaController extends Controller
 
         // $getId = Http::accept('application/json')
         // ->withToken($request->session()->get('token'))
-        // ->get('http://127.0.0.1:8080/api/keluarga')->json();
+        // ->get(env('BASE_API_URL').'keluarga')->json();
         // $maxId = max($getId['data'])['id'];
 
         // // dd($data);
@@ -92,7 +92,7 @@ class KeluargaController extends Controller
         // foreach ($data['nik'] as $item => $value) {          
         //     $response2 = Http::accept('application/json')
         //     ->withToken($request->session()->get('token'))
-        //     ->post('http://127.0.0.1:8080/api/detail-keluarga', [
+        //     ->post(env('BASE_API_URL').'detail-keluarga', [
         //         'keluarga_id' => $maxId,
         //         'nik' => $data['nik'][$item],
         //         'nama_lengkap' => $data['nama_lengkap'][$item],
@@ -118,7 +118,7 @@ class KeluargaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/keluarga/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'keluarga/'.' '.$id)->json();
         $keluarga = $response['data'];
         
         return view('keluarga.show',compact('keluarga'));

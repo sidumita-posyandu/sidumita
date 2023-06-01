@@ -16,20 +16,20 @@ class ProvinsiController extends Controller
 		// 	dd( $request->session()->get('token'));
 		// }
         
-        // $response = Http::get('http://127.0.0.1:8080/api/provinsi', [
+        // $response = Http::get(env('BASE_API_URL').'provinsi', [
         //     'headers' => [
         //         'Accept' => 'application/json',
         //         'Authorization' => 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODA4MFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY3OTM4NTMyMCwiZXhwIjoxNjc5Mzg4OTIwLCJuYmYiOjE2NzkzODUzMjAsImp0aSI6IjRmOERmS1VTZm80YVVEbVAiLCJzdWIiOjcsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.iOkwAEwM6ZD-wx4w44jpllRc3fASnOc1YHC9XhwIh1M',
         //     ],
         // ])->json();
 
-        // $response = Http::get('http://127.0.0.1:8080/api/user');
+        // $response = Http::get(env('BASE_API_URL').'user');
         // $response->headers->set('Accept', 'application/json');
         // $response->headers->set('Authorization', 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODA4MFwvYXBpXC9hdXRoXC9sb2dpbiIsImlhdCI6MTY3OTM4NTMyMCwiZXhwIjoxNjc5Mzg4OTIwLCJuYmYiOjE2NzkzODUzMjAsImp0aSI6IjRmOERmS1VTZm80YVVEbVAiLCJzdWIiOjcsInBydiI6Ijg3ZTBhZjFlZjlmZDE1ODEyZmRlYzk3MTUzYTE0ZTBiMDQ3NTQ2YWEifQ.iOkwAEwM6ZD-wx4w44jpllRc3fASnOc1YHC9XhwIh1M');
         // $provinsi = json_decode($response->getContent());
         // dd(json_decode($response, true));
 
-        // $response = Request::create('http://127.0.0.1:8080/api/provinsi', 'GET');
+        // $response = Request::create(env('BASE_API_URL').'provinsi', 'GET');
         // $response->headers->set('Accept', 'application/json');
         // $response->headers->set('Authorization', 'Bearer '.$token);
         // $res = app()->handle($response);
@@ -37,7 +37,7 @@ class ProvinsiController extends Controller
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/provinsi')
+            ->get(env('BASE_API_URL').'provinsi')
             ->json();
         
         $provinsi = $response['data'];
@@ -59,11 +59,11 @@ class ProvinsiController extends Controller
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/provinsi', [
+            ->post(env('BASE_API_URL').'provinsi', [
                 'nama_provinsi' => $request->nama_provinsi,
             ]);
 
-        // $response = Http::post('http://127.0.0.1:8080/api/provinsi', [
+        // $response = Http::post(env('BASE_API_URL').'provinsi', [
         //     'nama_provinsi' => $request->nama_provinsi,
 
         // ]);
@@ -76,10 +76,10 @@ class ProvinsiController extends Controller
     {
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)
+            ->get(env('BASE_API_URL').'provinsi/'.' '.$id)
             ->json();
             
-        // $response = Http::get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)->json();
+        // $response = Http::get(env('BASE_API_URL').'provinsi/'.' '.$id)->json();
         $provinsi = $response['data'];
 
         return view('provinsi.show',compact('provinsi'));
@@ -87,11 +87,11 @@ class ProvinsiController extends Controller
     
     public function edit(Request $request, $id)
     {
-        // $response = Http::get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)->json();
+        // $response = Http::get(env('BASE_API_URL').'provinsi/'.' '.$id)->json();
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/provinsi/'.' '.$id)
+            ->get(env('BASE_API_URL').'provinsi/'.' '.$id)
             ->json();
 
         $provinsi = $response['data'];
@@ -105,13 +105,13 @@ class ProvinsiController extends Controller
             'nama_provinsi' => 'required',
         ]);
 
-        // $response = Http::patch('http://127.0.0.1:8080/api/provinsi/'.' '.$id, [
+        // $response = Http::patch(env('BASE_API_URL').'provinsi/'.' '.$id, [
         //     'nama_provinsi' => $request->nama_provinsi,
         // ]);
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->patch('http://127.0.0.1:8080/api/provinsi/'.' '.$id, [
+            ->patch(env('BASE_API_URL').'provinsi/'.' '.$id, [
                 'nama_provinsi' => $request->nama_provinsi,
             ]);
         
@@ -122,11 +122,11 @@ class ProvinsiController extends Controller
 
     public function destroy(Request $request, $id)
     {
-        // $response = Http::delete('http://127.0.0.1:8080/api/provinsi/'.$id);
+        // $response = Http::delete(env('BASE_API_URL').'provinsi/'.$id);
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->delete('http://127.0.0.1:8080/api/provinsi/'.$id)
+            ->delete(env('BASE_API_URL').'provinsi/'.$id)
             ->json();
 
         return redirect()->route('provinsi.index')

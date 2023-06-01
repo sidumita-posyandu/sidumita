@@ -13,7 +13,7 @@ class DusunController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun')->json();
+        ->get(env('BASE_API_URL').'dusun')->json();
         $dusun = $response['data'];
         
         return view('dusun.index',compact('dusun'))
@@ -24,7 +24,7 @@ class DusunController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/desa')->json();
+        ->get(env('BASE_API_URL').'desa')->json();
         $desa = $response['data'];
         return view('dusun.create', compact('desa'));
     }
@@ -38,7 +38,7 @@ class DusunController extends Controller
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/dusun', [
+        ->post(env('BASE_API_URL').'dusun', [
             'nama_dusun' => $request->nama_dusun,
             'desa_id' => $request->desa_id,
         ]);
@@ -53,7 +53,7 @@ class DusunController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'dusun/'.' '.$id)->json();
         $dusun = $response['data'];
         
         return view('dusun.show',compact('dusun'));
@@ -63,12 +63,12 @@ class DusunController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'dusun/'.' '.$id)->json();
         $dusun = $response['data']; 
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/desa')->json();
+        ->get(env('BASE_API_URL').'desa')->json();
         $desa = $response2['data'];
         
         return view('dusun.edit',compact('dusun','desa'));
@@ -83,7 +83,7 @@ class DusunController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/dusun/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'dusun/'.' '.$id, [
             'nama_dusun' => $request->nama_dusun,
             'desa_id' => $request->desa_id,
         ]);
@@ -96,7 +96,7 @@ class DusunController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/dusun/'.' '.$id);
+        ->delete(env('BASE_API_URL').'dusun/'.' '.$id);
     
         return redirect()->route('dusun.index')
                         ->with('success','Data dusun berhasil dihapus');

@@ -9,6 +9,7 @@
             <div class="form">
                 <div class="form-group">
                     <label for="pilih_balita"><strong>Pilih Balita</strong></label>
+                    @if(is_array($balita) || is_object($balita))
                     @foreach($balita as $b)
                     <div class="card border-left-primary shadow h-100 py-2">
                         <div class="card-body">
@@ -27,6 +28,9 @@
                         </div>
                     </div>
                     @endforeach
+                    @else
+                    <div class="text-secondary text-center">{{$balita}}</div>
+                    @endif
                 </div>
             </div>
         </div>

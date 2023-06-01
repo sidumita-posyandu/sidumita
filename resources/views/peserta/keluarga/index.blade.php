@@ -33,6 +33,7 @@
         </div>
         <div class="col-8 col-lg-9">
             <h3 class="mb-3">Data Keluarga</h3>
+            @if(is_array($keluarga) || is_object($keluarga))
             <div class="form-group row">
                 <label for="no_kartu_keluarga" class="col-sm-3 col-form-label">Nomor Kartu Keluarga</label>
                 <div class="col-sm-9">
@@ -61,6 +62,9 @@
                         value=": {{$keluarga['jumlah_keluarga']}}">
                 </div>
             </div>
+            @else
+            <div>Data belum terdaftar</div>
+            @endif
             <div class="table-responsive mt-5">
                 <table class="table table-bordered">
                     <tr>

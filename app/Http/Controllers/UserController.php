@@ -22,7 +22,7 @@ class UserController extends Controller
     {
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/user')
+            ->get(env('BASE_API_URL').'user')
             ->json();
         
         $users = $response['data'];
@@ -40,13 +40,13 @@ class UserController extends Controller
     {
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/role')
+            ->get(env('BASE_API_URL').'role')
             ->json();
         $role = $response['data'];
 
         $response2 = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/provinsi')
+            ->get(env('BASE_API_URL').'provinsi')
             ->json();
         $provinsi = $response2['data'];
 
@@ -66,7 +66,7 @@ class UserController extends Controller
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/auth/register-admin', [
+        ->post(env('BASE_API_URL').'auth/register-admin', [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,
@@ -87,11 +87,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/user/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'user/'.' '.$id)->json();
         $user = $response['data'];
 
         return view('users.show',compact('user'));

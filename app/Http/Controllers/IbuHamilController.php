@@ -16,7 +16,7 @@ class IbuHamilController extends Controller
         if($request->session()->get('userAuth')['role_id'] == 3){
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/petugas/with-ibu-hamil')->json();
+            ->get(env('BASE_API_URL').'petugas/with-ibu-hamil')->json();
             $ibu_hamil = $this->paginate($response['data'])->withPath('/admin/ibu-hamil');
             
             return view('ibu-hamil.index-petugas',compact('ibu_hamil'))
@@ -24,7 +24,7 @@ class IbuHamilController extends Controller
         }else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/ibu-hamil')->json();
+            ->get(env('BASE_API_URL').'ibu-hamil')->json();
             $ibu_hamil = $this->paginate($response['data'])->withPath('/admin/ibu-hamil');
             
             return view('ibu-hamil.index',compact('ibu_hamil'))
@@ -36,7 +36,7 @@ class IbuHamilController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/keluarga')->json();
+        ->get(env('BASE_API_URL').'keluarga')->json();
         $keluarga = $response['data'];
 
         return view('ibu-hamil.create', compact('keluarga'));
@@ -52,7 +52,7 @@ class IbuHamilController extends Controller
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/ibu-hamil', [
+        ->post(env('BASE_API_URL').'ibu-hamil', [
             'detail_keluarga_id' => $request->detail_keluarga_id,
             'berat_badan_prakehamilan' => $request->berat_badan_prakehamilan,
             'tinggi_badan_prakehamilan' => $request->tinggi_badan_prakehamilan,
@@ -66,7 +66,7 @@ class IbuHamilController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/ibu-hamil/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'ibu-hamil/'.' '.$id)->json();
         $ibu_hamil = $response['data'];
         
         return view('ibu-hamil.show',compact('ibu_hamil'));
@@ -76,7 +76,7 @@ class IbuHamilController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/ibu-hamil/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'ibu-hamil/'.' '.$id)->json();
         $ibu_hamil = $response['data'];
         
         return view('ibu-hamil.edit',compact('ibu_hamil'));
@@ -91,8 +91,8 @@ class IbuHamilController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/ibu-hamil/'.' '.$id, [
-            'nama_ibu_hamil' => $request->nama_ibu-hamil,
+        ->patch(env('BASE_API_URL').'ibu-hamil/'.' '.$id, [
+            'nama_ibu_hamil' => $request->nama_ibu_hamil,
             'keluarga_id' => $request->keluarga_id,
         ]);
         
@@ -104,7 +104,7 @@ class IbuHamilController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/ibu-hamil/'.' '.$id)->json();
+        ->delete(env('BASE_API_URL').'ibu-hamil/'.' '.$id)->json();
     
         return redirect()->route('ibu-hamil.index')
                         ->with('success','Data ibu-hamil berhasil dihapus');

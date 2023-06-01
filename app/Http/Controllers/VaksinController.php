@@ -12,7 +12,7 @@ class VaksinController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/vaksin')->json();
+        ->get(env('BASE_API_URL').'vaksin')->json();
         $vaksin = $response['data'];
 
         return view('vaksin.index', compact('vaksin'))
@@ -35,7 +35,7 @@ class VaksinController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/vaksin', [
+        ->post(env('BASE_API_URL').'vaksin', [
             'nama_vaksin' => $request->nama_vaksin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan,
@@ -46,21 +46,21 @@ class VaksinController extends Controller
                         ->with('success','Data vaksin berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'vaksin/'.' '.$id)->json();
         $vaksin = $response['data'];
 
         return view('vaksin.show',compact('vaksin'));
     }
     
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'vaksin/'.' '.$id)->json();
         $vaksin = $response['data'];
         
         return view('vaksin.edit',compact('vaksin'));
@@ -77,7 +77,7 @@ class VaksinController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/vaksin/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'vaksin/'.' '.$id, [
             'nama_vaksin' => $request->nama_vaksin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan,
@@ -88,11 +88,11 @@ class VaksinController extends Controller
                         ->with('success','Data vaksin Berhasil Diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/vaksin/'.' '.$id)->json();
+        ->delete(env('BASE_API_URL').'vaksin/'.' '.$id)->json();
     
         return redirect()->route('vaksin.index')
                         ->with('success','Data vaksin berhasil dihapus');

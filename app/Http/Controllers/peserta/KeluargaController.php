@@ -12,8 +12,10 @@ class KeluargaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/me/keluarga')->json();
+        ->get(env('BASE_API_URL').'me/keluarga')->json();
         $keluarga = $response['data'];
+
+        dd($keluarga);
         
         return view('peserta.keluarga.index', compact('keluarga'))
             ->with('i', ($request->input('page', 1) - 1) * 5);

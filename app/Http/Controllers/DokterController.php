@@ -12,7 +12,7 @@ class DokterController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dokter')->json();
+        ->get(env('BASE_API_URL').'dokter')->json();
         $dokter = $response['data'];
         
         return view('dokter.index',compact('dokter'))
@@ -23,7 +23,7 @@ class DokterController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/provinsi')->json();
+        ->get(env('BASE_API_URL').'provinsi')->json();
         $provinsi = $response['data'];
 
         $token = $request->session()->get('token');
@@ -44,7 +44,7 @@ class DokterController extends Controller
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/dokter', [
+        ->post(env('BASE_API_URL').'dokter', [
             'nip' => $request->nip,
             'nama_dokter' => $request->nama_dokter,
             'no_telp' => $request->no_telp,
@@ -60,7 +60,7 @@ class DokterController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dokter/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'dokter/'.' '.$id)->json();
         $dokter = $response['data'];
         
         return view('dokter.show',compact('dokter'));
@@ -70,12 +70,12 @@ class DokterController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dokter/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'dokter/'.' '.$id)->json();
         $dokter = $response['data']; 
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/provinsi')->json();
+        ->get(env('BASE_API_URL').'provinsi')->json();
         $provinsi = $response2['data'];
         
         return view('dokter.edit',compact('dokter','provinsi'));
@@ -93,7 +93,7 @@ class DokterController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/dokter/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'dokter/'.' '.$id, [
             'nip' => $request->nip,
             'nama_dokter' => $request->nama_dokter,
             'no_telp' => $request->no_telp,
@@ -109,7 +109,7 @@ class DokterController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/dokter/'.' '.$id);
+        ->delete(env('BASE_API_URL').'dokter/'.' '.$id);
     
         return redirect()->route('dokter.index')
                         ->with('success','Data dokter berhasil dihapus');

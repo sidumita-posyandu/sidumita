@@ -17,12 +17,12 @@ class PemeriksaanIbuHamilController extends Controller
         if($request->session()->get('userAuth')['role_id'] == 3){
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/petugas/with-pemeriksaan-ibu-hamil')->json();
+            ->get(env('BASE_API_URL').'petugas/with-pemeriksaan-ibu-hamil')->json();
             $pemeriksaanibuhamil = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-ibuhamil');
         }else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil')->json();
+            ->get(env('BASE_API_URL').'pemeriksaan-ibuhamil')->json();
             $pemeriksaanibuhamil = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-ibuhamil');
         }
         
@@ -33,7 +33,7 @@ class PemeriksaanIbuHamilController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/ibu-hamil')->json();
+        ->get(env('BASE_API_URL').'ibu-hamil')->json();
         $ibuhamil = $response['data'];
 
         $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
@@ -45,7 +45,7 @@ class PemeriksaanIbuHamilController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/ibu-hamil/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'ibu-hamil/'.' '.$id)->json();
         $ibuhamil = $response['data'];
 
         $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
@@ -59,7 +59,7 @@ class PemeriksaanIbuHamilController extends Controller
                 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil', [
+        ->post(env('BASE_API_URL').'pemeriksaan-ibuhamil', [
             'ibu_hamil_id' => $request->ibu_hamil_id,
             'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
             'berat_badan' => $request->berat_badan,
@@ -80,7 +80,7 @@ class PemeriksaanIbuHamilController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'pemeriksaan-ibuhamil/'.' '.$id)->json();
         $pemeriksaanibuhamil = $response['data'];
         
         return view('pemeriksaanibuhamil.show',compact('pemeriksaanibuhamil'));
@@ -90,17 +90,17 @@ class PemeriksaanIbuHamilController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/pemeriksaan-ibuhamil/kandungan/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'pemeriksaan-ibuhamil/kandungan/'.' '.$id)->json();
         $rekap = $response['data'];
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/detail-keluarga/'.' '.$rekap[0]['ibu_hamil']['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'detail-keluarga/'.' '.$rekap[0]['ibu_hamil']['detail_keluarga_id'])->json();
         $ibuhamil = $response2['data'][0];
 
         $response3 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun/'.' '.$ibuhamil['keluarga']['dusun_id'])->json();
+        ->get(env('BASE_API_URL').'dusun/'.' '.$ibuhamil['keluarga']['dusun_id'])->json();
         $dusun = $response3['data'];
 
         $data_terbaru = max($rekap);
@@ -109,7 +109,7 @@ class PemeriksaanIbuHamilController extends Controller
 
         $response4 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/cek-berat-ibu-hamil', [
+        ->post(env('BASE_API_URL').'cek-berat-ibu-hamil', [
             'ibu_hamil_id' => $data_terbaru['ibu_hamil']['id'],
             'umur_kandungan' => $data_terbaru['umur_kandungan'],
             'berat_badan' => $data_terbaru['berat_badan'],
@@ -118,7 +118,7 @@ class PemeriksaanIbuHamilController extends Controller
 
         $response5 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/data-grafik-ibu-hamil/'.' '.$data_terbaru['ibu_hamil']['id'])->json();
+        ->get(env('BASE_API_URL').'data-grafik-ibu-hamil/'.' '.$data_terbaru['ibu_hamil']['id'])->json();
         $data_grafik = $response5['data'];
         
 

@@ -14,7 +14,7 @@ class KecamatanController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/kecamatan')->json();
+        ->get(env('BASE_API_URL').'kecamatan')->json();
         $kecamatan = $response['data'];
         
         return view('kecamatan.index',compact('kecamatan'))
@@ -25,7 +25,7 @@ class KecamatanController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/kabupaten')->json();
+        ->get(env('BASE_API_URL').'kabupaten')->json();
         $kabupaten = $response['data'];
         
         return view('kecamatan.create', compact('kabupaten'));
@@ -40,7 +40,7 @@ class KecamatanController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/kecamatan', [
+        ->post(env('BASE_API_URL').'kecamatan', [
             'nama_kecamatan' => $request->nama_kecamatan,
             'kabupaten_id' => $request->kabupaten_id,
         ]);
@@ -55,7 +55,7 @@ class KecamatanController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/kecamatan/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'kecamatan/'.' '.$id)->json();
         $kecamatan = $response['data'];
         
         return view('kecamatan.show',compact('kecamatan'));
@@ -65,12 +65,12 @@ class KecamatanController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/kecamatan/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'kecamatan/'.' '.$id)->json();
         $kecamatan = $response['data'];
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/kabupaten/')->json();
+        ->get(env('BASE_API_URL').'kabupaten/')->json();
         $kabupaten = $response2['data'];        
         
         return view('kecamatan.edit',compact('kecamatan','kabupaten'));
@@ -85,7 +85,7 @@ class KecamatanController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/kecamatan/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'kecamatan/'.' '.$id, [
             'nama_kecamatan' => $request->nama_kecamatan,
             'kabupaten_id' => $request->kabupaten_id,
         ]);
@@ -98,7 +98,7 @@ class KecamatanController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/kecamatan/'.' '.$id);
+        ->delete(env('BASE_API_URL').'kecamatan/'.' '.$id);
     
         return redirect()->route('kecamatan.index')
                         ->with('success','Data kecamatan berhasil dihapus');

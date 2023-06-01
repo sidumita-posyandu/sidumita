@@ -12,7 +12,7 @@ class JadwalPemeriksaanController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/jadwal-pemeriksaan')->json();
+        ->get(env('BASE_API_URL').'jadwal-pemeriksaan')->json();
         $jadwal_pemeriksaan = $response['data'];
 
         return view('jadwal-pemeriksaan.index',compact('jadwal_pemeriksaan'))
@@ -23,7 +23,7 @@ class JadwalPemeriksaanController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/provinsi')->json();
+        ->get(env('BASE_API_URL').'provinsi')->json();
         $provinsi = $response['data'];
 
         $token = $request->session()->get('token');
@@ -43,17 +43,13 @@ class JadwalPemeriksaanController extends Controller
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/jadwal-pemeriksaan', [
+        ->post(env('BASE_API_URL').'jadwal-pemeriksaan', [
             'jenis_pemeriksaan' => $request->jenis_pemeriksaan,
             'waktu_mulai' => $request->waktu_mulai,
             'waktu_berakhir' => $request->waktu_berakhir,
             'dusun_id' => $request->dusun_id,
             'operator_posyandu_id' => $request->operator_posyandu_id,
         ]);
-
-        if($response->status() == 409){
-            return redirect()->route('jadwal-pemeriksaan.index')->with('success','Data jadwal-pemeriksaan berhasil dibuat.');;
-        }
             
         return redirect()->route('jadwal-pemeriksaan.index')
                         ->with('success','Data jadwal-pemeriksaan berhasil dibuat.');
@@ -61,7 +57,7 @@ class JadwalPemeriksaanController extends Controller
 
     public function show($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/jadwal-pemeriksaan/'.' '.$id)->json();
+        $response = Http::get(env('BASE_API_URL').'jadwal-pemeriksaan/'.' '.$id)->json();
         $jadwal_pemeriksaan = $response['data'];
         
         return view('jadwal-pemeriksaan.show',compact('jadwal-pemeriksaan'));
@@ -69,7 +65,7 @@ class JadwalPemeriksaanController extends Controller
     
     public function edit($id)
     {
-        $response = Http::get('http://127.0.0.1:8080/api/jadwal-pemeriksaan/'.' '.$id)->json();
+        $response = Http::get(env('BASE_API_URL').'jadwal-pemeriksaan/'.' '.$id)->json();
         $jadwal_pemeriksaan = $response['data'];
         
         return view('jadwal-pemeriksaan.edit',compact('jadwal-pemeriksaan'));
@@ -78,13 +74,19 @@ class JadwalPemeriksaanController extends Controller
     public function update(Request $request, $id)
     {
         request()->validate([
-            'nama_jadwal-pemeriksaan' => 'required',
-            'desa_id' => 'required',
+            'jenis_pemeriksaan' => 'required',
+            'waktu_mulai' => 'required',
+            'waktu_berakhir' => 'required',
+            'dusun_id' => 'required',
+            'operator_posyandu_id' => 'required',
         ]);
 
-        $response = Http::patch('http://127.0.0.1:8080/api/jadwal-pemeriksaan/'.' '.$id, [
-            'nama_jadwal-pemeriksaan' => $request->nama_jadwal-pemeriksaan,
-            'desa_id' => $request->desa_id,
+        $response = Http::patch(env('BASE_API_URL').'jadwal-pemeriksaan/'.' '.$id, [
+            'jenis_pemeriksaan' => $request->jenis_pemeriksaan,
+            'waktu_mulai' => $request->waktu_mulai,
+            'waktu_berakhir' => $request->waktu_berakhir,
+            'dusun_id' => $request->dusun_id,
+            'operator_posyandu_id' => $request->operator_posyandu_id,
         ]);
         
         return redirect()->route('jadwal-pemeriksaan.index')

@@ -11,7 +11,7 @@ class PetugasKesehatanController extends Controller
     public function profile(Request $request){
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/me/petugas')->json();
+        ->get(env('BASE_API_URL').'me/petugas')->json();
         $petugas = $response['data'];
 
         return view('petugas-kesehatan.profile', compact('petugas'));
@@ -20,7 +20,7 @@ class PetugasKesehatanController extends Controller
     public function update(Request $request, $id){
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/me/update-petugas', [
+        ->post(env('BASE_API_URL').'me/update-petugas', [
             'nama' => request('nama'), 
             'jenis_kelamin' => request('jenis_kelamin'), 
             'tempat_lahir' => request('tempat_lahir'), 

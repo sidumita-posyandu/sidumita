@@ -17,7 +17,7 @@ class BalitaController extends Controller
         if($request->session()->get('userAuth')['role_id'] == 3){
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/petugas/with-balita')->json();
+            ->get(env('BASE_API_URL').'petugas/with-balita')->json();
             $balita = $this->paginate($response['data'])->withPath('/admin/balita');
             
             return view('balita.index-petugas',compact('balita'))
@@ -25,7 +25,7 @@ class BalitaController extends Controller
         }else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/balita')->json();
+            ->get(env('BASE_API_URL').'balita')->json();
             $balita = $this->paginate($response['data'])->withPath('/admin/balita');
             
             return view('balita.index',compact('balita'))
@@ -37,7 +37,7 @@ class BalitaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/keluarga')->json();
+        ->get(env('BASE_API_URL').'keluarga')->json();
         $keluarga = $response['data'];
 
         return view('balita.create', compact('keluarga'));
@@ -51,7 +51,7 @@ class BalitaController extends Controller
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/balita', [
+        ->post(env('BASE_API_URL').'balita', [
             'detail_keluarga_id' => $request->detail_keluarga_id,
         ]);
         
@@ -61,21 +61,21 @@ class BalitaController extends Controller
                         ->with('success','Data balita berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'balita/'.' '.$id)->json();
         $balita = $response['data'];
         
         return view('balita.show',compact('balita'));
     }
     
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'balita/'.' '.$id)->json();
         $balita = $response['data'];
         
         return view('balita.edit',compact('balita'));
@@ -90,7 +90,7 @@ class BalitaController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/balita/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'balita/'.' '.$id, [
             'nama_balita' => $request->nama_balita,
             'keluarga_id' => $request->keluarga_id,
         ]);
@@ -99,11 +99,11 @@ class BalitaController extends Controller
                         ->with('success','Data balita Berhasil Diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
+        ->delete(env('BASE_API_URL').'balita/'.' '.$id)->json();
     
         return redirect()->route('balita.index')
                         ->with('success','Data balita berhasil dihapus');

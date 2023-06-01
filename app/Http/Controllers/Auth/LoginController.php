@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Http\Response;
 use Redirect;
 
 
@@ -21,7 +20,7 @@ class LoginController extends Controller
         $request->session()->flush();
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/auth/logout')
+            ->get(env('BASE_API_URL').'auth/logout')
             ->json();
 
         return redirect('login');
@@ -34,7 +33,7 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-        $response = Http::post('http://127.0.0.1:8080/api/auth/login', [
+        $response = Http::post(env('BASE_API_URL').'auth/login', [
             'email' => $request->email,
             'password' => $request->password,
         ]);
@@ -58,7 +57,7 @@ class LoginController extends Controller
     public function user(){
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/user')
+            ->get(env('BASE_API_URL').'auth/user')
             ->json();
         
         $user = $response['data'];

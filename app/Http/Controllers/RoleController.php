@@ -16,7 +16,7 @@ class RoleController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/role')->json();
+        ->get(env('BASE_API_URL').'role')->json();
         $roles = $response['data'];
 
         return view('roles.index',compact('roles'))
@@ -37,7 +37,7 @@ class RoleController extends Controller
     
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/role', [
+            ->post(env('BASE_API_URL').'role', [
                 'role' => $request->role,
             ]);
     
@@ -59,7 +59,7 @@ class RoleController extends Controller
     
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/role/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'role/'.' '.$id, [
             'role' => $request->role,
         ]);
     
@@ -67,11 +67,11 @@ class RoleController extends Controller
                         ->with('success','Role berhasil diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/role/'.' '.$id, [
+        ->delete(env('BASE_API_URL').'role/'.' '.$id, [
             'role' => $request->role,
         ]);
 

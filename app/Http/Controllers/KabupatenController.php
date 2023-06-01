@@ -11,11 +11,11 @@ class KabupatenController extends Controller
 {   
     public function index(Request $request)
     {
-        // $response = Http::get('http://127.0.0.1:8080/api/kabupaten')->json();
+        // $response = Http::get(env('BASE_API_URL').'kabupaten')->json();
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/kabupaten')
+            ->get(env('BASE_API_URL').'kabupaten')
             ->json();
 
         $kabupaten = $response['data'];
@@ -26,11 +26,11 @@ class KabupatenController extends Controller
     
     public function create(Request $request)
     {
-        // $response = Http::get('http://127.0.0.1:8080/api/provinsi')->json();
+        // $response = Http::get(env('BASE_API_URL').'provinsi')->json();
         
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/provinsi')
+            ->get(env('BASE_API_URL').'provinsi')
             ->json();
 
         $provinsi = $response['data'];
@@ -45,14 +45,14 @@ class KabupatenController extends Controller
             'provinsi_id' => 'required'
         ]);
 
-        // $response = Http::post('http://127.0.0.1:8080/api/kabupaten', [
+        // $response = Http::post(env('BASE_API_URL').'kabupaten', [
         //     'nama_kabupaten' => $request->nama_kabupaten,
         //     'provinsi_id' => $request->provinsi_id,
         // ]);
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/kabupaten', [
+            ->post(env('BASE_API_URL').'kabupaten', [
                 'nama_kabupaten' => $request->nama_kabupaten,
                 'provinsi_id' => $request->provinsi_id,
             ]);
@@ -63,11 +63,11 @@ class KabupatenController extends Controller
 
     public function show(Request $request, $id)
     {
-        // $response = Http::get('http://127.0.0.1:8080/api/kabupaten/'.' '.$id)->json();
+        // $response = Http::get(env('BASE_API_URL').'kabupaten/'.' '.$id)->json();
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/kabupaten/'.' '.$id)
+            ->get(env('BASE_API_URL').'kabupaten/'.' '.$id)
             ->json();
             
         $kabupaten = $response['data'];
@@ -78,12 +78,12 @@ class KabupatenController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/provinsi/')->json();
+        ->get(env('BASE_API_URL').'provinsi/')->json();
         $provinsi = $response['data'];
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/kabupaten/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'kabupaten/'.' '.$id)->json();
         $kabupaten = $response2['data'];
         
         return view('kabupaten.edit',compact('provinsi','kabupaten'));
@@ -98,7 +98,7 @@ class KabupatenController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/kabupaten/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'kabupaten/'.' '.$id, [
             'nama_kabupaten' => $request->nama_kabupaten,
             'provinsi_id' => $request->provinsi_id,
         ]);
@@ -111,7 +111,7 @@ class KabupatenController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/kabupaten/'.$id);
+        ->delete(env('BASE_API_URL').'kabupaten/'.$id);
     
         return redirect()->route('kabupaten.index')
                         ->with('success','Data kabupaten berhasil dihapus');

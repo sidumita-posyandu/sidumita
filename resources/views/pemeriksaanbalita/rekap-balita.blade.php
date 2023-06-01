@@ -120,7 +120,7 @@
                 <div id="head_boys_0_2_years" style="height:500px;"></div>
             </div>
             <div class="tab-pane fade" id="vaksin" role="tabpanel" aria-labelledby="vaksin-tab">
-            <div id="vaksin" class="row ml-2 mt-2">
+                <div id="vaksin" class="row ml-2 mt-2">
                     <div class="col-sm-6">
                         <strong>Jenis Vaksin</strong>
                     </div>
@@ -139,7 +139,8 @@
                     </div>
                     <div class="col-sm-4">
                         <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
-                            name="vaksin"><span class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
+                            name="vaksin"><span
+                            class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
                     </div>
                     @elseif($imunisasi['status'] == "Akan")
                     <div class="col-sm-4">
@@ -148,7 +149,28 @@
                     </div>
                     <div class="col-sm-4">
                         <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
-                            name="vaksin"><span class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
+                            name="vaksin"><span
+                            class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
+                    </div>
+                    @elseif($imunisasi['status'] == "Kejar")
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-warning">{{$imunisasi['status']}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span
+                            class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
+                    </div>
+                    @elseif($imunisasi['status'] == "Susulan")
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-warning">{{$imunisasi['status']}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span
+                            class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
                     </div>
                     @else
                     <div class="col-sm-4">
@@ -197,6 +219,26 @@
                     <div class="col-sm-6">
                         <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
                             name="vaksin"><span class="badge badge-warning">{{$imunisasi['status']}}</span>
+                    </div>
+                    @elseif($imunisasi['status'] == "Kejar")
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-warning">{{$imunisasi['status']}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span
+                            class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
+                    </div>
+                    @elseif($imunisasi['status'] == "Susulan")
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span class="badge badge-warning">{{$imunisasi['status']}}</span>
+                    </div>
+                    <div class="col-sm-4">
+                        <input type="text" readonly class="form-control-plaintext badge bg-secondary" id="vaksin"
+                            name="vaksin"><span
+                            class="badge badge-secondary">{{$imunisasi['tanggal_pemeriksaan']}}</span>
                     </div>
                     @else
                     <div class="col-sm-6">

@@ -12,7 +12,7 @@ class DetailKeluargaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/keluarga/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'keluarga/'.' '.$id)->json();
         $keluarga = $response['data'];
         
         return view('detail-keluarga.create', compact('keluarga'));
@@ -26,7 +26,7 @@ class DetailKeluargaController extends Controller
         foreach ($data['nik'] as $item => $value) {          
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/detail-keluarga', [
+            ->post(env('BASE_API_URL').'detail-keluarga', [
                 'keluarga_id' => $id,
                 'nik' => $data['nik'][$item],
                 'nama_lengkap' => $data['nama_lengkap'][$item],
@@ -48,7 +48,7 @@ class DetailKeluargaController extends Controller
         
         // $response2 = Http::accept('application/json')
         // ->withToken($request->session()->get('token'))
-        // ->put('http://127.0.0.1:8080/api/keluarga/'.' '.$id, [
+        // ->put(env('BASE_API_URL').'keluarga/'.' '.$id, [
         //     'no_kartu_keluarga' => $data['no_kartu_keluarga'],
         //     'kepala_keluarga' => $data['kepala_keluarga'],
         //     'alamat' => $data['alamat'],

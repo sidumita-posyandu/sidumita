@@ -13,7 +13,7 @@ class DesaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/desa')->json();
+        ->get(env('BASE_API_URL').'desa')->json();
         $desa = $response['data'];
         
         return view('desa.index',compact('desa'))
@@ -24,7 +24,7 @@ class DesaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/kecamatan')->json();
+        ->get(env('BASE_API_URL').'kecamatan')->json();
         $kecamatan = $response['data'];
         return view('desa.create', compact('kecamatan'));
     }
@@ -38,7 +38,7 @@ class DesaController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/desa', [
+        ->post(env('BASE_API_URL').'desa', [
             'nama_desa' => $request->nama_desa,
             'kecamatan_id' => $request->kecamatan_id,
         ]);
@@ -53,7 +53,7 @@ class DesaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/desa/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'desa/'.' '.$id)->json();
         $desa = $response['data'];
 
         return view('desa.show',compact('desa'));
@@ -63,12 +63,12 @@ class DesaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/desa/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'desa/'.' '.$id)->json();
         $desa = $response['data'];
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/kecamatan/')->json();
+        ->get(env('BASE_API_URL').'kecamatan/')->json();
         $kecamatan = $response2['data'];        
         
         return view('desa.edit',compact('kecamatan','desa'));
@@ -83,7 +83,7 @@ class DesaController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/desa/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'desa/'.' '.$id, [
             'nama_desa' => $request->nama_desa,
             'kecamatan_id' => $request->kecamatan_id,
         ]);
@@ -96,7 +96,7 @@ class DesaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/desa/'.' '.$id)->json();
+        ->delete(env('BASE_API_URL').'desa/'.' '.$id)->json();
     
         return redirect()->route('desa.index')
                         ->with('success','Data desa berhasil dihapus');

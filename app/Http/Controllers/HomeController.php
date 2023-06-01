@@ -11,22 +11,22 @@ class HomeController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/balita/')->json();
+        ->get(env('BASE_API_URL').'balita/')->json();
         $balita = count($response['data']);
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/ibu-hamil/')->json();
+        ->get(env('BASE_API_URL').'ibu-hamil/')->json();
         $ibu_hamil = count($response2['data']);
         
         $response3 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/keluarga/')->json();
+        ->get(env('BASE_API_URL').'keluarga/')->json();
         $keluarga = count($response3['data']);
 
         $response4 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/detail-keluarga/')->json();
+        ->get(env('BASE_API_URL').'detail-keluarga/')->json();
         $anggota_keluarga = count($response4['data']);
         
 

@@ -17,18 +17,18 @@ class PemeriksaanBalitaController extends Controller
         if($request->session()->get('userAuth')['role_id'] == 3){
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/petugas/with-pemeriksaan-balita')->json();
+            ->get(env('BASE_API_URL').'petugas/with-pemeriksaan-balita')->json();
             $pemeriksaanbalita = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-balita');
         }else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
+            ->get(env('BASE_API_URL').'pemeriksaan-balita')->json();
             $pemeriksaanbalita = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-balita');  
         }
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun')
+        ->get(env('BASE_API_URL').'dusun')
         ->json();
         $dusun = $response2['data'];
                 
@@ -39,17 +39,17 @@ class PemeriksaanBalitaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/balita')->json();
+        ->get(env('BASE_API_URL').'balita')->json();
         $balita = $response['data'];
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/vaksin')->json();
+        ->get(env('BASE_API_URL').'vaksin')->json();
         $vaksin = $response2['data'];
 
         $response3 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dokter')->json();
+        ->get(env('BASE_API_URL').'dokter')->json();
         $dokter = $response3['data'];
 
         $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
@@ -61,22 +61,22 @@ class PemeriksaanBalitaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/balita/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'balita/'.' '.$id)->json();
         $balita = $response['data'];
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/vaksin')->json();
+        ->get(env('BASE_API_URL').'vaksin')->json();
         $vaksin = $response2['data'];
 
         $response3 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/umur/'.' '.$balita['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'umur/'.' '.$balita['detail_keluarga_id'])->json();
         $umur = $response3['data'];
 
         $response4 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dokter')->json();
+        ->get(env('BASE_API_URL').'dokter')->json();
         $dokter = $response4['data'];
 
         $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
@@ -104,17 +104,17 @@ class PemeriksaanBalitaController extends Controller
         
         $responseBalita = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/balita/'.' '.$request->balita_id)->json();
+        ->get(env('BASE_API_URL').'balita/'.' '.$request->balita_id)->json();
         $cekBalita = $responseBalita['data'];
 
         $responseUmur = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/umur/'.' '.$cekBalita['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'umur/'.' '.$cekBalita['detail_keluarga_id'])->json();
         $cekUmur = $responseUmur['data'];
         
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/pemeriksaan-balita', [
+        ->post(env('BASE_API_URL').'pemeriksaan-balita', [
             'balita_id' => $request->balita_id,
             'umur_balita' => $cekUmur['usia_bulan'],
             'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
@@ -134,13 +134,13 @@ class PemeriksaanBalitaController extends Controller
         // if ($request->vaksin_id != 0) {
         //     $getId = Http::accept('application/json')
         //     ->withToken($request->session()->get('token'))
-        //     ->get('http://127.0.0.1:8080/api/pemeriksaan-balita')->json();
+        //     ->get(env('BASE_API_URL').'pemeriksaan-balita')->json();
         //     $maxId = max($getId['data'])['id'];
             
         //     foreach ($data['vaksin_id'] as $item => $value) {          
         //         $response2 = Http::accept('application/json')
         //         ->withToken($request->session()->get('token'))
-        //         ->post('http://127.0.0.1:8080/api/detailpemeriksaan-balita', [
+        //         ->post(env('BASE_API_URL').'detailpemeriksaan-balita', [
         //             'pemeriksaan_balita_id' => $maxId,
         //             'balita_id' => $request->balita_id,
         //             'vaksin_id' => $data['vaksin_id'][$item],
@@ -156,7 +156,7 @@ class PemeriksaanBalitaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/pemeriksaan-balita/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'pemeriksaan-balita/'.' '.$id)->json();
         $pemeriksaanbalita = $response['data'];
 
         return view('pemeriksaanbalita.show',compact('pemeriksaanbalita'));
@@ -166,7 +166,7 @@ class PemeriksaanBalitaController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/pemeriksaan-balita/umur/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'pemeriksaan-balita/umur/'.' '.$id)->json();
         if ($response['data'] == []) {
             return view('errors.no-data');
          }
@@ -174,17 +174,17 @@ class PemeriksaanBalitaController extends Controller
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/detail-keluarga/'.' '.$rekap[0]['balita']['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'detail-keluarga/'.' '.$rekap[0]['balita']['detail_keluarga_id'])->json();
         $balita = $response2['data'][0];
 
         $response3 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/umur/'.' '.$rekap[0]['balita']['detail_keluarga_id'])->json();
+        ->get(env('BASE_API_URL').'umur/'.' '.$rekap[0]['balita']['detail_keluarga_id'])->json();
         $umur = $response3['data'];
 
         $response4 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/dusun/'.' '.$balita['keluarga']['dusun_id'])->json();
+        ->get(env('BASE_API_URL').'dusun/'.' '.$balita['keluarga']['dusun_id'])->json();
         $dusun = $response4['data'];
 
         $data_terbaru = max($rekap);
@@ -192,7 +192,7 @@ class PemeriksaanBalitaController extends Controller
 
             $response5 = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/cek-tinggi-boys', [
+            ->post(env('BASE_API_URL').'cek-tinggi-boys', [
                 'data_ukur' => $data_terbaru['tinggi_badan'],
                 'umur' => $data_terbaru['umur_balita'],
             ]);
@@ -200,7 +200,7 @@ class PemeriksaanBalitaController extends Controller
 
             $response6 = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/cek-tinggi-girls', [
+            ->post(env('BASE_API_URL').'cek-tinggi-girls', [
                 'data_ukur' => $data_terbaru['tinggi_badan'],
                 'umur' => $data_terbaru['umur_balita'],
             ]);
@@ -208,7 +208,7 @@ class PemeriksaanBalitaController extends Controller
 
             $response7 = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/cek-berat-boys', [
+            ->post(env('BASE_API_URL').'cek-berat-boys', [
                 'data_ukur' => $data_terbaru['berat_badan'],
                 'umur' => $data_terbaru['umur_balita'],
             ]);
@@ -216,7 +216,7 @@ class PemeriksaanBalitaController extends Controller
 
             $response8 = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/cek-berat-girls', [
+            ->post(env('BASE_API_URL').'cek-berat-girls', [
                 'data_ukur' => $data_terbaru['berat_badan'],
                 'umur' => $data_terbaru['umur_balita'],
             ]);
@@ -224,7 +224,7 @@ class PemeriksaanBalitaController extends Controller
 
             $response8 = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/cek-kepala-boys', [
+            ->post(env('BASE_API_URL').'cek-kepala-boys', [
                 'data_ukur' => $data_terbaru['lingkar_kepala'],
                 'umur' => $data_terbaru['umur_balita'],
             ]);
@@ -232,7 +232,7 @@ class PemeriksaanBalitaController extends Controller
 
             $response9 = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->post('http://127.0.0.1:8080/api/cek-kepala-girls', [
+            ->post(env('BASE_API_URL').'cek-kepala-girls', [
                 'data_ukur' => $data_terbaru['lingkar_kepala'],
                 'umur' => $data_terbaru['umur_balita'],
             ]);
@@ -363,7 +363,7 @@ class PemeriksaanBalitaController extends Controller
 
         $response10 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/cek-imunisasi-balita/'.' '.$id);
+        ->get(env('BASE_API_URL').'cek-imunisasi-balita/'.' '.$id);
         $vaksin = $response10['data'];
 
         return view('pemeriksaanbalita.rekap-balita',compact('vaksin','thick_position','tinggi_badan', 'berat_badan', 'lingkar_kepala', 'rekap', 'balita', 'umur', 'dusun', 'ltinggi0', 'ltinggi1', 'ltinggi2', 'ltinggi3', 'ltinggimin1', 'ltinggimin2', 'ltinggimin3', 'ptinggi0', 'ptinggi1', 'ptinggi2', 'ptinggi3', 'ptinggimin1', 'ptinggimin2', 'ptinggimin3', 'lberat0', 'lberat1', 'lberat2', 'lberat3', 'lberatmin1', 'lberatmin2', 'lberatmin3', 'pberat0', 'pberat1', 'pberat2', 'pberat3', 'pberatmin1', 'pberatmin2', 'pberatmin3', 'lkepala0', 'lkepala1', 'lkepala2', 'lkepala3', 'lkepalamin1', 'lkepalamin2', 'lkepalamin3', 'pkepala0', 'pkepala1', 'pkepala2', 'pkepala3', 'pkepalamin1', 'pkepalamin2', 'pkepalamin3'));

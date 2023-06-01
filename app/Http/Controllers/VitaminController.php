@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
-use App\Vitamin;
 
 class VitaminController extends Controller
 {
@@ -13,7 +12,7 @@ class VitaminController extends Controller
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/vitamin')->json();
+        ->get(env('BASE_API_URL').'vitamin')->json();
         $vitamin = $response['data'];
 
         return view('vitamin.index', compact('vitamin'))
@@ -34,7 +33,7 @@ class VitaminController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->post('http://127.0.0.1:8080/api/vitamin', [
+        ->post(env('BASE_API_URL').'vitamin', [
             'nama_vitamin' => $request->nama_vitamin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan
@@ -44,21 +43,21 @@ class VitaminController extends Controller
                         ->with('success','Data vitamin berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/vitamin/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'vitamin/'.' '.$id)->json();
         $vitamin = $response['data'];
 
         return view('vitamin.show',compact('vitamin'));
     }
     
-    public function edit($id)
+    public function edit($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->get('http://127.0.0.1:8080/api/vitamin/'.' '.$id)->json();
+        ->get(env('BASE_API_URL').'vitamin/'.' '.$id)->json();
         $vitamin = $response['data'];
         
         return view('vitamin.edit',compact('vitamin'));
@@ -74,7 +73,7 @@ class VitaminController extends Controller
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch('http://127.0.0.1:8080/api/vitamin/'.' '.$id, [
+        ->patch(env('BASE_API_URL').'vitamin/'.' '.$id, [
             'nama_vitamin' => $request->nama_vitamin,
             'dosis' => $request->dosis,
             'catatan' => $request->catatan,
@@ -84,11 +83,11 @@ class VitaminController extends Controller
                         ->with('success','Data vitamin Berhasil Diperbarui');
     }
 
-    public function destroy($id)
+    public function destroy($id, Request $request)
     {
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->delete('http://127.0.0.1:8080/api/vitamin/'.' '.$id)->json();
+        ->delete(env('BASE_API_URL').'vitamin/'.' '.$id)->json();
     
         return redirect()->route('vitamin.index')
                         ->with('success','Data vitamin berhasil dihapus');
