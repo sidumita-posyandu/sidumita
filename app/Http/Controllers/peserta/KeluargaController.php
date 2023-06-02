@@ -14,8 +14,6 @@ class KeluargaController extends Controller
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'me/keluarga')->json();
         $keluarga = $response['data'];
-
-        dd($keluarga);
         
         return view('peserta.keluarga.index', compact('keluarga'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
