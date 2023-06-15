@@ -13,7 +13,7 @@ class PemeriksaanIbuHamilController extends Controller
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'me/ibu-hamil')->json();
 
-        if($response == 'ErrorException' || $response['data'] == []){
+        if($response['data'] == []){
             $ibu_hamil = "Data belum terdaftar";
         }else{
             $ibu_hamil = $response['data'];
