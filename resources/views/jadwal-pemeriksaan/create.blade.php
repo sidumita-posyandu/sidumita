@@ -111,7 +111,7 @@ $(document).ready(function() {
         var idProvinsi = this.value;
         $("#kabupaten").html('');
         $.ajax({
-            url: "http://127.0.0.1:8080/api/fetch-provinsi",
+            url: "{{ env('BASE_API_URL') }}fetch-provinsi",
             type: "POST",
             headers: {
                 "Authorization": "Bearer " + token
@@ -136,7 +136,7 @@ $(document).ready(function() {
         var idKabupaten = this.value;
         $("#kecamatan").html('');
         $.ajax({
-            url: "http://127.0.0.1:8080/api/fetch-kabupaten",
+            url: "{{ env('BASE_API_URL') }}fetch-kabupaten",
             type: "POST",
             headers: {
                 "Authorization": "Bearer " + token
@@ -160,7 +160,7 @@ $(document).ready(function() {
         var idKecamatan = this.value;
         $("#desa").html('');
         $.ajax({
-            url: "http://127.0.0.1:8080/api/fetch-kecamatan",
+            url: "{{ env('BASE_API_URL') }}fetch-kecamatan",
             type: "POST",
             headers: {
                 "Authorization": "Bearer " + token
@@ -184,7 +184,7 @@ $(document).ready(function() {
         var idDesa = this.value;
         $("#dusun").html('');
         $.ajax({
-            url: "http://127.0.0.1:8080/api/fetch-desa",
+            url: "{{ env('BASE_API_URL') }}fetch-desa",
             type: "POST",
             headers: {
                 "Authorization": "Bearer " + token

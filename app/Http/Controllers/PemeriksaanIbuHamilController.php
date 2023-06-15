@@ -111,6 +111,10 @@ class PemeriksaanIbuHamilController extends Controller
         ->get(env('BASE_API_URL').'pemeriksaan-ibuhamil/kandungan/'.' '.$id)->json();
         $rekap = $response['data'];
 
+        if($rekap == []){
+            return view('pemeriksaanibuhamil.rekap-kosong', compact('rekap'));
+        }
+
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'detail-keluarga/'.' '.$rekap[0]['ibu_hamil']['detail_keluarga_id'])->json();
@@ -135,13 +139,13 @@ class PemeriksaanIbuHamilController extends Controller
         $response5 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'data-grafik-ibu-hamil/'.' '.$data_terbaru['ibu_hamil']['id'])->json();
-        $data_grafik = $response5['data'];     
-        
+        $data_grafik = $response5['data'];
+                
         $berat_badan = array();
         $tick_position = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
         25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
 
-        for ($i=0; $i < 24; $i++) { 
+        for ($i=0; $i < 41; $i++) { 
             $berat_badan[$i] = NULL;
         }
         

@@ -47,6 +47,7 @@ class HomeController extends Controller
         if(isset($konten)){
             foreach($konten as $listkonten){
                 $datakonten[] = [
+                    'id' => $listkonten['id'],
                     'judul' => $listkonten['judul'],
                     'konten' => $listkonten['konten'],
                     'image' => env('BASE_IMAGE_URL').$listkonten['gambar'],

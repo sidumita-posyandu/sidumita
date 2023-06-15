@@ -23,6 +23,8 @@ Route::post('/login/authenticate', [App\Http\Controllers\Auth\LoginController::c
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'peserta'])->name('peserta');
 
+Route::get('/konten/{id}', [App\Http\Controllers\Peserta\KontenController::class, 'show'])->name('peserta.konten.show');
+
 Route::group([
     'middleware' => ['ceklogin', 'admin'], 'prefix' => 'admin'], function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -76,5 +78,5 @@ Route::group(['middleware' => ['ceklogin']], function () {
     Route::get('/pemeriksaan-ibu-hamil', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'index'])->name('peserta.periksa-ibuhamil.index');
     Route::get('/pemeriksaan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'detIbuHamil'])->name('peserta.periksa-ibuhamil.detail');
     Route::get('/grafik-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'rekap_ibu_hamil'])->name('peserta.periksa-ibuhamil.grafik');
-    Route::get('/history-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\HistoryPemeriksaanController::class, 'ibuHamil'])->name('peserta.periksa-ibuhamil.history');
+    Route::get('/history-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\HistoryPemeriksaanController::class, 'ibuHamil'])->name('peserta.periksa-ibuhamil.history');    
     });
