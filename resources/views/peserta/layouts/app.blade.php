@@ -32,7 +32,7 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="{{ route('peserta.periksa.index') }}">Pemeriksaan
                                         Balita</a></li>
-                                <li><a class="dropdown-item" href="#">Pemeriksaan Ibu Hamil</a></li>
+                                <li><a class="dropdown-item" href="{{ route('peserta.periksa-ibuhamil.index') }}">Pemeriksaan Ibu Hamil</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -51,7 +51,7 @@
                         @if(!Session::get('token'))
                         <li class="nav-item">
                             <a href="{{route('login')}}" type="button" class="btn btn-success">Login</a>
-                            <a href="#" type="button" class="btn btn-outline-secondary">Register</a>
+                            <!-- <a href="#" type="button" class="btn btn-outline-secondary">Register</a> -->
                         </li>
                         @endif
                     </ul>

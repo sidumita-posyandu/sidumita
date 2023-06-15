@@ -67,7 +67,7 @@
                 <a href="{{ route('peserta.periksa-ibuhamil.grafik', [$det_ibu_hamil['ibu_hamil_id']]) }}" type="button"
                     class="btn btn-success w-100">Lihat Grafik Pertumbuhan</a>
                 <hr class="hr" />
-                <a href="" type="button" class="btn btn-secondary w-100">History Pemeriksaan</a>
+                <a href="{{ route('peserta.periksa-ibuhamil.history', [$det_ibu_hamil['ibu_hamil_id']]) }}" type="button" class="btn btn-secondary w-100">History Pemeriksaan</a>
             </div>
         </div>
         <div class="col-sm-6">

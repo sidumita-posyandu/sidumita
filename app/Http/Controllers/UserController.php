@@ -4,12 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\User;
-use Spatie\Permission\Models\Role;
-use DB;
-use Hash;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Collection;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class UserController extends Controller
 {
@@ -25,7 +23,7 @@ class UserController extends Controller
             ->get(env('BASE_API_URL').'user')
             ->json();
         
-        $users = $response['data'];
+        $users = $this->paginate($response['data'])->withPath('/admin/users');;
 
         return view('users.index', compact('users'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
@@ -153,4 +151,11 @@ class UserController extends Controller
     //     return redirect()->route('users.index')
     //                     ->with('success','User deleted successfully');
     // }
+
+    public function paginate($items, $perPage = 5, $page = null, $options = [])
+    {
+        $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
+        $items = $items instanceof Collection ? $items : Collection::make($items);
+        return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
+    }
 }

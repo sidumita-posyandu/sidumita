@@ -51,6 +51,12 @@
                         value="{{ $tanggal_pemeriksaan }}" readonly>
                 </div>
             </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Umur Kandungan:</strong>
+                    <input type="text" name="umur_kandungan" class="form-control" placeholder="Umur Kandungan">
+                </div>
+            </div>
         </div>
     </div>
 

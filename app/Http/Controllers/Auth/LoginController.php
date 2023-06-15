@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Redirect;
-
+use stdClass;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
 {
@@ -39,10 +39,12 @@ class LoginController extends Controller
         ]);
 
         if($response->getStatusCode() == 401){
-            return Redirect::back()->withErrors(['message' => 'Email atau password salah!']);
+            $request->session()->put('status', 'Email atau password salah');
+            return redirect()->back();  
         }
         elseif($response->getStatusCode() == 500){
-            return Redirect::back()->withErrors(['message' => 'Terjadi kesalahan pada server']);
+            $request->session()->put('status', 'Terjadi kesalahan pada server');
+            return redirect()->back();  
         }
         
         $token = json_decode((string) $response->getBody(), true)['access_token'];
@@ -54,7 +56,7 @@ class LoginController extends Controller
         return redirect()->route('home');
     }
 
-    public function user(){
+    public function user(Request $request){
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'auth/user')

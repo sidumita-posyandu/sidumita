@@ -152,11 +152,10 @@ class PemeriksaanBalitaController extends Controller
                 'keluhan' => $request->keluhan,
                 'penanganan' => $request->penanganan,
                 'catatan' => $request->catatan,
-                'petugas_kesehatan_id' => $request->petugas_kesehatan_id,
+                'petugas_kesehatan_id' => 1,
                 'dokter_id' => $request->dokter_id,
                 'vitamin_id' => $request->vitamin_id,
             ]);
-
         }
         
         return redirect()->route('pemeriksaan-balita.index')

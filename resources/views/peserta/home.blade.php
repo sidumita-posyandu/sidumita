@@ -54,7 +54,7 @@
                         <div class="col-2"><i class="fa-solid fa-stethoscope" style="font-size: 30px;"></i></div>
                         <div class="col-10 mt-1">
                             <h6 class="mb-1">Pemeriksaan Ibu Hamil</h6>
-                            <a href="#" class="stretched-link"></a>
+                            <a href="{{ route('peserta.periksa-ibuhamil.index') }}" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>
@@ -93,23 +93,26 @@
     <h2>Berita</h2>
     <div id="berita">
         <div class="row">
-            <div class="col-xl-6 col-md-6 text-center">
-                <img src="{{asset('img/dashboard.png')}}" alt="" width="450px">
+            @if($datakonten == 404)
+            <p>Berita belum tersedia</p>
+            @else
+            @foreach($datakonten as $konten)
+            <div class="col-sm-4">
+                <div class="card mt-2 border-0">
+                    <img src="{{$konten['image']}}" class="card-img-top">
+                    <div class="card-body">
+                        <h4 class="card-title">{{$konten['judul']}}</h4>
+                        <!-- <p class="card-text">{{$konten['konten']}}</p> -->
+                    </div>
+                </div>
             </div>
-            <div class="col-xl-6 col-md-6">
-                <h4>Contoh berita</h4>
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quod repudiandae, eos cum ea vitae, labore
-                impedit iste vel voluptates minima tempore dolores natus deserunt facilis atque sed dolorum temporibus
-                dolorem laboriosam, ducimus ratione quia unde culpa quis! Dignissimos voluptates quos consequuntur nam
-                dolorem temporibus incidunt animi possimus. Explicabo iste sint ab qui! Fugit accusamus explicabo
-                consequuntur quae, necessitatibus accusantium ad voluptates, veritatis similique mollitia voluptatem.
-                Esse?
-            </div>
+            @endforeach
+            @endif
         </div>
     </div>
 </div>
 
-<footer class="text-center text-lg-start text-white" style="background-color: #013220">
+<footer class="text-center text-lg-start text-white mt-5" style="background-color: #013220">
     <!-- Grid container -->
     <div class="container p-4 pb-0">
         <!-- Section: Links -->

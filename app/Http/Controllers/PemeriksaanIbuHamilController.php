@@ -57,20 +57,38 @@ class PemeriksaanIbuHamilController extends Controller
     {
         $data = $request->all();
                 
-        $response = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->post(env('BASE_API_URL').'pemeriksaan-ibuhamil', [
-            'ibu_hamil_id' => $request->ibu_hamil_id,
-            'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
-            'berat_badan' => $request->berat_badan,
-            'tinggi_badan' => $request->tinggi_badan,
-            'lingkar_perut' => $request->lingkar_perut,
-            'denyut_nadi' => $request->denyut_nadi,
-            'keluhan' => $request->keluhan,
-            'penanganan' => $request->penanganan,
-            'catatan' => $request->catatan,
-            'petugas_kesehatan_id' => 1,
+        if($request->session()->get('userAuth')['role_id'] == 3){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post(env('BASE_API_URL').'pemeriksaan-ibu-hamil/byPetugas', [
+                'ibu_hamil_id' => $request->ibu_hamil_id,
+                'umur_kandungan' => $request->umur_kandungan,
+                'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
+                'berat_badan' => $request->berat_badan,
+                'tinggi_badan' => $request->tinggi_badan,
+                'lingkar_perut' => $request->lingkar_perut,
+                'denyut_nadi' => $request->denyut_nadi,
+                'keluhan' => $request->keluhan,
+                'penanganan' => $request->penanganan,
+                'catatan' => $request->catatan,
+            ]);
+        }else{
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->post(env('BASE_API_URL').'pemeriksaan-ibuhamil', [
+                'ibu_hamil_id' => $request->ibu_hamil_id,
+                'umur_kandungan' => $request->umur_kandungan,
+                'tanggal_pemeriksaan' => $request->tanggal_pemeriksaan,
+                'berat_badan' => $request->berat_badan,
+                'tinggi_badan' => $request->tinggi_badan,
+                'lingkar_perut' => $request->lingkar_perut,
+                'denyut_nadi' => $request->denyut_nadi,
+                'keluhan' => $request->keluhan,
+                'penanganan' => $request->penanganan,
+                'catatan' => $request->catatan,
+                'petugas_kesehatan_id' => 1,
         ]);
+        }
         
         return redirect()->route('pemeriksaan-ibuhamil.index')
         ->with('success','Pemeriksaan ibu hamil berhasil dibuat.');
@@ -105,8 +123,6 @@ class PemeriksaanIbuHamilController extends Controller
 
         $data_terbaru = max($rekap);
 
-        dd($rekap);
-
         $response4 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->post(env('BASE_API_URL').'cek-berat-ibu-hamil', [
@@ -119,9 +135,8 @@ class PemeriksaanIbuHamilController extends Controller
         $response5 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'data-grafik-ibu-hamil/'.' '.$data_terbaru['ibu_hamil']['id'])->json();
-        $data_grafik = $response5['data'];
+        $data_grafik = $response5['data'];     
         
-
         $berat_badan = array();
         $tick_position = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24,
         25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40];
@@ -130,13 +145,13 @@ class PemeriksaanIbuHamilController extends Controller
             $berat_badan[$i] = NULL;
         }
         
-        for ($i=0; $i < count($data_grafik['umur_kandungan']); $i++) { 
+        for ($i=0; $i < count($data_grafik); $i++) { 
             // ($i == (int)$rekap[$i]['umur_balita']) ? ($tinggi_badan[(int)$rekap[$i]['umur_balita']] = (int)$rekap[$i]['tinggi_badan']) : $tinggi_badan[$i] = NULL && $tinggi_badan[];           
             // $tinggi_badan[(int)$rekap[$i]['umur_balita']] = (int)$rekap[$i]['tinggi_badan'];
-            $berat_badan[(int)$data_grafik['umur_kandungan'][$i]] = (int)$data_grafik['berat_badan'][$i];
+            $berat_badan[(int)$data_grafik[$i]['umur_kandungan']] = (int)$data_grafik[$i]['berat_badan'];
         }
 
-        return view('pemeriksaanibuhamil.rekap-ibuhamil', compact('rekap', 'ibuhamil', 'dusun', 'hasil_pengukuran', 'data_grafik', 'berat_badan', 'tick_position'));
+        return view('pemeriksaanibuhamil.rekap-ibuhamil', compact('rekap', 'ibuhamil', 'dusun', 'hasil_pengukuran', 'data_grafik', 'berat_badan', 'tick_position', 'data_terbaru'));
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])

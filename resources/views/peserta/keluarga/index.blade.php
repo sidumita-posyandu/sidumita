@@ -4,26 +4,22 @@
 <div class="container mt-5">
     <div class="row">
         <div class="col-4 col-lg-3" style="padding-right: 50px;">
-            <div class="card shadow">
+            <div class="card shadow-sm">
                 <div class="card-body">
                     <div class="container">
-                        <li class="nav-item active my-3" style="list-style-type: none;">
-                            <a class="nav-link row" href="#">
-                                <i class="fa-solid col-2 fa-user text-success"></i>
-                                <span class="col-10">Profil</span></a>
                         </li>
                         <li class="nav-item active my-3" style="list-style-type: none;">
                             <a class="nav-link row" href="#">
                                 <i class="fa-solid col-2 fa-bars-progress text-success"></i>
                                 <span>Data Keluarga</span></a>
                         </li>
-                        <li class="nav-item active my-3" style="list-style-type: none;">
+                        <!-- <li class="nav-item active my-3" style="list-style-type: none;">
                             <a class="nav-link row" href="#">
                                 <i class="fa-solid col-2 fa-gears text-success"></i>
                                 <span>Atur Akun</span></a>
-                        </li>
+                        </li> -->
                         <li class="nav-item active my-3" style="list-style-type: none;">
-                            <a class="nav-link row" href="#">
+                            <a class="nav-link row" href="{{route('logout')}}">
                                 <i class="fa-solid col-2 fa-right-from-bracket text-success"></i>
                                 <span>Log Out</span></a>
                         </li>

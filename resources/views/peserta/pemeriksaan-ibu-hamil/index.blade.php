@@ -11,7 +11,7 @@
                     <label for="pilih_balita"><strong>Pilih Balita</strong></label>
                     @if(is_array($ibu_hamil) || is_object($ibu_hamil))
                     @foreach($ibu_hamil as $b)
-                    <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card border-left-primary shadow h-100 py-2 mt-2">
                         <div class="card-body">
                             <div class="row" style="padding-left: 20px;">
                                 <div class="col-sm-2"><i class="fa-solid fa-person" style="font-size: 30px;"></i>

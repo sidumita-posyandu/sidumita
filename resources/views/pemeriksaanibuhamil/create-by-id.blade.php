@@ -35,9 +35,9 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <strong>Nama Ibu Hamil:</strong>
-                    <input type="text" name="balita_id" class="form-control"
+                    <input type="text" name="ibu_hamil_id" class="form-control"
                         value="{{ $ibuhamil['id'] }}" hidden>
-                    <input type="text" name="nama_balita" class="form-control-plaintext"
+                    <input type="text" name="nama_ibu_hamil" class="form-control-plaintext"
                         value="{{ $ibuhamil['detail_keluarga']['nama_lengkap'] }}" readonly>
                 </div>
             </div>
@@ -46,6 +46,12 @@
                     <strong>Tanggal Pemeriksaan:</strong>
                     <input type="text" name="tanggal_pemeriksaan" class="form-control-plaintext"
                         value="{{ $tanggal_pemeriksaan }}" readonly>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-group">
+                    <strong>Umur Kandungan:</strong>
+                    <input type="text" name="umur_kandungan" class="form-control" placeholder="Umur Kandungan" required>
                 </div>
             </div>
         </div>
@@ -60,13 +66,13 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <strong>Berat Badan (Kg):</strong>
-                        <input type="text" name="berat_badan" class="form-control" placeholder="Berat Badan">
+                        <input type="text" name="berat_badan" class="form-control" placeholder="Berat Badan" required>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <strong>Tinggi Badan (Cm):</strong>
-                        <input type="text" name="tinggi_badan" class="form-control" placeholder="Tinggi Badan">
+                        <input type="text" name="tinggi_badan" class="form-control" placeholder="Tinggi Badan" required>
                     </div>
                 </div>
             </div>
@@ -74,13 +80,13 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <strong>Lingkar Perut (Cm):</strong>
-                        <input type="text" name="lingkar_perut" class="form-control" placeholder="Lingkar Perut">
+                        <input type="text" name="lingkar_perut" class="form-control" placeholder="Lingkar Perut" required>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
                         <strong>Denyut Nadi:</strong>
-                        <input type="text" name="denyut_nadi" class="form-control" placeholder="Denyut Nadi">
+                        <input type="text" name="denyut_nadi" class="form-control" placeholder="Denyut Nadi" required>
                     </div>
                 </div>
             </div>

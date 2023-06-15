@@ -13,9 +13,10 @@ class PemeriksaanBalitaController extends Controller
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'me/balita')->json();
 
-        if($response['exception'] == 'ErrorException'){
+        if($response['data'] == []){
             $balita = "Data belum terdaftar";
-        }else{
+        }
+        else{
             $balita = $response['data'];
         }
 
@@ -45,22 +46,41 @@ class PemeriksaanBalitaController extends Controller
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'pemeriksaan-balita/balita/'.' '.$id)->json();
-        $det_balita = $response['data'][0];
+        if(!isset($response['data']) || $response['data'] == []){
+            $det_balita = 404;
+        }else{
+            $det_balita = $response['data'][0];
+        }
 
         $response2 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'detail-keluarga/'.' '.$det_balita['balita']['detail_keluarga_id'])->json();
-        $balita = $response2['data'][0];
+
+        if(!isset($response['data']) || $response['data'] == []){
+            $balita = 404;
+        }else{
+            $balita = $response2['data'][0];
+        }
         
         $response3 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'umur/'.' '.$det_balita['balita']['detail_keluarga_id'])->json();
-        $umur = $response3['data'];
+        
+        if(!isset($response['data']) || $response['data'] == []){
+            $umur = 404;
+        }else{
+            $umur = $response3['data'];
+        }
 
         $response4 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'dusun/'.' '.$balita['keluarga']['dusun_id'])->json();
-        $dusun = $response4['data'];
+        
+        if(!isset($response['data']) || $response['data'] == []){
+            $dusun = 404;
+        }else{
+            $dusun = $response4['data'];
+        }
 
         return view('peserta.pemeriksaan-balita.detail-balita', compact('balita', 'det_balita', 'umur', 'dusun'));
     }
@@ -254,6 +274,7 @@ class PemeriksaanBalitaController extends Controller
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'cek-imunisasi-balita/'.' '.$id);
         $vaksin = $response10['data'];
+
 
         return view('peserta.pemeriksaan-balita.grafik',compact('vaksin','data_terbaru','hasil_tinggi_girls', 'hasil_berat_boys', 'hasil_berat_girls', 'hasil_kepala_boys', 'hasil_tinggi_girls', 'thick_position','tinggi_badan','berat_badan','lingkar_kepala','hasil_tinggi_boys', 'rekap', 'balita', 'umur', 'dusun', 'ltinggi0', 'ltinggi1', 'ltinggi2', 'ltinggi3', 'ltinggimin1', 'ltinggimin2', 'ltinggimin3', 'ptinggi0', 'ptinggi1', 'ptinggi2', 'ptinggi3', 'ptinggimin1', 'ptinggimin2', 'ptinggimin3', 'lberat0', 'lberat1', 'lberat2', 'lberat3', 'lberatmin1', 'lberatmin2', 'lberatmin3', 'pberat0', 'pberat1', 'pberat2', 'pberat3', 'pberatmin1', 'pberatmin2', 'pberatmin3', 'lkepala0', 'lkepala1', 'lkepala2', 'lkepala3', 'lkepalamin1', 'lkepalamin2', 'lkepalamin3', 'pkepala0', 'pkepala1', 'pkepala2', 'pkepala3', 'pkepalamin1', 'pkepalamin2', 'pkepalamin3'));
     }

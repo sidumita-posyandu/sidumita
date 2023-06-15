@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Intervention\Image\Facades\Image as Image;
 
 class HomeController extends Controller
 {
@@ -28,7 +29,6 @@ class HomeController extends Controller
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'detail-keluarga/')->json();
         $anggota_keluarga = count($response4['data']);
-        
 
         if($request->session()->get('userAuth')['role_id'] == 4)
         {
@@ -40,6 +40,22 @@ class HomeController extends Controller
     }
 
     public function peserta(){
-        return view('peserta.home');
+        $response5 = Http::withHeaders(["Content-type", "multipart/form-data"])
+            ->get(env('BASE_API_URL').'konten');
+        $konten = $response5['data'];
+
+        if(isset($konten)){
+            foreach($konten as $listkonten){
+                $datakonten[] = [
+                    'judul' => $listkonten['judul'],
+                    'konten' => $listkonten['konten'],
+                    'image' => env('BASE_IMAGE_URL').$listkonten['gambar'],
+                ];
+            }
+        }else{
+            $datakonten = 404;
+        }
+
+        return view('peserta.home', compact('datakonten'));
     }
 }

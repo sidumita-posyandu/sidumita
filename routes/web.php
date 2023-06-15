@@ -62,6 +62,8 @@ Route::group([
     Route::post('/petugas-kesehatan/profile/{id}', [App\Http\Controllers\PetugasKesehatanController::class, 'update'])->name('petugas.update');
 
     Route::resource('dokter', DokterController::class);
+
+    Route::resource('konten', KontenController::class);
 });
 
 Route::group(['middleware' => ['ceklogin']], function () {
@@ -69,9 +71,10 @@ Route::group(['middleware' => ['ceklogin']], function () {
     Route::get('/pemeriksaan-balita', [App\Http\Controllers\Peserta\PemeriksaanBalitaController::class, 'index'])->name('peserta.periksa.index');
     Route::get('/pemeriksaan-balita/{id}', [App\Http\Controllers\Peserta\PemeriksaanBalitaController::class, 'detBalita'])->name('peserta.periksa.detail');
     Route::get('/grafik-pertumbuhan-balita/{id}', [App\Http\Controllers\Peserta\PemeriksaanBalitaController::class, 'rekap_balita'])->name('peserta.periksa.grafik');
+    Route::get('/history-pertumbuhan-balita/{id}', [App\Http\Controllers\Peserta\HistoryPemeriksaanController::class, 'balita'])->name('peserta.periksa.history');
 
     Route::get('/pemeriksaan-ibu-hamil', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'index'])->name('peserta.periksa-ibuhamil.index');
     Route::get('/pemeriksaan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'detIbuHamil'])->name('peserta.periksa-ibuhamil.detail');
     Route::get('/grafik-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'rekap_ibu_hamil'])->name('peserta.periksa-ibuhamil.grafik');
-
-});
+    Route::get('/history-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\HistoryPemeriksaanController::class, 'ibuHamil'])->name('peserta.periksa-ibuhamil.history');
+    });

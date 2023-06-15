@@ -54,20 +54,24 @@
                                         <strong class="text-gray-900" style="font-size: 24px;">SIDUMITA</strong>
                                         <hr>
                                     </div>
-                                    @if($errors->any())
-                                    <div class="alert alert-danger">
-                                        <p>{{ $errors->first() }}</p>
+                                    @if(session()->has('status'))
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    Email atau password salah!
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        {{@Session::forget('status')}}
+                                    </button>
                                     </div>
                                     @endif
                                     <form action="{{ route('login.store') }}" method="POST" class="user">
                                         @csrf
                                         <div class="form-group mt-4">
                                             <input type="email" class="form-control form-control-user" name="email"
-                                                placeholder="Masukan Alamat Email">
+                                                placeholder="Masukan Alamat Email" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                name="password" placeholder="Masukan Password">
+                                                name="password" placeholder="Masukan Password" required>
                                         </div>
                                         <button type="submit" class="btn btn-success btn-user btn-block">Log
                                             In</button>

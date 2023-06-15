@@ -31,7 +31,7 @@
                     </div>
                     <div class="row">
                         <h6>Usia Kandungan:</h6>
-                        <h6 class="ml-3">#</h6>
+                        <h6 class="ml-3">{{ $data_terbaru['umur_kandungan'] }} Minggu</h6>
                     </div>
                 </div>
             </div>
@@ -90,13 +90,13 @@
 
 <div class="card shadow mt-2">
     <div class="card-body">
-        @if($hasil_pengukuran['status'] == "underweight")
+        @if($hasil_pengukuran['status'] == "Underweight")
         <div id="grafik-underweight-ibu-hamil" style="height:500px;"></div>
-        @elseif($hasil_pengukuran['status'] == "normal")
+        @elseif($hasil_pengukuran['status'] == "Normal")
         <div id="grafik-normal-ibu-hamil" style="height:500px;"></div>
-        @elseif($hasil_pengukuran['status'] == "overweight")
+        @elseif($hasil_pengukuran['status'] == "Overweight")
         <div id="grafik-overweight-ibu-hamil" style="height:500px;"></div>
-        @elseif($hasil_pengukuran['status'] == "obese")
+        @elseif($hasil_pengukuran['status'] == "Obese")
         <div id="grafik-obese-ibu-hamil" style="height:500px;"></div>
         @endif
         <p class="text-center" style="color: #000">Berat badan yang disarankan

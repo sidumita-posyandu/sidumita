@@ -4,6 +4,11 @@
 <div class="container mt-3">
     <div class="row">
         <div class="col-sm-6">
+            @if($balita == 404)
+            <div>
+                Data Belum Tersedia
+            </div>
+            @else
             <div class="form-group mb-3">
                 <label for="nama_lengkap">Nama Lengkap</label>
                 <input type="text" class="form-control" id="nama_lengkap" value="{{ $balita['nama_lengkap'] }}"
@@ -63,12 +68,15 @@
             </div>
             <figcaption class="figure-caption">*Data diatas diambil dari pemeriksaan terbaru. Silahkan pilih menu
                 "History Pemeriksaan" untuk melihat pemeriksaan sebelumnya</figcaption>
-            <div class="form-group mb-3 mt-2">
+            @if($det_balita != 404)
+                <div class="form-group mb-3 mt-2">
                 <a href="{{ route('peserta.periksa.grafik', [$det_balita['balita_id']]) }}" type="button"
                     class="btn btn-success w-100">Lihat Grafik Pertumbuhan</a>
                 <hr class="hr" />
-                <a href="" type="button" class="btn btn-secondary w-100">History Pemeriksaan</a>
+                <a href="{{ route('peserta.periksa.history', [$det_balita['balita_id']]) }}" type="button" class="btn btn-secondary w-100">History Pemeriksaan</a>
             </div>
+            @endif
+            @endif
         </div>
         <div class="col-sm-6">
             <h6>Informasi</h6>

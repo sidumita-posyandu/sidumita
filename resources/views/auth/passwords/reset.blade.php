@@ -54,7 +54,7 @@
                                             <input type="hidden" class="form-control form-control-user mb-2" name="token"
                                                 value="{{ $token }}">
                                             <input type="email" class="form-control form-control-user mb-2" name="email"
-                                                value="{{ $email }}">
+                                                value="{{ $email }}" readonly>
                                             <input type="password" class="form-control form-control-user mb-2" name="password"
                                                 placeholder="Masukan Password">
                                             <input type="password" class="form-control form-control-user mb-2" name="password_confirmation"

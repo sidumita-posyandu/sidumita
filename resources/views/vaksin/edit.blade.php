@@ -41,25 +41,61 @@
                     <input type="text" name="nama_vaksin" value="{{ $vaksin['nama_vaksin'] }}" class="form-control">
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Dosis:</strong>
                     <input type="text" name="dosis" class="form-control" value="{{ $vaksin['dosis'] }}">
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <strong>Catatan:</strong>
-                    <input type="text" name="catatan" class="form-control" value="{{ $vaksin['catatan'] }}">
-                </div>
-            </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Status:</strong>
                     <select class="form-control" id="status" name="status">
                         <option value="Wajib">Wajib</option>
                         <option value="Tambahan">Tambahan</option>
                     </select>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Rekomendasi Min:</strong>
+                    <input type="number" name="umur_rek_min" class="form-control" value="{{ $vaksin['umur_rek_min'] }}">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Rekomendasi Max:</strong>
+                    <input type="number" name="umur_rek_max" class="form-control" value="{{ $vaksin['umur_rek_max'] }}">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Kejar Min:</strong>
+                    <input type="number" name="umur_min" class="form-control" value="{{ $vaksin['umur_min'] }}">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Kejar Max:</strong>
+                    <input type="number" name="umur_max" class="form-control" value="{{ $vaksin['umur_max'] }}">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Susulan Min:</strong>
+                    <input type="number" name="umur_susulan_min" class="form-control" value="{{ $vaksin['umur_susulan_min'] }}">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Susulan Max:</strong>
+                    <input type="number" name="umur_susulan_max" class="form-control" value="{{ $vaksin['umur_susulan_max'] }}">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Catatan:</strong>
+                    <input type="text" name="catatan" class="form-control" value="{{ $vaksin['catatan'] }}">
                 </div>
             </div>
             <div class="text-center col-sm-12">

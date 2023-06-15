@@ -32,7 +32,7 @@
                 <th width="50px">No</th>
                 <th width="500px">Nama Ibu Hamil</th>
                 <th>Tanggal Lahir</th>
-                <th width="190px">Action</th>
+                <th width="290px">Action</th>
             </tr>
             @if(is_array($ibu_hamil) || is_object($ibu_hamil))
             @foreach ($ibu_hamil as $k => $item)
@@ -42,6 +42,7 @@
                 <td>{{ $item['detail_keluarga']['tanggal_lahir'] }}</td>
                 <td>
                     <div class="row m-auto">
+                        @if(Session::get('userAuth')['role_id'] <= 2)
                         <form method="POST" action="{{ route('ibu-hamil.destroy', [$item['id']]) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
@@ -49,6 +50,11 @@
                                 onclick="return confirm('Yakin Menghapus Data?')"><i
                                     class='fas fa-trash mr-1'></i>Delete</button>
                         </form>
+                        @endif
+                        <a class="btn btn-success btn-sm ml-1"
+                            href="{{ route('create-ibu-hamil-id', [$item['id']]) }}"><i
+                                class="fas fa-edit mr-1"></i>
+                            Periksa</a>
                         <a class="btn btn-info btn-sm ml-1" href="{{ route('rekap-ibu-hamil', [$item['id']]) }}"><i
                                 class="fas fa-edit mr-1"></i>
                             Rekap</a>

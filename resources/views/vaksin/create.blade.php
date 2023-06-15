@@ -39,19 +39,13 @@
                     <input type="text" name="nama_vaksin" class="form-control" placeholder="Nama vaksin">
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Dosis:</strong>
                     <input type="text" name="dosis" class="form-control" placeholder="Dosis">
                 </div>
             </div>
-            <div class="col-sm-12">
-                <div class="form-group">
-                    <strong>Catatan:</strong>
-                    <input type="text" name="catatan" class="form-control" placeholder="Catatan">
-                </div>
-            </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <div class="form-group">
                         <strong>Status:</strong>
@@ -60,6 +54,48 @@
                             <option value="Tambahan">Tambahan</option>
                         </select>
                     </div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Rekomendasi Min:</strong>
+                    <input type="number" name="umur_rek_min" class="form-control" placeholder="Bulan">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Rekomendasi Max:</strong>
+                    <input type="number" name="umur_rek_max" class="form-control" placeholder="Bulan">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Kejar Min:</strong>
+                    <input type="number" name="umur_min" class="form-control" placeholder="Bulan">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Kejar Max:</strong>
+                    <input type="number" name="umur_max" class="form-control" placeholder="Bulan">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Susulan Min:</strong>
+                    <input type="number" name="umur_susulan_min" class="form-control" placeholder="Bulan">
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <div class="form-group">
+                    <strong>Susulan Max:</strong>
+                    <input type="number" name="umur_susulan_max" class="form-control" placeholder="Bulan">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Catatan:</strong>
+                    <input type="text" name="catatan" class="form-control" placeholder="Catatan">
                 </div>
             </div>
             <div class="text-center col-sm-12">

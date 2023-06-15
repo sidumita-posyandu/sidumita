@@ -35,13 +35,13 @@
                 <div id="weight_boys_0_2_years" style="height:500px;"></div>
                 <div id="head_boys_0_2_years" style="height:500px;"></div>
             </div> -->
-            @if($hasil_pengukuran['status'] == "underweight")
+            @if($hasil_pengukuran['status'] == "Underweight")
             <div id="grafik-underweight-ibu-hamil" style="height:500px;"></div>
-            @elseif($hasil_pengukuran['status'] == "normal")
+            @elseif($hasil_pengukuran['status'] == "Normal")
             <div id="grafik-normal-ibu-hamil" style="height:500px;"></div>
-            @elseif($hasil_pengukuran['status'] == "overweight")
+            @elseif($hasil_pengukuran['status'] == "Overweight")
             <div id="grafik-overweight-ibu-hamil" style="height:500px;"></div>
-            @elseif($hasil_pengukuran['status'] == "obese")
+            @elseif($hasil_pengukuran['status'] == "Obese")
             <div id="grafik-obese-ibu-hamil" style="height:500px;"></div>
             @endif
             <p class="text-center" style="color: #000">Berat badan yang disarankan

@@ -135,6 +135,12 @@
 
             @if(Session::get('userAuth')['role_id'] == 1)
 
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('konten.index') }}">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Konten</span></a>
+            </li>
+
             <!-- Divider -->
             <hr class="sidebar-divider">
 
@@ -152,7 +158,6 @@
                     data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="{{ route('users.index') }}">Users</a>
-                        <a class="collapse-item" href="#">Roles</a>
                     </div>
                 </div>
             </li>
@@ -167,10 +172,11 @@
                     <i class="fas fa-fw fa-user"></i>
                     <span>Profil</span></a>
             </li>
+            <hr class="sidebar-divider d-none d-md-block">
+
             @endif
 
             <!-- Divider -->
-            <hr class="sidebar-divider d-none d-md-block">
 
             <!-- Sidebar Toggler (Sidebar) -->
             <div class="text-center d-none d-md-inline">

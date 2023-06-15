@@ -42,7 +42,6 @@
                 <th>Waktu Mulai</th>
                 <th>Waktu Berakhir</th>
                 <th>Dusun</th>
-                <th width="170px">Action</th>
             </tr>
 
             @foreach ($jadwal_pemeriksaan as $k => $item)
@@ -52,8 +51,6 @@
                 <td>{{ $item['waktu_mulai'] }}</td>
                 <td>{{ $item['waktu_berakhir'] }}</td>
                 <td>{{ $item['nama_dusun'] }}</td>
-                <td>
-                </td>
             </tr>
             @endforeach
         </table>
