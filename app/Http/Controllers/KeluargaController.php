@@ -25,7 +25,16 @@ class KeluargaController extends Controller
 
             return view('keluarga.index-petugas', compact('keluarga'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
-        }else{
+        }elseif($request->session()->get('userAuth')['role_id'] == 2){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'operator/keluarga')->json();
+            $keluarga = $this->paginate($response['data'])->withPath('/admin/keluarga');
+
+            return view('keluarga.index-operator', compact('keluarga'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+        }
+        else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'keluarga')->json();
@@ -144,6 +153,35 @@ class KeluargaController extends Controller
     
         // return redirect()->route('keluarga.index')
         //                 ->with('success','Data keluarga berhasil dihapus');
+    }
+
+    public function indexValidasiKeluarga(Request $request){
+        if($request->session()->get('userAuth')['role_id'] == 1){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'keluarga')->json();
+            $keluarga = $this->paginate($response['data'])->withPath('/admin/akun-keluarga');
+
+            return view('keluarga.validasi', compact('keluarga'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+        }elseif($request->session()->get('userAuth')['role_id'] == 2){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'operator/keluarga')->json();
+
+            $keluarga = $this->paginate($response['data'])->withPath('/admin/akun-keluarga');
+
+            return view('keluarga.validasi-operator', compact('keluarga'))
+            ->with('i', ($request->input('page', 1) - 1) * 5);
+        }
+    }
+
+    public function validasiKeluarga(Request $request, $id){
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->patch(env('BASE_API_URL').'validasi-user/'.' '.$id);
+        
+        return back();
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])

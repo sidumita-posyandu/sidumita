@@ -62,10 +62,14 @@ Route::group([
 
     Route::get('/petugas-kesehatan/profile', [App\Http\Controllers\PetugasKesehatanController::class, 'profile'])->name('petugas.profile');
     Route::post('/petugas-kesehatan/profile/{id}', [App\Http\Controllers\PetugasKesehatanController::class, 'update'])->name('petugas.update');
-
+    
     Route::resource('dokter', DokterController::class);
-
+    
     Route::resource('konten', KontenController::class);
+    
+    Route::get('/akun-keluarga', [App\Http\Controllers\KeluargaController::class, 'indexValidasiKeluarga'])->name('akun-keluarga');
+    Route::patch('/validasi-keluarga/{id}', [App\Http\Controllers\KeluargaController::class, 'validasiKeluarga'])->name('akun-keluarga.validasi');
+    Route::patch('/unvalidasi-keluarga/{id}', [App\Http\Controllers\KeluargaController::class, 'unvalidasiKeluarga'])->name('akun-keluarga.unvalidasi');
 });
 
 Route::group(['middleware' => ['ceklogin']], function () {

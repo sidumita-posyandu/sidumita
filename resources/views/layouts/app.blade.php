@@ -132,6 +132,15 @@
                     </div>
                 </div>
             </li>
+            @if(Session::get('userAuth')['role_id'] == 1 || Session::get('userAuth')['role_id'] == 2)
+
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('akun-keluarga') }}">
+                    <i class="fas fa-fw fa-folder"></i>
+                    <span>Validasi User</span></a>
+            </li>
+
+            @endif
 
             @if(Session::get('userAuth')['role_id'] == 1)
 

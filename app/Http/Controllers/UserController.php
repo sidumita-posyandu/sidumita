@@ -94,6 +94,18 @@ class UserController extends Controller
 
         return view('users.show',compact('user'));
     }
+
+    // public function indexKeluarga(Request $request){
+    //     $response = Http::accept('application/json')
+    //         ->withToken($request->session()->get('token'))
+    //         ->get(env('BASE_API_URL').'user')
+    //         ->json();
+        
+    //     $users = $this->paginate($response['data'])->withPath('/admin/users');;
+
+    //     return view('users.index', compact('users'))
+    //         ->with('i', ($request->input('page', 1) - 1) * 5);
+    // }
     
     /**
      * Show the form for editing the specified resource.

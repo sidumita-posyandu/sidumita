@@ -22,7 +22,17 @@ class BalitaController extends Controller
             
             return view('balita.index-petugas',compact('balita'))
             ->with('i', ($request->input('balita', 1) - 1) * 5); 
-        }else{
+        }
+        elseif($request->session()->get('userAuth')['role_id'] == 2){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'operator/balita')->json();
+            $balita = $this->paginate($response['data'])->withPath('/admin/balita');
+            
+            return view('balita.index-operator',compact('balita'))
+            ->with('i', ($request->input('balita', 1) - 1) * 5); 
+        }
+        else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'balita')->json();

@@ -29,7 +29,7 @@
         </div>
         <table class="table table-bordered">
             <tr>
-                <th width="50px">No</th>
+            <th width="50px">No</th>
                 <th>Nama Ibu Hamil</th>
                 <th>Tanggal Lahir</th>
                 <th width="290px">Action</th>

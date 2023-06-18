@@ -21,7 +21,17 @@ class IbuHamilController extends Controller
             
             return view('ibu-hamil.index-petugas',compact('ibu_hamil'))
             ->with('i', ($request->input('ibu_hamils', 1) - 1) * 5); 
-        }else{
+        }
+        elseif($request->session()->get('userAuth')['role_id'] == 2){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'operator/ibu-hamil')->json();
+            $ibu_hamil = $this->paginate($response['data'])->withPath('/admin/ibu-hamil');
+            
+            return view('ibu-hamil.index-operator',compact('ibu_hamil'))
+                ->with('i', ($request->input('ibu-hamil', 1) - 1) * 5);   
+        }
+        else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'ibu-hamil')->json();
