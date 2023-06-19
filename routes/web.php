@@ -23,7 +23,7 @@ Route::post('/login/authenticate', [App\Http\Controllers\Auth\LoginController::c
 Route::get('/logout', [App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'peserta'])->name('peserta');
 
-Route::get('/konten/{id}', [App\Http\Controllers\Peserta\KontenController::class, 'show'])->name('peserta.konten.show');
+Route::get('/konten/{id}', [App\Http\Controllers\PesertaController\KontenController::class, 'show'])->name('peserta.konten.show');
 
 Route::group([
     'middleware' => ['ceklogin', 'admin'], 'prefix' => 'admin'], function () {
@@ -73,14 +73,14 @@ Route::group([
 });
 
 Route::group(['middleware' => ['ceklogin']], function () {
-    Route::get('/keluarga', [App\Http\Controllers\Peserta\KeluargaController::class, 'index'])->name('peserta.keluarga.index');
-    Route::get('/pemeriksaan-balita', [App\Http\Controllers\Peserta\PemeriksaanBalitaController::class, 'index'])->name('peserta.periksa.index');
-    Route::get('/pemeriksaan-balita/{id}', [App\Http\Controllers\Peserta\PemeriksaanBalitaController::class, 'detBalita'])->name('peserta.periksa.detail');
-    Route::get('/grafik-pertumbuhan-balita/{id}', [App\Http\Controllers\Peserta\PemeriksaanBalitaController::class, 'rekap_balita'])->name('peserta.periksa.grafik');
-    Route::get('/history-pertumbuhan-balita/{id}', [App\Http\Controllers\Peserta\HistoryPemeriksaanController::class, 'balita'])->name('peserta.periksa.history');
+    Route::get('/pemeriksaan-balita', [App\Http\Controllers\PesertaController\PemeriksaanBalitaController::class, 'index'])->name('peserta.periksa.index');
+    Route::get('/keluarga', [App\Http\Controllers\PesertaController\KeluargaController::class, 'index'])->name('peserta.keluarga.index');
+    Route::get('/pemeriksaan-balita/{id}', [App\Http\Controllers\PesertaController\PemeriksaanBalitaController::class, 'detBalita'])->name('peserta.periksa.detail');
+    Route::get('/grafik-pertumbuhan-balita/{id}', [App\Http\Controllers\PesertaController\PemeriksaanBalitaController::class, 'rekap_balita'])->name('peserta.periksa.grafik');
+    Route::get('/history-pertumbuhan-balita/{id}', [App\Http\Controllers\PesertaController\HistoryPemeriksaanController::class, 'balita'])->name('peserta.periksa.history');
 
-    Route::get('/pemeriksaan-ibu-hamil', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'index'])->name('peserta.periksa-ibuhamil.index');
-    Route::get('/pemeriksaan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'detIbuHamil'])->name('peserta.periksa-ibuhamil.detail');
-    Route::get('/grafik-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\PemeriksaanIbuHamilController::class, 'rekap_ibu_hamil'])->name('peserta.periksa-ibuhamil.grafik');
-    Route::get('/history-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\Peserta\HistoryPemeriksaanController::class, 'ibuHamil'])->name('peserta.periksa-ibuhamil.history');    
+    Route::get('/pemeriksaan-ibu-hamil', [App\Http\Controllers\PesertaController\PemeriksaanIbuHamilController::class, 'index'])->name('peserta.periksa-ibuhamil.index');
+    Route::get('/pemeriksaan-ibu-hamil/{id}', [App\Http\Controllers\PesertaController\PemeriksaanIbuHamilController::class, 'detIbuHamil'])->name('peserta.periksa-ibuhamil.detail');
+    Route::get('/grafik-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\PesertaController\PemeriksaanIbuHamilController::class, 'rekap_ibu_hamil'])->name('peserta.periksa-ibuhamil.grafik');
+    Route::get('/history-pertumbuhan-ibu-hamil/{id}', [App\Http\Controllers\PesertaController\HistoryPemeriksaanController::class, 'ibuHamil'])->name('peserta.periksa-ibuhamil.history');    
     });
