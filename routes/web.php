@@ -73,8 +73,8 @@ Route::group([
 });
 
 Route::group(['middleware' => ['ceklogin']], function () {
-    Route::get('/pemeriksaan-balita', [App\Http\Controllers\PesertaController\PemeriksaanBalitaController::class, 'index'])->name('peserta.periksa.index');
     Route::get('/keluarga', [App\Http\Controllers\PesertaController\KeluargaController::class, 'index'])->name('peserta.keluarga.index');
+    Route::get('/pemeriksaan-balita', [App\Http\Controllers\PesertaController\PemeriksaanBalitaController::class, 'index'])->name('peserta.periksa.index');
     Route::get('/pemeriksaan-balita/{id}', [App\Http\Controllers\PesertaController\PemeriksaanBalitaController::class, 'detBalita'])->name('peserta.periksa.detail');
     Route::get('/grafik-pertumbuhan-balita/{id}', [App\Http\Controllers\PesertaController\PemeriksaanBalitaController::class, 'rekap_balita'])->name('peserta.periksa.grafik');
     Route::get('/history-pertumbuhan-balita/{id}', [App\Http\Controllers\PesertaController\HistoryPemeriksaanController::class, 'balita'])->name('peserta.periksa.history');

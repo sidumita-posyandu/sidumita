@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\peserta;
+namespace App\Http\Controllers\PesertaController;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Http;
 
 class PemeriksaanBalitaController extends Controller
