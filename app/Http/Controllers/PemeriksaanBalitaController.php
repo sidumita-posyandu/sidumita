@@ -19,7 +19,14 @@ class PemeriksaanBalitaController extends Controller
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'petugas/with-pemeriksaan-balita')->json();
             $pemeriksaanbalita = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-balita');
-        }else{
+        }
+        elseif($request->session()->get('userAuth')['role_id'] == 2){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'operator/pemeriksaan-balita')->json();
+            $pemeriksaanbalita = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-balita');
+        }
+        else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'pemeriksaan-balita')->json();

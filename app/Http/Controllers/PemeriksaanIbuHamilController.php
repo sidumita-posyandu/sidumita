@@ -19,7 +19,14 @@ class PemeriksaanIbuHamilController extends Controller
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'petugas/with-pemeriksaan-ibu-hamil')->json();
             $pemeriksaanibuhamil = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-ibuhamil');
-        }else{
+        }
+        elseif($request->session()->get('userAuth')['role_id'] == 2){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'operator/pemeriksaan-ibu-hamil')->json();
+            $pemeriksaanibuhamil = $this->paginate($response['data'])->withPath('/admin/pemeriksaan-balita');
+        }
+        else{
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'pemeriksaan-ibuhamil')->json();

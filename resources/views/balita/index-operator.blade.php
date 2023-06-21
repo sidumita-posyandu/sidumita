@@ -35,7 +35,7 @@
                 @if(Session::get('userAuth')['role_id'] <= 2)
                 <th width="290px">Action</th>
                 @else
-                <th width="200px">Action</th>
+                <th width="210px">Action</th>
                 @endif
             </tr>
             @if(is_array($balita) || is_object($balita))

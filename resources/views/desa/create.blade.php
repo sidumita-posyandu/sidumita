@@ -43,7 +43,7 @@
                     <select class="form-control" id="kecamata" name="kecamatan_id">
                         <option value="" selected disabled>-- Pilih Kecamatan --</option>
                         @foreach ($kecamatan as $p)
-                        <option value="{{ $p['id'] }}">{{ $p['nama_kecamatan'] }}</option>
+                        <option value="{{ $p['id'] }}">{{ $p['id'] }}. {{ $p['nama_kecamatan'] }}</option>
                         @endforeach
                     </select>
                 </div>

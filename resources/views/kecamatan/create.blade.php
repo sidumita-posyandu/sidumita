@@ -42,7 +42,7 @@
                     <select class="form-control" id="kabupaten" name="kabupaten_id">
                         <option value="" selected disabled>-- Pilih Kabupaten --</option>
                         @foreach ($kabupaten as $kabupaten)
-                        <option value="{{ $kabupaten['id'] }}">{{ $kabupaten['nama_kabupaten'] }}</option>
+                        <option value="{{ $kabupaten['id'] }}">{{ $kabupaten['id'] }}. {{ $kabupaten['nama_kabupaten'] }}</option>
                         @endforeach
                     </select>
                 </div>

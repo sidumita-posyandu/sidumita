@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\PesertaController;
+namespace App\Http\Controllers\peserta;
 
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
 class HistoryPemeriksaanController extends Controller

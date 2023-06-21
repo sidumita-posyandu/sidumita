@@ -43,9 +43,13 @@
                                         <strong class="text-gray-900" style="font-size: 24px;">SIDUMITA</strong>
                                         <h6 style="font-size: 14px;">Masukan password yang baru</h3>
                                     </div>
-                                    @if($errors->any())
-                                    <div class="alert alert-danger">
-                                        <p>{{ $errors->first() }}</p>
+                                    @if(session()->has('ganti_password'))
+                                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                    {{@Session::get('ganti_password')}}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                        {{@Session::forget('ganti_password')}}
+                                    </button>
                                     </div>
                                     @endif
                                     <form action="{{route('getResetRequest.store')}}" method="POST" class="user">
@@ -56,9 +60,9 @@
                                             <input type="email" class="form-control form-control-user mb-2" name="email"
                                                 value="{{ $email }}" readonly>
                                             <input type="password" class="form-control form-control-user mb-2" name="password"
-                                                placeholder="Masukan Password">
+                                                placeholder="Masukan Password" required minlength="8">
                                             <input type="password" class="form-control form-control-user mb-2" name="password_confirmation"
-                                                placeholder="Masukan Password Kembali">
+                                                placeholder="Masukan Password Kembali" required minlength="8">
                                         </div>
                                         <button type="submit" class="btn btn-success btn-user btn-block">Submit</button>
                                     </form>

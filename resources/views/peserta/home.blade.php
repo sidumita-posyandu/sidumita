@@ -34,7 +34,7 @@
 
 <div class="container" style="margin-top: 35px;">
     <div class="row">
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row">
@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row">
@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-4 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row">
@@ -68,19 +68,6 @@
                         <div class="col-10 mt-1">
                             <h6 class="mb-1">Data Keluarga</h6>
                             <a href="{{ route('peserta.keluarga.index') }}" class="stretched-link"></a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-2"><i class="fa-solid fa-user" style="font-size: 30px;"></i></div>
-                        <div class="col-10 mt-1">
-                            <h6 class="mb-1">Profil Saya</h6>
-                            <a href="#" class="stretched-link"></a>
                         </div>
                     </div>
                 </div>

@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-
+use Illuminate\Support\Facades\Validator;
 class ForgetPasswordController extends Controller
 {
     public function index(){
@@ -28,12 +28,22 @@ class ForgetPasswordController extends Controller
     }
 
     public function setResetRequest(Request $request){
-        request()->validate([
+        $validasi = Validator::make($request->all(), [
             'token' => 'required',
             'email' => 'required',
-            'password' => 'required',
-            'password_confirmation' => 'required'
+            'password' => 'required|string|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/',
+            'password_confirmation' => 'required|string|regex:/[a-z]/|regex:/[A-Z]/|regex:/[0-9]/'
         ]);
+
+        if($validasi->fails()){
+            $request->session()->put('ganti_password', 'Password minimal menggunakan 1 huruf kapital, dan 1 angka');
+            return redirect()->back();  
+        }
+
+        if($request->password != $request->password_confirmation){
+            $request->session()->put('ganti_password', 'Password dan konfirmasi password tidak cocok');
+            return redirect()->back();  
+        }
 
         $response = Http::post(env('BASE_API_URL').'auth/resetPassword', [
             'resetToken' => $request->token,

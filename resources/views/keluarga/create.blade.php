@@ -29,29 +29,31 @@
     <div class="card shadow">
         <div class="card-header font-weight-bold">
             Data Keluarga
+            <br>
+            <span class="text-danger font-italic" style="font-size: 10px;">* Data wajib diisi</span>
         </div>
         <div class="row m-2">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <strong>No Kartu Keluarga:</strong>
-                    <input type="text" name="no_kartu_keluarga" class="form-control" placeholder="No Kartu Keluarga">
+                    <strong>No Kartu Keluarga <span class="text-danger">*</span></strong>
+                    <input type="number" name="no_kartu_keluarga" class="form-control" placeholder="No Kartu Keluarga" required>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
-                    <strong>Kepala Keluarga:</strong>
-                    <input type="text" name="kepala_keluarga" class="form-control" placeholder="Nama Kepala Keluarga">
+                    <strong>Kepala Keluarga <span class="text-danger">*</span></strong>
+                    <input type="text" name="kepala_keluarga" class="form-control" placeholder="Nama Kepala Keluarga" required>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
-                    <strong>Alamat:</strong>
-                    <input type="text" name="alamat" class="form-control" placeholder="Alamat" rows="3"></input>
+                    <strong>Alamat <span class="text-danger">*</span></strong>
+                    <input type="text" name="alamat" class="form-control" placeholder="Alamat" rows="3" required>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <strong>Provinsi:</strong>
+                    <strong>Provinsi <span class="text-danger">*</span></strong>
                     <select class="form-control" id="provinsi" name="provinsi_id">
                         <option value="" selected disabled>-- Pilih Provinsi --</option>
                         @foreach ($provinsi as $p)
@@ -62,32 +64,32 @@
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <strong>Kabupaten:</strong>
-                    <select class="form-control" id="kabupaten" name="kabupaten_id">
+                    <strong>Kabupaten <span class="text-danger">*</span></strong>
+                    <select class="form-control" id="kabupaten" name="kabupaten_id" required>
                         <option value="" selected disabled></option>
                     </select>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <strong>Kecamatan:</strong>
-                    <select class="form-control" id="kecamatan" name="kecamatan_id">
+                    <strong>Kecamatan <span class="text-danger">*</span></strong>
+                    <select class="form-control" id="kecamatan" name="kecamatan_id" required>
                         <option value="" selected disabled></option>
                     </select>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <strong>Desa:</strong>
-                    <select class="form-control" id="desa" name="desa_id">
+                    <strong>Desa <span class="text-danger">*</span></strong>
+                    <select class="form-control" id="desa" name="desa_id" required>
                         <option value="" selected disabled></option>
                     </select>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <strong>Dusun:</strong>
-                    <select class="form-control" id="dusun" name="dusun_id">
+                    <strong>Dusun <span class="text-danger">*</span></strong>
+                    <select class="form-control" id="dusun" name="dusun_id" required>
                         <option value="" selected disabled></option>
                     </select>
                 </div>
@@ -95,8 +97,8 @@
             <div class="col-sm-6"></div>
             <div class="col-sm-6">
                 <div class="form-group">
-                    <strong>Email:</strong>
-                    <input type="text" name="email" class="form-control" placeholder="Email">
+                    <strong>Email <span class="text-danger">*</span></strong>
+                    <input type="text" name="email" class="form-control" placeholder="Email" required>
                 </div>
             </div>
             <div class="col-sm-6">
