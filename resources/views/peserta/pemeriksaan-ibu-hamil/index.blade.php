@@ -34,9 +34,26 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-1"></div>
+        <div class="col-sm-4">
             <h3 class="text-center">Artikel</h3>
+            <?php $count = 0; ?>
+            @foreach($datakonten as $key => $listkonten)
+            <?php if ($count == 2) break; ?>
+            <div class="mb-2">
+                <div class="card mt-2 border-0">
+                    <div class="card-body">
+                        <img src="{{$listkonten['image']}}" class="card-img-top">
+                        <a href="{{ route('peserta.konten.show', $listkonten['id']) }}" style="text-decoration:none; color:black;">
+                            <h4>{{$listkonten['judul']}}</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <?php $count++; ?>
+            @endforeach
         </div>
+        <div class="col-sm-1"></div>
     </div>
 </div>
 @endsection

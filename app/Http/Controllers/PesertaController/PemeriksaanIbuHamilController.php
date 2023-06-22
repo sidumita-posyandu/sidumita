@@ -21,7 +21,24 @@ class PemeriksaanIbuHamilController extends Controller
 
         $token = $request->session()->get('token');
 
-        return view('peserta.pemeriksaan-ibu-hamil.index', compact('ibu_hamil', 'token'));
+        $response2 = Http::withHeaders(["Content-type", "multipart/form-data"])
+            ->get(env('BASE_API_URL').'konten');
+        $listkonten = $response2['data'];
+
+        if(isset($listkonten)){
+            foreach($listkonten as $kontenlist){
+                $datakonten[] = [
+                    'id' => $kontenlist['id'],
+                    'judul' => $kontenlist['judul'],
+                    'konten' => $kontenlist['konten'],
+                    'image' => env('BASE_IMAGE_URL').$kontenlist['gambar'],
+                ];
+            }
+        }else{
+            $datakonten = 404;
+        }
+
+        return view('peserta.pemeriksaan-ibu-hamil.index', compact('datakonten', 'ibu_hamil', 'token'));
     }
 
     public function detIbuHamil(Request $request, $id)
@@ -29,6 +46,9 @@ class PemeriksaanIbuHamilController extends Controller
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'pemeriksaan-ibuhamil/ibuhamil/'.' '.$id)->json();
+        if($response['data'] == []){
+            return view('peserta.pemeriksaan-ibu-hamil.detail-ibuhamil-null');
+        }
         $det_ibu_hamil = $response['data'][0];
 
         $response2 = Http::accept('application/json')

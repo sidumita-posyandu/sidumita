@@ -22,7 +22,24 @@ class PemeriksaanBalitaController extends Controller
 
         $token = $request->session()->get('token');
 
-        return view('peserta.pemeriksaan-balita.index', compact('balita', 'token'));
+        $response2 = Http::withHeaders(["Content-type", "multipart/form-data"])
+            ->get(env('BASE_API_URL').'konten');
+        $listkonten = $response2['data'];
+
+        if(isset($listkonten)){
+            foreach($listkonten as $kontenlist){
+                $datakonten[] = [
+                    'id' => $kontenlist['id'],
+                    'judul' => $kontenlist['judul'],
+                    'konten' => $kontenlist['konten'],
+                    'image' => env('BASE_IMAGE_URL').$kontenlist['gambar'],
+                ];
+            }
+        }else{
+            $datakonten = 404;
+        }
+
+        return view('peserta.pemeriksaan-balita.index', compact('balita', 'token', 'datakonten'));
     }
 
     // public function index(Request $request){

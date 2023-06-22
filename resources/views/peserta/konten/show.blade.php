@@ -18,7 +18,7 @@
                     <div class="card-body">
                         <img src="{{$listkonten['image']}}" class="card-img-top">
                         <a href="{{ route('peserta.konten.show', $listkonten['id']) }}" style="text-decoration:none; color:black;">
-                            <h3>{{$listkonten['judul']}}</h1>
+                            <h4>{{$listkonten['judul']}}</h4>
                         </a>
                     </div>
                 </div>
