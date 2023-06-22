@@ -88,7 +88,7 @@
             </p>
             <div class="collapse" id="grafikinfo">
                 <div class="card card-body">
-                    Grafik pertumbuhan ini dapat membantu Anda dan dokter spesialis anak untuk melacak pertumbuhan anak
+                    Grafik pertumbuhan ini dapat membantu Anda, bidan dan dokter spesialis anak untuk melacak pertumbuhan anak
                     dari waktu ke waktu. Pertumbuhan panjang badan, berat badan, dan lingkar kepala anak dapat
                     dibandingkan dengan parameter sesuai dengan usia dan jenis kelamin yang sama guna mengetahui apakah
                     pertumbuhan anak sudah sesuai.

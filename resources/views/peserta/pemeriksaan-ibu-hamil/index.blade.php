@@ -5,10 +5,10 @@
     <div class="row">
         <div class="col-sm-6">
             <h3>List Ibu Hamil</h3>
-            <p>Silahkan pilih ibu hamil yang terdaftar untuk melihat pertumbuhan balita dibawah ini</p>
+            <p>Silahkan pilih ibu hamil yang terdaftar untuk melihat pertumbuhan ibu hamil dibawah ini</p>
             <div class="form">
                 <div class="form-group">
-                    <label for="pilih_balita"><strong>Pilih Balita</strong></label>
+                    <label for="pilih_ibu_hamil"><strong>Pilih Ibu Hamil</strong></label>
                     @if(is_array($ibu_hamil) || is_object($ibu_hamil))
                     @foreach($ibu_hamil as $b)
                     <div class="card border-left-primary shadow h-100 py-2 mt-2">
