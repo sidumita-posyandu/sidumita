@@ -44,12 +44,23 @@ class IbuHamilController extends Controller
     
     public function create(Request $request)
     {
+        if($request->session()->get('userAuth')['role_id'] == 2){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'operator/detail-keluarga')->json();
+            $keluarga = $response['data'];
+
+            return view('ibu-hamil.create-operator', compact('keluarga'));
+
+        }else{
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'keluarga')->json();
         $keluarga = $response['data'];
 
         return view('ibu-hamil.create', compact('keluarga'));
+
+        }
     }
     
     public function store(Request $request)

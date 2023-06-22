@@ -31,7 +31,6 @@
                 <th>No Kartu Keluarga</th>
                 <th>Kepala Keluarga</th>
                 <th>Alamat</th>
-                <th>Jumlah</th>
                 <th>Dusun</th>
                 <th width="190px">Action</th>
             </tr>
@@ -42,7 +41,6 @@
                 <td>{{ $k['no_kartu_keluarga'] }}</td>
                 <td>{{ $k['kepala_keluarga'] }}</td>
                 <td>{{ $k['alamat'] }}</td>
-                <td>{{ count($k['detail_keluargas']) }}</td>
                 <td>{{ $k['nama_dusun'] }}</td>
                 <td>
                     <a class="btn btn-info btn-sm" href="{{ route('keluarga.show', $k['id']) }}">List Anggota

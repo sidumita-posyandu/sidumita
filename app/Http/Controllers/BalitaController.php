@@ -45,12 +45,24 @@ class BalitaController extends Controller
     
     public function create(Request $request)
     {
-        $response = Http::accept('application/json')
-        ->withToken($request->session()->get('token'))
-        ->get(env('BASE_API_URL').'keluarga')->json();
-        $keluarga = $response['data'];
+        if($request->session()->get('userAuth')['role_id'] == 2){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'operator/detail-keluarga')->json();
+            $keluarga = $response['data'];
 
-        return view('balita.create', compact('keluarga'));
+            return view('balita.create-operator', compact('keluarga'));
+
+        }else{
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'keluarga')->json();
+            $keluarga = $response['data'];
+
+            return view('balita.create', compact('keluarga'));
+        }
+        
+    
     }
     
     public function store(Request $request)
