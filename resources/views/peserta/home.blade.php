@@ -77,24 +77,21 @@
 </div>
 
 <div class="container">
-    <h2>Berita</h2>
-    <div id="berita">
-        <div class="row">
-            @if($datakonten == 404)
-            <p>Berita belum tersedia</p>
-            @else
-            @foreach($datakonten as $konten)
-            <div class="col-sm-4">
-                <div class="card mt-2 border-0">
+    <ul class="list-group list-group-horizontal position-relative overflow-auto border-0">
+        @if($datakonten == 404)
+        <p>Berita belum tersedia</p>
+        @else
+        @foreach($datakonten as $konten)
+        <li class="list-group-item border-0" style="min-height: 400px; min-width: 400px; margin-right: 5px;">
+        <div class="card mt-2 border-0">
                     <div class="card-body">
                     <img src="{{$konten['image']}}" class="card-img-top mb-2">
                         <a href="{{ route('peserta.konten.show', $konten['id']) }}" style="text-decoration:none; color:black;"><h4 class="card-title">{{$konten['judul']}}</h4></a>
                     </div>
                 </div>
-            </div>
-            @endforeach
-            @endif
-        </div>
-    </div>
+        </li>
+        @endforeach
+        @endif
+    </ul>
 </div>
 @endsection
