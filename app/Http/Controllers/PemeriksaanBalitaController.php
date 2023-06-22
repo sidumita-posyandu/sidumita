@@ -116,7 +116,7 @@ class PemeriksaanBalitaController extends Controller
         ]);
 
         if($validasi->fails()){
-            $request->session()->put('input_pemeriksaan_balita', 'Terjadi kesalahan pada input');
+            $request->session()->put('input_pemeriksaan_balita', 'Terjadi kesalahan pada');
             return redirect()->back();  
         }
         
@@ -147,7 +147,7 @@ class PemeriksaanBalitaController extends Controller
                 'petugas_kesehatan_id' => $request->petugas_kesehatan,
                 'dokter_id' => $request->dokter_id,
                 'vitamin_id' => $request->vitamin_id,
-                'vaksin_id' => array($request->vaksin_id),
+                'vaksin_id' => $request->vaksin_id,
             ]);
         }
 
@@ -168,10 +168,10 @@ class PemeriksaanBalitaController extends Controller
                 'petugas_kesehatan_id' => 1,
                 'dokter_id' => $request->dokter_id,
                 'vitamin_id' => $request->vitamin_id,
-                'vaksin_id' => array($request->vaksin_id),
+                'vaksin_id' => $request->vaksin_id,
             ]);
         }
-        
+
         return redirect()->route('pemeriksaan-balita.index')
         ->with('success','Pemeriksaan Balita berhasil dibuat.');
     }
