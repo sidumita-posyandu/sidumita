@@ -93,6 +93,7 @@
                             </div>
                         </div>
                     </div>
+                    <p class="text-danger" style="font-size: 12px;">Gunakan "." untuk angka desimal (contoh 2.25)</p>
                     <div class="form-group">
                         <strong>Keluhan:</strong>
                         <input type="text" name="keluhan" class="form-control" placeholder="Keluhan"></input>

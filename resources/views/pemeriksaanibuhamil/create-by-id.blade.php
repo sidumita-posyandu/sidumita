@@ -31,23 +31,23 @@
             Data Ibu Hamil
         </div>
         <div class="row m-2">
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Nama Ibu Hamil:</strong>
                     <input type="text" name="ibu_hamil_id" class="form-control" value="{{ $ibuhamil['id'] }}" hidden>
                     <input type="text" name="nama_ibu_hamil" class="form-control-plaintext" value="{{ $ibuhamil['detail_keluarga']['nama_lengkap'] }}" readonly>
                 </div>
             </div>
-            <div class="col-sm-12">
+            <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Tanggal Pemeriksaan:</strong>
                     <input type="text" name="tanggal_pemeriksaan" class="form-control-plaintext" value="{{ $tanggal_pemeriksaan }}" readonly>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-6">
                 <div class="form-group">
-                    <strong>Umur Kandungan:</strong>
-                    <input type="text" name="umur_kandungan" class="form-control" placeholder="Umur Kandungan" required>
+                    <strong>Umur Kandungan (dalam Minggu):</strong>
+                    <input type="number" name="umur_kandungan" class="form-control" placeholder="Umur Kandungan" required>
                 </div>
             </div>
         </div>
@@ -81,11 +81,12 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="form-group">
-                        <strong>Denyut Nadi:</strong>
+                        <strong>Denyut Nadi (Bpm):</strong>
                         <input type="text" name="denyut_nadi" class="form-control" placeholder="Denyut Nadi" required>
                     </div>
                 </div>
             </div>
+            <p class="text-danger" style="font-size: 12px;">Gunakan "." untuk angka desimal (contoh 2.25)</p>
             <div class="form-group">
                 <strong>Keluhan:</strong>
                 <input type="text" name="keluhan" class="form-control" placeholder="Keluhan"></input>
