@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Validator;
 
 class PemeriksaanBalitaController extends Controller
 {
@@ -100,7 +101,7 @@ class PemeriksaanBalitaController extends Controller
     {
         $data = $request->all();
 
-        request()->validate([
+        $validasi = Validator::make($data, [
             'balita_id' => 'required',
             'tanggal_pemeriksaan' => 'required',
             'berat_badan' => 'required',
@@ -113,6 +114,11 @@ class PemeriksaanBalitaController extends Controller
             'petugas_kesehatan_id' => 'required',
             'dokter_id' => 'required',
         ]);
+
+        if($validasi->fails()){
+            $request->session()->put('input_pemeriksaan_balita', 'Terjadi kesalahan pada input');
+            return redirect()->back();  
+        }
         
         $responseBalita = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
@@ -146,7 +152,7 @@ class PemeriksaanBalitaController extends Controller
         }
 
         else{
-            $responseAdmin = Http::accept('application/json')
+            $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
             ->post(env('BASE_API_URL').'pemeriksaan-balita-admin', [
                 'balita_id' => $request->balita_id,
@@ -162,6 +168,7 @@ class PemeriksaanBalitaController extends Controller
                 'petugas_kesehatan_id' => 1,
                 'dokter_id' => $request->dokter_id,
                 'vitamin_id' => $request->vitamin_id,
+                'vaksin_id' => array($request->vaksin_id),
             ]);
         }
         

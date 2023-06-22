@@ -7,8 +7,7 @@
             <h2>Pemeriksaan Ibu Hamil</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('pemeriksaan-ibuhamil.index') }}"><i
-                    class="fas fa-arrow-left mr-1"></i> Kembali</a>
+            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('pemeriksaan-ibuhamil.index') }}"><i class="fas fa-arrow-left mr-1"></i> Kembali</a>
         </div>
     </div>
 </div>
@@ -35,17 +34,14 @@
             <div class="col-sm-12">
                 <div class="form-group">
                     <strong>Nama Ibu Hamil:</strong>
-                    <input type="text" name="ibu_hamil_id" class="form-control"
-                        value="{{ $ibuhamil['id'] }}" hidden>
-                    <input type="text" name="nama_ibu_hamil" class="form-control-plaintext"
-                        value="{{ $ibuhamil['detail_keluarga']['nama_lengkap'] }}" readonly>
+                    <input type="text" name="ibu_hamil_id" class="form-control" value="{{ $ibuhamil['id'] }}" hidden>
+                    <input type="text" name="nama_ibu_hamil" class="form-control-plaintext" value="{{ $ibuhamil['detail_keluarga']['nama_lengkap'] }}" readonly>
                 </div>
             </div>
             <div class="col-sm-12">
                 <div class="form-group">
                     <strong>Tanggal Pemeriksaan:</strong>
-                    <input type="text" name="tanggal_pemeriksaan" class="form-control-plaintext"
-                        value="{{ $tanggal_pemeriksaan }}" readonly>
+                    <input type="text" name="tanggal_pemeriksaan" class="form-control-plaintext" value="{{ $tanggal_pemeriksaan }}" readonly>
                 </div>
             </div>
             <div class="col-sm-3">
@@ -102,7 +98,11 @@
                 <strong>Catatan Khusus:</strong>
                 <input type="text" name="catatan" class="form-control" placeholder="Catatan Khusus"></input>
             </div>
+            @if(Session::get('userAuth')['role_id'] != 3)
             <input type="hidden" name="petugas_kesehatan_id" class="form-control" value="1">
+            @elseif(Session::get('userAuth')['role_id'] == 3)
+            <input type="hidden" name="petugas_kesehatan_id" class="form-control" value="{{Session::get('userAuth')['id']}}">
+            @endif
         </div>
     </div>
     <div class="text-center mt-3">

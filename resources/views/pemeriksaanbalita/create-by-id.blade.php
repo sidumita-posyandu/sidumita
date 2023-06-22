@@ -7,21 +7,19 @@
             <h2>Pemeriksaan Balita</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('pemeriksaan-balita.index') }}"><i
-                    class="fas fa-arrow-left mr-1"></i> Kembali</a>
+            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('pemeriksaan-balita.index') }}"><i class="fas fa-arrow-left mr-1"></i> Kembali</a>
         </div>
     </div>
 </div>
 
 
-@if ($errors->any())
-<div class="alert alert-danger">
-    Terjadi kesalahan dengan input yang dimasukan.<br><br>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
+@if(session()->has('input_pemeriksaan_balita'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    Terjadi kesalahan pada input data
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        {{@Session::forget('input_pemeriksaan_balita')}}
+    </button>
 </div>
 @endif
 
@@ -35,31 +33,26 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Nama balita:</strong>
-                    <input type="text" name="balita_id" class="form-control"
-                        value="{{ $balita['id'] }}" hidden>
-                    <input type="text" class="form-control-plaintext"
-                        value="{{ $balita['detail_keluarga']['nama_lengkap'] }}" readonly>
+                    <input type="text" name="balita_id" class="form-control" value="{{ $balita['id'] }}" hidden>
+                    <input type="text" class="form-control-plaintext" value="{{ $balita['detail_keluarga']['nama_lengkap'] }}" readonly>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Jenis Kelamin:</strong>
-                    <input type="text" class="form-control-plaintext"
-                        value="{{ $balita['detail_keluarga']['jenis_kelamin'] }}" readonly>
+                    <input type="text" class="form-control-plaintext" value="{{ $balita['detail_keluarga']['jenis_kelamin'] }}" readonly>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Umur Balita (bulan):</strong>
-                    <input type="text" class="form-control-plaintext"
-                        value="{{ $umur['usia_bulan'] }} bulan" readonly>
+                    <input type="text" class="form-control-plaintext" value="{{ $umur['usia_bulan'] }} bulan" readonly>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Tanggal Pemeriksaan:</strong>
-                    <input type="text" name="tanggal_pemeriksaan" class="form-control-plaintext"
-                        value="{{ $tanggal_pemeriksaan }}" readonly>
+                    <input type="text" name="tanggal_pemeriksaan" class="form-control-plaintext" value="{{ $tanggal_pemeriksaan }}" readonly>
                 </div>
             </div>
         </div>
@@ -90,15 +83,13 @@
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <strong>Lingkar Kepala (Cm):</strong>
-                                <input type="text" name="lingkar_kepala" class="form-control"
-                                    placeholder="Lingkar Kepala">
+                                <input type="text" name="lingkar_kepala" class="form-control" placeholder="Lingkar Kepala">
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
                                 <strong>Lingkar Lengan (Cm):</strong>
-                                <input type="text" name="lingkar_lengan" class="form-control"
-                                    placeholder="Lingkar Lengan">
+                                <input type="text" name="lingkar_lengan" class="form-control" placeholder="Lingkar Lengan">
                             </div>
                         </div>
                     </div>
@@ -123,7 +114,7 @@
                             @endforeach
                         </select>
                     </div>
-                    @if(Session::get('userAuth')['role_id'] == 1)
+                    @if(Session::get('userAuth')['role_id'] != 3)
                     <input type="hidden" name="petugas_kesehatan_id" class="form-control" value="1">
                     @elseif(Session::get('userAuth')['role_id'] == 3)
                     <input type="hidden" name="petugas_kesehatan_id" class="form-control" value="{{Session::get('userAuth')['id']}}">
@@ -160,8 +151,7 @@
                             <strong>Jenis Vaksin</strong>
                             @foreach($vaksin as $listvaksin)
                             <div class="form-check form-check-solid">
-                                <input class="form-check-input" type="checkbox" name="vaksin_id[]"
-                                    value="{{ $listvaksin['id'] }}">
+                                <input class="form-check-input" type="checkbox" name="vaksin_id[]" value="{{ $listvaksin['id'] }}">
                                 <label class="form-check-label">{{ $listvaksin['nama_vaksin'] }}</label>
                             </div>
                             @endforeach
