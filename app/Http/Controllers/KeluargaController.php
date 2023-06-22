@@ -35,6 +35,7 @@ class KeluargaController extends Controller
             $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
             ->get(env('BASE_API_URL').'keluarga')->json();
+            dd($response);
             $keluarga = $this->paginate($response['data'])->withPath('/admin/keluarga');
             
             return view('keluarga.index', compact('keluarga'))
