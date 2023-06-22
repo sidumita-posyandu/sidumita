@@ -270,7 +270,7 @@ class PemeriksaanBalitaController extends Controller
             $lingkar_kepala[(int)$rekap[$i]['umur_balita']] = (int)$rekap[$i]['lingkar_kepala'];
         }
 
-        $response10 = Http::accept('application/json')
+    $response10 = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'cek-imunisasi-balita/'.' '.$id);
         $vaksin = $response10['data'];

@@ -68,7 +68,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 <strong>Jumlah:</strong>
-                <input type="text" name="jumlah" class="form-control" value="{{ $keluarga['jumlah'] }}" readonly>
+                <input type="text" name="jumlah" class="form-control" value="{{count($keluarga['detail_keluargas'])}}" readonly>
             </div>
         </div>
     </div>
