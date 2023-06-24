@@ -30,10 +30,12 @@
         Jadwal Pemeriksaan
     </div>
     <div class="card-body">
+        @if(Session::get('userAuth')['role_id'] < 3)
         <div class="pull-right">
             <a class="btn btn-success btn-sm mb-2" href="{{ route('jadwal-pemeriksaan.create') }}"><i class="fas fa-plus mr-1"></i>
                 Tambah Jadwal Pemeriksaan</a>
         </div>
+        @endif
         <table class="table table-bordered">
             <tr>
                 <th>No</th>
@@ -41,7 +43,9 @@
                 <th>Waktu Mulai</th>
                 <th>Waktu Berakhir</th>
                 <th>Dusun</th>
+                @if(Session::get('userAuth')['role_id'] < 3)
                 <th>Action</th>
+                @endif
             </tr>
 
             @foreach ($jadwal_pemeriksaan as $k => $item)
@@ -51,6 +55,7 @@
                 <td>{{ $item['waktu_mulai'] }}</td>
                 <td>{{ $item['waktu_berakhir'] }}</td>
                 <td>{{ $item['nama_dusun'] }}</td>
+                @if(Session::get('userAuth')['role_id'] < 3)
                 <td>
                     <div class="dropdown">
                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -66,6 +71,7 @@
                         </div>
                     </div>
                 </td>
+                @endif
             </tr>
             @endforeach
         </table>
