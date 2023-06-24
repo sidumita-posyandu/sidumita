@@ -31,6 +31,7 @@
                                 <li><a class="dropdown-item" href="{{ route('peserta.periksa-ibuhamil.index') }}">Pemeriksaan Ibu Hamil</a></li>
                             </ul>
                         </li>
+                        @if(Session::get('token'))
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><strong>Profil</strong>
                             </a>
@@ -40,9 +41,10 @@
                                 <li>
                                     <hr class="dropdown-divider">
                                 </li>
-                                <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
+                                    <li><a class="dropdown-item" href="{{route('logout')}}">Logout</a></li>
                             </ul>
                         </li>
+                        @endif
                         @if(!Session::get('token'))
                         <li class="nav-item">
                             <a href="{{route('login')}}" type="button" class="btn btn-success">Login</a>

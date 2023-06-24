@@ -31,8 +31,7 @@
     </div>
     <div class="card-body">
         <div class="pull-right">
-            <a class="btn btn-success btn-sm mb-2" href="{{ route('jadwal-pemeriksaan.create') }}"><i
-                    class="fas fa-plus mr-1"></i>
+            <a class="btn btn-success btn-sm mb-2" href="{{ route('jadwal-pemeriksaan.create') }}"><i class="fas fa-plus mr-1"></i>
                 Tambah Jadwal Pemeriksaan</a>
         </div>
         <table class="table table-bordered">
@@ -42,6 +41,7 @@
                 <th>Waktu Mulai</th>
                 <th>Waktu Berakhir</th>
                 <th>Dusun</th>
+                <th>Action</th>
             </tr>
 
             @foreach ($jadwal_pemeriksaan as $k => $item)
@@ -51,6 +51,21 @@
                 <td>{{ $item['waktu_mulai'] }}</td>
                 <td>{{ $item['waktu_berakhir'] }}</td>
                 <td>{{ $item['nama_dusun'] }}</td>
+                <td>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Action
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ route('jadwal-pemeriksaan.edit', $item['id']) }}"></i>Edit</a>
+                            <form method="POST" action="{{ route('jadwal-pemeriksaan.destroy', [$item['id']]) }}">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <button class="dropdown-item" type="submit" onclick="return confirm('Yakin Menghapus Data?')">Delete</button>
+                        </form>
+                        </div>
+                    </div>
+                </td>
             </tr>
             @endforeach
         </table>
@@ -61,32 +76,30 @@
 @section('script')
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.8.0/main.js'></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"
-    integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    var calendarEl = document.getElementById('calendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        events: [
-            <?php 
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: [
+                <?php
                 //melakukan looping
                 foreach ($jadwal_pemeriksaan as $key => $value) {
-            ?> {
-                title: '<?php echo $value['jenis_pemeriksaan']; ?>',
-                start: '<?php echo $value['waktu_mulai']; ?>',
-                end: '<?php echo $value['waktu_berakhir']; ?>',
-            },
-            <?php } ?>
-        ],
-        eventColor: '#18a874',
-        selectOverlap: function(event) {
-            return event.rendering === 'background';
-        }
-    });
+                ?> {
+                        title: '<?php echo $value['jenis_pemeriksaan']; ?>',
+                        start: '<?php echo $value['waktu_mulai']; ?>',
+                        end: '<?php echo $value['waktu_berakhir']; ?>',
+                    },
+                <?php } ?>
+            ],
+            eventColor: '#18a874',
+            selectOverlap: function(event) {
+                return event.rendering === 'background';
+            }
+        });
 
-    calendar.render();
-});
+        calendar.render();
+    });
 </script>
 @endsection

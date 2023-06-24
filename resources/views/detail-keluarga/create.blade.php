@@ -70,13 +70,28 @@
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Agama:</strong>
-                    <input type="text" name="agama[]" class="form-control" placeholder="Agama" required>
+                    <select class="form-control" id="agama" name="agama[]">
+                        <option value="" selected disabled>-- Pilih Golongan Darah --</option>
+                        <option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="AB">AB</option>
+                        <option value="O">O</option>
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6">
                 <div class="form-group">
                     <strong>Pendidikan:</strong>
-                    <input type="text" name="pendidikan[]" class="form-control" value="-">
+                    <select class="form-control" id="pendidikan" name="pendidikan[]">
+                        <option value="" selected disabled>-- Pilih Pendidikan Terakhir --</option>
+                        <option value="Belum">Belum</option>
+                        <option value="SD">SD</option>
+                        <option value="SMP">SMP</option>
+                        <option value="SMA">SMA</option>
+                        <option value="S1">S1</option>
+                        <option value="S2">S2</option>
+                        <option value="S3">S3</option>
+                    </select>
                 </div>
             </div>
             <div class="col-sm-6">
@@ -114,9 +129,9 @@
                     <strong>Status dalam Keluarga:</strong>
                     <select class="form-control" id="status_dalam_keluarga" name="status_dalam_keluarga[]">
                         <option value="" selected disabled>-- Pilih Status Perkawinan --</option>
+                        <option value="Kepala Keluarga">Kepala Keluarga</option>
+                        <option value="Istri">Istri</option>
                         <option value="Anak">Anak</option>
-                        <option value="Ayah">Ayah</option>
-                        <option value="Ibu">Ibu</option>
                     </select>
                 </div>
             </div>
