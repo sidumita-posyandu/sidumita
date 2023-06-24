@@ -71,11 +71,13 @@
                 <div class="form-group">
                     <strong>Agama:</strong>
                     <select class="form-control" id="agama" name="agama[]">
-                        <option value="" selected disabled>-- Pilih Golongan Darah --</option>
-                        <option value="A">A</option>
-                        <option value="B">B</option>
-                        <option value="AB">AB</option>
-                        <option value="O">O</option>
+                        <option value="" selected disabled>-- Pilih Agama--</option>
+                        <option value="Hindu">Hindu</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Kristen">Kristen</option>
+                        <option value="Katolik">Katolik</option>
+                        <option value="Budha">Budha</option>
+                        <option value="Konguchu">Konguchu</option>
                     </select>
                 </div>
             </div>

@@ -85,6 +85,12 @@
                         <input type="text" name="denyut_nadi" class="form-control" placeholder="Denyut Nadi" required>
                     </div>
                 </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <strong>Denyut Jantung Bayi (Bpm):</strong>
+                        <input type="text" name="denyut_jantung_bayi" class="form-control" placeholder="Denyut Jantung Bayi" required>
+                    </div>
+                </div>
             </div>
             <p class="text-danger" style="font-size: 12px;">Gunakan "." untuk angka desimal (contoh 2.25)</p>
             <div class="form-group">

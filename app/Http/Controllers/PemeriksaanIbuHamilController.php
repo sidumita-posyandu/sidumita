@@ -74,6 +74,7 @@ class PemeriksaanIbuHamilController extends Controller
                 'berat_badan' => $request->berat_badan,
                 'tinggi_badan' => $request->tinggi_badan,
                 'lingkar_perut' => $request->lingkar_perut,
+                'denyut_jantung_bayi' => $request->denyut_jantung_bayi,
                 'denyut_nadi' => $request->denyut_nadi,
                 'keluhan' => $request->keluhan,
                 'penanganan' => $request->penanganan,
@@ -90,11 +91,12 @@ class PemeriksaanIbuHamilController extends Controller
                 'tinggi_badan' => $request->tinggi_badan,
                 'lingkar_perut' => $request->lingkar_perut,
                 'denyut_nadi' => $request->denyut_nadi,
+                'denyut_jantung_bayi' => $request->denyut_jantung_bayi,
                 'keluhan' => $request->keluhan,
                 'penanganan' => $request->penanganan,
                 'catatan' => $request->catatan,
                 'petugas_kesehatan_id' => 1,
-        ]);
+            ]);
         }
         
         return redirect()->route('pemeriksaan-ibuhamil.index')
