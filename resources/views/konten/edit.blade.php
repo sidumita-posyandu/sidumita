@@ -4,42 +4,38 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Edit Provinsi</h2>
+            <h2>Edit Konten</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('provinsi.index') }}"><i
+            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('konten.index') }}"><i
                     class="fas fa-arrow-left mr-1"></i> Kembali</a>
         </div>
     </div>
 </div>
 
-
-@if ($errors->any())
-<div class="alert alert-danger">
-    Terjadi kesalahan dengan input yang dimasukan.<br><br>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-
-
-<form action="{{ route('provinsi.update', $provinsi['id']) }}" method="POST">
+<form action="{{ route('konten.updateKonten',$konten['id'])  }}" method="POST" enctype="multipart/form-data">
     @csrf
-    @method('PUT')
-
     <div class="card shadow">
         <div class="card-header font-weight-bold">
-            Edit Provinsi
+            Data Konten
         </div>
         <div class="row m-2">
             <div class="col-sm-12">
                 <div class="form-group">
-                    <strong>Nama Provinsi:</strong>
-                    <input type="text" name="nama_provinsi" value="{{ $provinsi['nama_provinsi'] }}"
-                        class="form-control" placeholder="Nama Provinsi">
+                    <strong>Judul:</strong>
+                    <input type="text" name="judul" class="form-control" value="{{$konten['judul']}}">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Isi Konten:</strong>
+                    <input type="text" name="konten" class="form-control" value="{{$konten['konten']}}">
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <strong>Gambar</strong><br>
+                    <input type="file" id="gambar" class="form-control-plaintext" name="gambar" accept="image/*">
                 </div>
             </div>
             <div class="text-center col-sm-12">
@@ -48,7 +44,6 @@
         </div>
     </div>
 
+
 </form>
-
-
 @endsection

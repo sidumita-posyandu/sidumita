@@ -35,9 +35,9 @@
                 <td><img src="{{ $item['image'] }}" alt="konten" style="width: 100px;"></td>
                 <td>
                     <div class="row m-auto">
-                        <a class="btn btn-primary btn-sm" href="#"><i
+                        <a class="btn btn-primary btn-sm" href="{{ route('konten.edit', $item['id']) }}"><i
                                 class='fas fa-edit mr-1'></i>Edit</a>
-                        <form method="POST" action="#">
+                        <form method="POST" action="{{ route('konten.destroy', $item['id']) }}">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <button type="submit" class="btn btn-danger btn-sm ml-1"

@@ -113,10 +113,22 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function edit($id)
-    // {
-    //     return view('users.edit');
-    // }
+    public function edit(Request $request, $id)
+    {
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get(env('BASE_API_URL').'user/'.' '.$id)->json();
+        $user = $response['data'];
+
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get(env('BASE_API_URL').'role')->json();
+        $role = $response['data'];
+
+        $token = $request->session()->get('token');
+
+        return view('users.edit',compact('user', 'role', 'token'));
+    }
     
     // /**
     //  * Update the specified resource in storage.

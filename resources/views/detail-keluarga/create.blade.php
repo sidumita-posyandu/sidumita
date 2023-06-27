@@ -77,7 +77,7 @@
                         <option value="Kristen">Kristen</option>
                         <option value="Katolik">Katolik</option>
                         <option value="Budha">Budha</option>
-                        <option value="Konguchu">Konguchu</option>
+                        <option value="Konghucu">Konghucu</option>
                     </select>
                 </div>
             </div>

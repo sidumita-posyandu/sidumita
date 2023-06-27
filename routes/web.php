@@ -65,6 +65,7 @@ Route::group([
     
     Route::resource('dokter', DokterController::class);
     
+    Route::post('update/konten/{id}', [App\Http\Controllers\KontenController::class, 'updateKonten'])->name('konten.updateKonten');
     Route::resource('konten', KontenController::class);
     
     Route::get('/akun-keluarga', [App\Http\Controllers\KeluargaController::class, 'indexValidasiKeluarga'])->name('akun-keluarga');

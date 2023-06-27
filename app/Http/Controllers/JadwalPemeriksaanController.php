@@ -55,9 +55,11 @@ class JadwalPemeriksaanController extends Controller
                         ->with('success','Data jadwal-pemeriksaan berhasil dibuat.');
     }
 
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        $response = Http::get(env('BASE_API_URL').'jadwal-pemeriksaan/'.' '.$id)->json();
+        $response = Http::accept('application/json')
+        ->withToken($request->session()->get('token'))
+        ->get(env('BASE_API_URL').'jadwal-pemeriksaan/'.' '.$id)->json();
         $jadwal_pemeriksaan = $response['data'];
         
         return view('jadwal-pemeriksaan.show',compact('jadwal-pemeriksaan'));

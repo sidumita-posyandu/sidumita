@@ -17,6 +17,7 @@ class KontenController extends Controller
         if(isset($data)){
             foreach($data as $listkonten){
                 $konten[] = [
+                    'id' => $listkonten['id'],
                     'judul' => $listkonten['judul'],
                     'konten' => $listkonten['konten'],
                     'image' => env('BASE_IMAGE_URL').$listkonten['gambar'],
@@ -108,7 +109,7 @@ class KontenController extends Controller
     {
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get(env('BASE_API_URL').'provinsi/'.' '.$id)
+            ->get(env('BASE_API_URL').'konten/'.' '.$id)
             ->json();
             
         // $response = Http::get(env('BASE_API_URL').'provinsi/'.' '.$id)->json();
@@ -123,32 +124,35 @@ class KontenController extends Controller
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->get(env('BASE_API_URL').'provinsi/'.' '.$id)
+            ->get(env('BASE_API_URL').'konten/'.' '.$id)
             ->json();
-
-        $provinsi = $response['data'];
         
-        return view('provinsi.edit',compact('provinsi'));
+        $konten = $response['data'];
+        
+        return view('konten.edit',compact('konten'));
     }
     
-    public function update(Request $request, $id)
+    public function updateKonten(Request $request, $id)
     {
-        request()->validate([
-            'nama_provinsi' => 'required',
-        ]);
-
         // $response = Http::patch(env('BASE_API_URL').'provinsi/'.' '.$id, [
         //     'nama_provinsi' => $request->nama_provinsi,
         // ]);
 
-        $response = Http::accept('application/json')
-            ->withToken($request->session()->get('token'))
-            ->patch(env('BASE_API_URL').'provinsi/'.' '.$id, [
-                'nama_provinsi' => $request->nama_provinsi,
-            ]);
-        
+        if ($request->hasFile('gambar') && $request->file('gambar')->isValid()) {
+            // get Illuminate\Http\UploadedFile instance
+            $image = $request->file('gambar');
     
-        return redirect()->route('provinsi.index')
+            // post request with attachment
+            $response = Http::withHeaders(["Content-type", "multipart/form-data"])
+                ->attach('gambar', file_get_contents($image), 'image.jpeg')
+                ->post(env('BASE_API_URL').'update/konten/'.$id, $request->all());
+
+        } else {
+            $response = Http::post(env('BASE_API_URL').'update/konten/'.$id, $request->all());
+
+        }
+        
+        return redirect()->route('konten.index')
                         ->with('success','Data provinsi Berhasil Diperbarui');
     }
 
@@ -158,10 +162,10 @@ class KontenController extends Controller
 
         $response = Http::accept('application/json')
             ->withToken($request->session()->get('token'))
-            ->delete(env('BASE_API_URL').'provinsi/'.$id)
+            ->delete(env('BASE_API_URL').'konten/'.$id)
             ->json();
 
-        return redirect()->route('provinsi.index')
-                        ->with('success','Data provinsi berhasil dihapus');
+        return redirect()->route('konten.index')
+                        ->with('success','Data konten berhasil dihapus');
     }
 }
