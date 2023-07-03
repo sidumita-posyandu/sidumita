@@ -8,6 +8,7 @@
         </div>
         <div class="pull-right">
             <a class="btn btn-secondary btn-sm mb-3" href="{{ route('pemeriksaan-balita.index') }}"><i class="fas fa-arrow-left mr-1"></i> Kembali</a>
+            <a class="btn btn-info btn-sm mb-3 ml-1" target="_blank" href="{{ route('rekap-balita', [$balita['id']]) }}"><i class="fas fa-edit mr-1"></i>Rekap</a>
         </div>
     </div>
 </div>
@@ -125,21 +126,6 @@
         </div>
 
         <div class="col-4">
-            <div class="card shadow mt-3">
-                <div class="card-header font-weight-bold">
-                    Dokter / Bidan
-                </div>
-                <div class="card-body">
-                    <div class="form-group">
-                        <select class="form-control" id="dokter" name="dokter_id">
-                            <option value="" selected disabled>-- Pilih Dokter / Bidan --</option>
-                            @foreach ($dokter as $d)
-                            <option value="{{ $d['id'] }}">{{ $d['nama_dokter'] }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                </div>
-            </div>
             <div class="card shadow mt-3">
                 <div class="card-header font-weight-bold">
                     Data Imunisasi

@@ -112,7 +112,6 @@ class PemeriksaanBalitaController extends Controller
             'penanganan' => 'required',
             'catatan' => 'required',
             'petugas_kesehatan_id' => 'required',
-            'dokter_id' => 'required',
         ]);
 
         if($validasi->fails()){
@@ -145,7 +144,7 @@ class PemeriksaanBalitaController extends Controller
                 'penanganan' => $request->penanganan,
                 'catatan' => $request->catatan,
                 'petugas_kesehatan_id' => $request->petugas_kesehatan,
-                'dokter_id' => $request->dokter_id,
+                'dokter_id' => 1,
                 'vitamin_id' => $request->vitamin_id,
                 'vaksin_id' => $request->vaksin_id,
             ]);

@@ -7,20 +7,18 @@
             <h2>Tambah Keluarga</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('keluarga.index') }}"><i
-                    class="fas fa-arrow-left mr-1"></i> Kembali</a>
+            <a class="btn btn-secondary btn-sm mb-3" href="{{ route('keluarga.index') }}"><i class="fas fa-arrow-left mr-1"></i> Kembali</a>
         </div>
     </div>
 </div>
 
-@if ($errors->any())
-<div class="alert alert-danger">
-    Terjadi kesalahan dengan input yang dimasukan.<br><br>
-    <ul>
-        @foreach ($errors->all() as $error)
-        <li>{{ $error }}</li>
-        @endforeach
-    </ul>
+@if(session()->has('errorInputKeluarga'))
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    Terjadi kesalahan pada input yang dimasukan
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        {{@Session::forget('errorInputKeluarga')}}
+    </button>
 </div>
 @endif
 
@@ -37,6 +35,7 @@
                 <div class="form-group">
                     <strong>No Kartu Keluarga <span class="text-danger">*</span></strong>
                     <input type="number" name="no_kartu_keluarga" class="form-control" placeholder="No Kartu Keluarga" required>
+                    <small class="form-text text-muted">No kartu keluarga maksimal 16 angka</small>
                 </div>
             </div>
             <div class="col-sm-12">
@@ -119,104 +118,104 @@
 
 @section('script')
 <script>
-$(document).ready(function() {
-    var token = @json($token);
-    $('#provinsi').on('change', function() {
-        var idProvinsi = this.value;
-        $("#kabupaten").html('');
-        $.ajax({
-            url: "{{ env('BASE_API_URL') }}fetch-provinsi",
-            type: "POST",
-            headers: {
-                "Authorization": "Bearer " + token
-            },
-            data: {
-                provinsi_id: idProvinsi,
-                _token: '{{csrf_token()}}'
-            },
-            dataType: 'json',
-            success: function(result) {
-                $('#kabupaten').html('<option value="">-- Pilih Kabupaten --</option>');
+    $(document).ready(function() {
+        var token = @json($token);
+        $('#provinsi').on('change', function() {
+            var idProvinsi = this.value;
+            $("#kabupaten").html('');
+            $.ajax({
+                url: "{{ env('BASE_API_URL') }}fetch-provinsi",
+                type: "POST",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                data: {
+                    provinsi_id: idProvinsi,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function(result) {
+                    $('#kabupaten').html('<option value="">-- Pilih Kabupaten --</option>');
 
-                $.each(result.data, function(key, value) {
-                    $("#kabupaten").append('<option value="' + value.id + '">' +
-                        value.nama_kabupaten + '</option>');
-                });
-            }
+                    $.each(result.data, function(key, value) {
+                        $("#kabupaten").append('<option value="' + value.id + '">' +
+                            value.nama_kabupaten + '</option>');
+                    });
+                }
+            });
+        });
+
+        $('#kabupaten').on('change', function() {
+            var idKabupaten = this.value;
+            $("#kecamatan").html('');
+            $.ajax({
+                url: "{{ env('BASE_API_URL') }}fetch-kabupaten",
+                type: "POST",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                data: {
+                    kabupaten_id: idKabupaten,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function(result) {
+                    $('#kecamatan').html('<option value="">-- Pilih Kecamatan --</option>');
+                    $.each(result.data, function(key, value) {
+                        $("#kecamatan").append('<option value="' + value.id + '">' +
+                            value.nama_kecamatan + '</option>');
+                    });
+                }
+            });
+        });
+
+        $('#kecamatan').on('change', function() {
+            var idKecamatan = this.value;
+            $("#desa").html('');
+            $.ajax({
+                url: "{{ env('BASE_API_URL') }}fetch-kecamatan",
+                type: "POST",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                data: {
+                    kecamatan_id: idKecamatan,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function(result) {
+                    $('#desa').html('<option value="">-- Pilih Desa --</option>');
+                    $.each(result.data, function(key, value) {
+                        $("#desa").append('<option value="' + value.id + '">' + value
+                            .nama_desa + '</option>');
+                    });
+                }
+            });
+        });
+
+        $('#desa').on('change', function() {
+            var idDesa = this.value;
+            $("#dusun").html('');
+            $.ajax({
+                url: "{{ env('BASE_API_URL') }}fetch-desa",
+                type: "POST",
+                headers: {
+                    "Authorization": "Bearer " + token
+                },
+                data: {
+                    desa_id: idDesa,
+                    _token: '{{csrf_token()}}'
+                },
+                dataType: 'json',
+                success: function(result) {
+                    $('#dusun').html('<option value="">-- Pilih Dusun --</option>');
+                    $.each(result.data, function(key, value) {
+                        $("#dusun").append('<option value="' + value.id + '">' + value
+                            .nama_dusun + '</option>');
+                    });
+                }
+            });
         });
     });
-
-    $('#kabupaten').on('change', function() {
-        var idKabupaten = this.value;
-        $("#kecamatan").html('');
-        $.ajax({
-            url: "{{ env('BASE_API_URL') }}fetch-kabupaten",
-            type: "POST",
-            headers: {
-                "Authorization": "Bearer " + token
-            },
-            data: {
-                kabupaten_id: idKabupaten,
-                _token: '{{csrf_token()}}'
-            },
-            dataType: 'json',
-            success: function(result) {
-                $('#kecamatan').html('<option value="">-- Pilih Kecamatan --</option>');
-                $.each(result.data, function(key, value) {
-                    $("#kecamatan").append('<option value="' + value.id + '">' +
-                        value.nama_kecamatan + '</option>');
-                });
-            }
-        });
-    });
-
-    $('#kecamatan').on('change', function() {
-        var idKecamatan = this.value;
-        $("#desa").html('');
-        $.ajax({
-            url: "{{ env('BASE_API_URL') }}fetch-kecamatan",
-            type: "POST",
-            headers: {
-                "Authorization": "Bearer " + token
-            },
-            data: {
-                kecamatan_id: idKecamatan,
-                _token: '{{csrf_token()}}'
-            },
-            dataType: 'json',
-            success: function(result) {
-                $('#desa').html('<option value="">-- Pilih Desa --</option>');
-                $.each(result.data, function(key, value) {
-                    $("#desa").append('<option value="' + value.id + '">' + value
-                        .nama_desa + '</option>');
-                });
-            }
-        });
-    });
-
-    $('#desa').on('change', function() {
-        var idDesa = this.value;
-        $("#dusun").html('');
-        $.ajax({
-            url: "{{ env('BASE_API_URL') }}fetch-desa",
-            type: "POST",
-            headers: {
-                "Authorization": "Bearer " + token
-            },
-            data: {
-                desa_id: idDesa,
-                _token: '{{csrf_token()}}'
-            },
-            dataType: 'json',
-            success: function(result) {
-                $('#dusun').html('<option value="">-- Pilih Dusun --</option>');
-                $.each(result.data, function(key, value) {
-                    $("#dusun").append('<option value="' + value.id + '">' + value
-                        .nama_dusun + '</option>');
-                });
-            }
-        });
-    });
-});
 </script>
 @endsection

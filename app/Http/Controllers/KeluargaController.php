@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Validator;
 
 class KeluargaController extends Controller
 {
@@ -59,10 +60,17 @@ class KeluargaController extends Controller
     {
         $data = $request->all();
 
-        // $count = 0;
-        // foreach ($data['nik'] as $item => $value) {
-        //     $count = $count + 1;
-        // }
+        $validasi = Validator::make($request->all(), [
+            'no_kartu_keluarga' => 'required|max:16',
+            'kepala_keluarga' => 'required',
+            'alamat' => 'required',
+            'dusun_id' => 'required'
+        ]);
+
+        if($validasi->fails()){
+            $request->session()->put('errorInputKeluarga', $validasi->errors());
+            return redirect()->back();  
+        }
                 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
@@ -76,6 +84,11 @@ class KeluargaController extends Controller
             'alamat' => $request->alamat,
             'dusun_id' => $request->dusun_id,
         ]);
+
+        if($response->getStatusCode() == 400){
+            $request->session()->put('errorInputKeluarga', $response['message']);
+            return redirect()->back();  
+        }
 
         // $response = Http::accept('application/json')
         // ->withToken($request->session()->get('token'))
