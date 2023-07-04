@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Pagination\Paginator;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 class IbuHamilController extends Controller
@@ -98,27 +99,40 @@ class IbuHamilController extends Controller
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
         ->get(env('BASE_API_URL').'ibu-hamil/'.' '.$id)->json();
-        $ibu_hamil = $response['data'];
+        $ibuhamil = $response['data'];
         
-        return view('ibu-hamil.edit',compact('ibu_hamil'));
+        return view('ibu-hamil.edit',compact('ibuhamil'));
     }
     
     public function update(Request $request, $id)
     {
         request()->validate([
-            'nama_ibu-hamil' => 'required',
-            'keluarga_id' => 'required',
+            'detail_keluarga_id' => 'required',
+            'berat_badan_prakehamilan' => 'required',
+            'tinggi_badan_prakehamilan' => 'required'
         ]);
 
         $response = Http::accept('application/json')
         ->withToken($request->session()->get('token'))
-        ->patch(env('BASE_API_URL').'ibu-hamil/'.' '.$id, [
-            'nama_ibu_hamil' => $request->nama_ibu_hamil,
-            'keluarga_id' => $request->keluarga_id,
+        ->patch(env('BASE_API_URL').'ibu-hamil/'.''.$id, [
+            'detail_keluarga_id' => $request->detail_keluarga_id,
+            'berat_badan_prakehamilan' => $request->berat_badan_prakehamilan,
+            'tinggi_badan_prakehamilan' => $request->tinggi_badan_prakehamilan,
         ]);
+
+        if($response->getStatusCode()){
+            $response = Http::accept('application/json')
+            ->withToken($request->session()->get('token'))
+            ->get(env('BASE_API_URL').'ibu-hamil/'.' '.$id)->json();
+            $ibuhamil = $response['data'];
+
+            $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
+
+            return view('pemeriksaanibuhamil.create-by-id', compact('ibuhamil', 'tanggal_pemeriksaan'));
+        }else{
+            return view('ibu-hamil.index', compact('ibuhamil'));
+        }
         
-        return redirect()->route('ibu-hamil.index')
-                        ->with('success','Data ibu-hamil Berhasil Diperbarui');
     }
 
     public function destroy(Request $request, $id)

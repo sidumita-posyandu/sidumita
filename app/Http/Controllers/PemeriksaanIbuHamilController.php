@@ -55,6 +55,10 @@ class PemeriksaanIbuHamilController extends Controller
         ->get(env('BASE_API_URL').'ibu-hamil/'.' '.$id)->json();
         $ibuhamil = $response['data'];
 
+        if($ibuhamil['berat_badan_prakehamilan'] == null || $ibuhamil['berat_badan_prakehamilan'] == null){
+            return view('ibu-hamil.edit', compact('ibuhamil'));
+        }
+
         $tanggal_pemeriksaan = Carbon::now()->format('Y-m-d');
 
         return view('pemeriksaanibuhamil.create-by-id', compact('ibuhamil', 'tanggal_pemeriksaan'));

@@ -13,9 +13,13 @@
     </div>
 </div>
 
-@if(session()->has('success'))
-<div class="alert alert-success text-center">
-    {{ session()->get('success') }}
+@if(session()->has('suksesInputJadwal'))
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{@Session::get('suksesInputJadwal')}}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+        {{@Session::forget('suksesInputJadwal')}}
+    </button>
 </div>
 @endif
 

@@ -50,9 +50,14 @@ class JadwalPemeriksaanController extends Controller
             'dusun_id' => $request->dusun_id,
             'operator_posyandu_id' => $request->operator_posyandu_id,
         ]);
-            
-        return redirect()->route('jadwal-pemeriksaan.index')
-                        ->with('success','Data jadwal-pemeriksaan berhasil dibuat.');
+
+        if ($response->getStatusCode() == 400) {
+            $request->session()->put('errorInputJadwalSudahAda', 'Jadwal sudah ada');
+            return redirect()->back();  
+        }
+        
+        $request->session()->put('suksesInputJadwal', 'Jadwal sukses ditambahkan');
+        return redirect()->route('jadwal-pemeriksaan.index');
     }
 
     public function show(Request $request, $id)
